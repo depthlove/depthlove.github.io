@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+  <meta name="description" content="在使用任何工具之前，我们都有必要对工具做大概地的了解，做到粗犷但不失偏颇，这对我们选择工具和切入点是很关键的。本节的标题虽然是 WebRTC 源码下载与编译，但在这之前，我们有必要大概地了解 WebRTC，比如开发机构、免费性、支持的平台、功能亮点。 WebRTC 是一个免费开源的跨平台项目，由 Google，Mozilla，Opera 等支持，支持 Chrome，Firefox，Opera 以及">
+<meta name="keywords" content="音视频处理,WebRTC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebRTC 开发（二）源码下载与编译">
+<meta property="og:url" content="https://depthlove.github.io/2019/05/02/webrtc-development-2-source-code-download-and-build/index.html">
+<meta property="og:site_name" content="Minmin.Sun Blog">
+<meta property="og:description" content="在使用任何工具之前，我们都有必要对工具做大概地的了解，做到粗犷但不失偏颇，这对我们选择工具和切入点是很关键的。本节的标题虽然是 WebRTC 源码下载与编译，但在这之前，我们有必要大概地了解 WebRTC，比如开发机构、免费性、支持的平台、功能亮点。 WebRTC 是一个免费开源的跨平台项目，由 Google，Mozilla，Opera 等支持，支持 Chrome，Firefox，Opera 以及">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-25T08:07:24.166Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebRTC 开发（二）源码下载与编译">
+<meta name="twitter:description" content="在使用任何工具之前，我们都有必要对工具做大概地的了解，做到粗犷但不失偏颇，这对我们选择工具和切入点是很关键的。本节的标题虽然是 WebRTC 源码下载与编译，但在这之前，我们有必要大概地了解 WebRTC，比如开发机构、免费性、支持的平台、功能亮点。 WebRTC 是一个免费开源的跨平台项目，由 Google，Mozilla，Opera 等支持，支持 Chrome，Firefox，Opera 以及">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://depthlove.github.io/2019/05/02/webrtc-development-2-source-code-download-and-build/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WebRTC 开发（二）源码下载与编译 | Minmin.Sun Blog</title>
+  
+
+
+
+
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb3cb1d5838b79bdd0bccc4f449418c6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Minmin.Sun Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">计算机硕士，音视频，机器学习方向。GitHub：https://github.com/depthlove</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-messages">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/messages/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>留言板</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-top">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/top/" rel="section"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>阅读最多</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/depthlove" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/05/02/webrtc-development-2-source-code-download-and-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Minmin.Sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Minmin.Sun Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">WebRTC 开发（二）源码下载与编译
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-02 13:35:17" itemprop="dateCreated datePublished" datetime="2019-05-02T13:35:17+08:00">2019-05-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/05/02/webrtc-development-2-source-code-download-and-build/" class="leancloud_visitors" data-flag-title="WebRTC 开发（二）源码下载与编译">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在使用任何工具之前，我们都有必要对工具做大概地的了解，做到粗犷但不失偏颇，这对我们选择工具和切入点是很关键的。本节的标题虽然是 WebRTC 源码下载与编译，但在这之前，我们有必要大概地了解 WebRTC，比如开发机构、免费性、支持的平台、功能亮点。</p>
+<p>WebRTC 是一个免费开源的跨平台项目，由 Google，Mozilla，Opera 等支持，支持 Chrome，Firefox，Opera 以及 Android 和 iOS 平台，能够给浏览器、手机应用和物联网设备提供了实时互动能力。</p>
+<p>WebRTC 是一组协议和 API。WebRTC 的起源可追溯到 2011年，经过六年多的时间的发展，在 2017年底 WebRTC 1.0 标准正式出炉。通过 WebRTC 的 <a href="https://webrtc.org/release-notes/" target="_blank" rel="noopener">Release Notes</a> 可以看到现在最新的 release 版本是 <a href="https://groups.google.com/forum/#!msg/discuss-webrtc/cXEtXIIYrQs/R7y0yIK2AQAJ" target="_blank" rel="noopener">M74 Release Noted</a>。</p>
+<p>2015年移动端直播的兴起，观众可以在手机端实时看主播的直播，但是观众与主播之间的沟通需要通过发弹幕来进行，这种交流的实时性较差，沟通不便利，观众参与感较差。2016年初移动端上出现了主播与观众之间可以通过实时视频聊天这种方式来沟通，即，视频连麦。那我们想实现这种视频连麦的功能该怎么做呢？</p>
+<p>现在通过 WebRTC 以及其它一些音视频工具，我们就可以搭建一个视频聊天工具，做到视频连麦，也能做到类似于微信视频群聊。关于各种实现视频连麦的方式，这里就不细说了，放到后面的章节来解说。</p>
+<p>了解到 WebRTC 是个什么东西后，通常人的心里就会产生一种跃跃欲试的冲动，想试试，那试试就试试呗。“磨刀不误砍柴工”这句话是有道理的，当我们没有经验和没有人传授经验的时候，那我们就要琢磨这句“磨刀不误砍柴工”了。我们要砍柴做饭，找到一把刀拿起就跑到树林里去砍柴，结果发现刀太钝，砍柴真费劲。这个时候，我们就意识到砍柴刀要用磨刀石磨一磨，磨锋利了，就能提升砍柴的效率。我举这个例子，就想说明两点：</p>
+<a id="more"></a>
+
+<p>第一，先尝试可以加深理解，获取自己的经验。</p>
+<p>第二，通过获取的经验，重新调整，比如调整做事步骤，加深理论学习等。</p>
+<p>WebRTC 支持 Windows, Mac OS X, Linux, Android 和 iOS 平台，这里以 iOS 平台为例来描述 WebRTC 的源码下载和编译过程。</p>
+<blockquote>
+<h1 id="一、安装-depot-tools-工具包"><a href="#一、安装-depot-tools-工具包" class="headerlink" title="一、安装 depot_tools 工具包"></a>一、安装 depot_tools 工具包</h1></blockquote>
+<p>下载源码的时候，要用到 depot_tools 工具包，这是 Chromium 官方推荐的工具包，具备下载、同步、编译、上传代码等功能。depot_tools 的详细介绍见 <a href="https://www.chromium.org/developers/how-tos/depottools" target="_blank" rel="noopener">Using depot_tools</a>。depot_tools 包含如下工具包：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gclient</span><br><span class="line">gcl</span><br><span class="line">git-cl</span><br><span class="line">svn [只在 Windows 上使用]</span><br><span class="line">drover</span><br><span class="line">cpplint.py</span><br><span class="line">pylint</span><br><span class="line">presubmit_support.py</span><br><span class="line">repo</span><br><span class="line">wtf</span><br><span class="line">weekly</span><br><span class="line">git-gs</span><br><span class="line">zsh-goodies</span><br></pre></td></tr></table></figure>
+
+<h2 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h2><p>depot_tools 源码属于 Google 的服务，即墙外资源，在获取 depot_tools 源码前，先需要开启 VPN 服务，然后在终端执行命令</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>~ suntongmian$ cd <span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>develop/webrtc </span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$</span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ git clone <span class="string">https:</span><span class="comment">//chromium.googlesource.com/chromium/tools/depot_tools.git</span></span><br><span class="line">正克隆到 <span class="string">'depot_tools'</span>...</span><br><span class="line"><span class="string">fatal:</span> unable to access <span class="string">'https://chromium.googlesource.com/chromium/tools/depot_tools.git/'</span>: Failed to connect to chromium.googlesource.com port <span class="number">443</span>: Operation timed out</span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p><strong>出现 “Failed to connect to chromium.googlesource.com port 443: Operation timed out” 问题后，需要检查 VPN 服务是否开启，网络状况是否良好。如果在 VPN 服务开启和网络状况良好的情况下，仍然不能 clone 代码成功，那就需要检查终端能否成功访问墙外的资源。</strong></p>
+<p>我开启了 VPN 服务，网络状况也很好，也能通过 Google 浏览器访问资源，但就是不能 clone depot_tools 源码成功。这个时候，我通过命令 <strong>curl</strong> 来检查终端是否具备翻墙功能。</p>
+<p>首先，在终端执行命令 </p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www<span class="selector-class">.baidu</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:webrtc suntongmian$ curl www.baidu.com</span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="comment">&lt;!--STATUS OK--&gt;</span><span class="tag">&lt;<span class="name">html</span>&gt;</span> <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">content-type</span> <span class="attr">content</span>=<span class="string">text/html;charset</span>=<span class="string">utf-8</span>&gt;</span><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">X-UA-Compatible</span> <span class="attr">content</span>=<span class="string">IE</span>=<span class="string">Edge</span>&gt;</span><span class="tag">&lt;<span class="name">meta</span> <span class="attr">content</span>=<span class="string">always</span> <span class="attr">name</span>=<span class="string">referrer</span>&gt;</span><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">stylesheet</span> <span class="attr">type</span>=<span class="string">text/css</span> <span class="attr">href</span>=<span class="string">http://s1.bdstatic.com/r/www/cache/bdorz/baidu.min.css</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>百度一下，你就知道<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span> <span class="tag">&lt;<span class="name">body</span> <span class="attr">link</span>=<span class="string">#0000cc</span>&gt;</span> <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">wrapper</span>&gt;</span> <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">head</span>&gt;</span> <span class="tag">&lt;<span class="name">div</span> </span></span><br><span class="line"><span class="tag"><span class="attr">www.baidu.com</span>/<span class="attr">img</span>/<span class="attr">gs.gif</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="tag">&lt;/<span class="name">body</span>&gt;</span> <span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">suntongmiandeMacBook-Pro:webrtc suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，能很快获取到 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 的资源。说明网络是正常的。</p>
+<p>其次，在终端执行命令</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www<span class="selector-class">.google</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:webrtc suntongmian$ curl www.google.com</span><br><span class="line">curl: (7) Failed <span class="keyword">to</span> connect <span class="keyword">to</span> www.google.com<span class="built_in"> port </span>80: Operation timed out</span><br><span class="line">suntongmiandeMacBook-Pro:webrtc suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，出现了请求超时的问题。说明通过终端不能访问 Google 服务。那该怎么解决呢？</p>
+<p>我的 MacBook 电脑上使用了 ShadowsocksX 客户端来启动 VPN 服务，但只支持浏览器能使用 VPN 服务。我参考了 <a href="https://blog.csdn.net/jiajiayouba/article/details/81453398" target="_blank" rel="noopener">MAC 终端走代理服务器</a> 一文中提到的方法来解决这个问题。</p>
+<p>我的 ShadowsocksX 客户端中 Socks5 配置信息如下</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">本地Socks5监听地址：<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">本地Socks5监听端口：<span class="number">10808</span></span><br><span class="line">连接超时：<span class="number">60</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 Socks5 的配置信息，在终端中执行命令</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">http_proxy</span>=socks5://127.0.0.1:10808</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">https_proxy</span>=socks5://127.0.0.1:10808</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">all_proxy</span>=socks5://127.0.0.1:10808</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ export http_proxy=<span class="string">socks5:</span><span class="comment">//127.0.0.1:10808</span></span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ </span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ export https_proxy=<span class="string">socks5:</span><span class="comment">//127.0.0.1:10808</span></span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ </span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>~ suntongmian$ export all_proxy=<span class="string">socks5:</span><span class="comment">//127.0.0.1:10808</span></span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>~ suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：执行后，只对当前终端起作用。重启终端后，默认失效。</strong></p>
+<p>启动了终端代理，然后再次执行命令</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www<span class="selector-class">.google</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:webrtc suntongmian$ curl www.google.com</span><br><span class="line">&lt;<span class="title">!doctype</span> html&gt;&lt;html itemscope=<span class="string">""</span> itemtype=<span class="string">"http://schema.org/WebPage"</span> lang=<span class="string">"en"</span>&gt;&lt;head&gt;&lt;meta content=<span class="string">"Search the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for."</span> name=<span class="string">"description"</span>&gt;&lt;meta content=<span class="string">"noodp"</span> name=<span class="string">"robots"</span>&gt;&lt;meta content=<span class="string">"text/html; charset=UTF-8"</span> http-equiv=<span class="string">"Content-Type"</span>&gt;&lt;meta content=<span class="string">"/logos/doodles/2019/us-teacher-appreciation-week-2019-begins-4994791740801024-l.png"</span> itemprop=<span class="string">"image"</span>&gt;&lt;meta content=<span class="string">"Happy US Teacher Appreciation Week 2019!"</span> property=<span class="string">"twitter:title"</span>&gt;&lt;meta content=<span class="string">"Happy US Teacher Appreciation Week 2019! #GoogleDoodle"</span> </span><br><span class="line">\u<span class="number">003</span>E\<span class="keyword">x</span><span class="number">22</span>,\<span class="keyword">x</span><span class="number">22</span>psrl\<span class="keyword">x</span><span class="number">22</span>:\<span class="keyword">x</span><span class="number">22</span>Remove\<span class="keyword">x</span><span class="number">22</span>,\<span class="keyword">x</span><span class="number">22</span>sbit\<span class="keyword">x</span><span class="number">22</span>:\<span class="keyword">x</span><span class="number">22</span>Search by image\<span class="keyword">x</span><span class="number">22</span>,\<span class="keyword">x</span><span class="number">22</span>srch\<span class="keyword">x</span><span class="number">22</span>:\<span class="keyword">x</span><span class="number">22</span>Google Search\<span class="keyword">x</span><span class="number">22</span>&#125;,\<span class="keyword">x</span><span class="number">22</span>ovr\<span class="keyword">x</span><span class="number">22</span>:&#123;&#125;,\<span class="keyword">x</span><span class="number">22</span>pq\<span class="keyword">x</span><span class="number">22</span>:\<span class="keyword">x</span><span class="number">22</span>\<span class="keyword">x</span><span class="number">22</span>,\<span class="keyword">x</span><span class="number">22</span>refpd\<span class="keyword">x</span><span class="number">22</span>:<span class="keyword">true</span>,\<span class="keyword">x</span><span class="number">22</span>rfs\<span class="keyword">x</span><span class="number">22</span>:[],\<span class="keyword">x</span><span class="number">22</span>sbpl\<span class="keyword">x</span><span class="number">22</span>:<span class="number">24</span>,\<span class="keyword">x</span><span class="number">22</span>sbpr\<span class="keyword">x</span><span class="number">22</span>:<span class="number">24</span>,\<span class="keyword">x</span><span class="number">22</span>scd\<span class="keyword">x</span><span class="number">22</span>:<span class="number">10</span>,\<span class="keyword">x</span><span class="number">22</span>sce\<span class="keyword">x</span><span class="number">22</span>:<span class="number">5</span>,\<span class="keyword">x</span><span class="number">22</span>stok\<span class="keyword">x</span><span class="number">22</span>:\<span class="keyword">x</span><span class="number">22</span>s<span class="number">4</span>ND<span class="number">7</span>ehgr<span class="number">2</span>lcHpcv<span class="number">5</span>T<span class="number">93</span>UySs<span class="number">4</span>ho\<span class="keyword">x</span><span class="number">22</span>,\<span class="keyword">x</span><span class="number">22</span>uhde\<span class="keyword">x</span><span class="number">22</span>:<span class="keyword">false</span>&#125;&#125;'<span class="comment">;google.pmc=JSON.parse(pmc);&#125;)();&lt;/script&gt;        &lt;/body&gt;&lt;/html&gt;suntongmiandeMacBook-Pro:webrtc suntongmian$ </span></span><br><span class="line"><span class="comment">suntongmiandeMacBook-Pro:webrtc suntongmian$</span></span><br></pre></td></tr></table></figure>
+
+<p>发现可以正常访问 <a href="http://www.google.com" target="_blank" rel="noopener">www.google.com</a> 的资源了。</p>
+<p>解决了终端的代理问题后，再次执行命令</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">https</span>://chromium.googlesource.com/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ git clone <span class="string">https:</span><span class="comment">//chromium.googlesource.com/chromium/tools/depot_tools.git</span></span><br><span class="line">正克隆到 <span class="string">'depot_tools'</span>...</span><br><span class="line"><span class="string">remote:</span> Sending approximately <span class="number">24.21</span> MiB ...</span><br><span class="line"><span class="string">remote:</span> Total <span class="number">31833</span> (delta <span class="number">22312</span>), reused <span class="number">31833</span> (delta <span class="number">22312</span>)</span><br><span class="line">接收对象中: <span class="number">100</span>% (<span class="number">31833</span><span class="regexp">/31833), 24.21 MiB | 1.25 MiB/</span>s, 完成.</span><br><span class="line">处理 delta 中: <span class="number">100</span>% (<span class="number">22312</span>/<span class="number">22312</span>), 完成.</span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ </span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ ls</span><br><span class="line">depot_tools</span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>到此，可以看到 depot_tools 源码已经下载成功了。</p>
+<h2 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h2><p>获取 depot_tools 文件夹所在的目录，在终端执行命令 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ ls</span><br><span class="line">depot_tools</span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ </span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$ pwd</span><br><span class="line"><span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>develop/webrtc</span><br><span class="line">suntongmiandeMacBook-<span class="string">Pro:</span>webrtc suntongmian$</span><br></pre></td></tr></table></figure>
+
+<h2 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h2><p>添加环境变量，命令格式为</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=<span class="variable">$PATH</span><span class="symbol">:/path/depot_tools</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，path 为上一步通过 pwd 命令获取的 depot_tools 文件夹所在目录。</p>
+<p>在终端执行命令</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=<span class="variable">$PATH</span><span class="symbol">:/Users/suntongmian/Documents/develop/webrtc/depot_tools</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="symbol">Pro:</span>webrtc suntongmian<span class="variable">$ </span>export PATH=<span class="variable">$PATH</span><span class="symbol">:/Users/suntongmian/Documents/develop/webrtc/depot_tools</span></span><br><span class="line">suntongmiandeMacBook-<span class="symbol">Pro:</span>webrtc suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：执行后，只对当前终端起作用。重启终端后，默认失效。</strong></p>
+<h2 id="step-4"><a href="#step-4" class="headerlink" title="step 4"></a>step 4</h2><p>到此，depot_tools 的配置已经完成。想知道 depot_tools 是否成功安装，在终端执行命令</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="comment">--help</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">suntongmiandeMacBook-Pro:webrtc </span><span class="string">suntongmian$</span> <span class="string">fetch </span><span class="built_in">--help</span></span><br><span class="line"><span class="built_in">usage:</span> <span class="string">fetch.</span><span class="string">py </span>[<span class="string">options]</span> &lt;<span class="string">config&gt;</span> [<span class="built_in">--property=value</span> [<span class="built_in">--property2=value2</span> ...]]</span><br><span class="line"></span><br><span class="line"><span class="string">This </span><span class="string">script </span><span class="string">can </span><span class="string">be </span><span class="string">used </span><span class="string">to </span><span class="string">download </span><span class="string">the </span><span class="string">Chromium </span><span class="string">sources.</span> <span class="string">See</span></span><br><span class="line"><span class="string">http:</span>//<span class="string">www.</span><span class="string">chromium.</span><span class="string">org/</span><span class="string">developers/</span><span class="string">how-tos/</span><span class="built_in">get-the-code</span></span><br><span class="line"><span class="built_in">for</span> <span class="string">full </span><span class="string">usage </span><span class="string">instructions.</span></span><br><span class="line"></span><br><span class="line"><span class="string">Valid </span><span class="string">options:</span></span><br><span class="line">   -h, <span class="built_in">--help,</span> <span class="string">help </span>  <span class="string">Print </span><span class="string">this </span><span class="string">message.</span></span><br><span class="line">   <span class="built_in">--nohooks</span>          <span class="string">Don'</span>t <span class="string">run </span><span class="string">hooks </span><span class="string">after </span><span class="string">checkout.</span></span><br><span class="line">   <span class="built_in">--force</span>            (<span class="string">dangerous)</span> <span class="string">Don'</span>t <span class="string">look </span><span class="string">for </span><span class="string">existing </span>.<span class="string">gclient </span><span class="string">file.</span></span><br><span class="line">   -n, <span class="built_in">--dry-run</span>      <span class="string">Don'</span>t <span class="string">run </span><span class="string">commands,</span> <span class="string">only </span><span class="string">print </span><span class="string">them.</span></span><br><span class="line">   <span class="built_in">--no-history</span>       <span class="string">Perform </span><span class="string">shallow </span><span class="string">clones,</span> <span class="string">don'</span>t <span class="string">fetch </span><span class="string">the </span><span class="string">full </span><span class="string">git </span><span class="string">history.</span></span><br><span class="line"></span><br><span class="line"><span class="string">Valid </span><span class="string">fetch </span><span class="string">configs:</span></span><br><span class="line">  <span class="string">android</span></span><br><span class="line"><span class="string"> </span> <span class="string">android_internal</span></span><br><span class="line"><span class="string"> </span> <span class="string">breakpad</span></span><br><span class="line"><span class="string"> </span> <span class="string">chromium</span></span><br><span class="line"><span class="string"> </span> <span class="string">config_util</span></span><br><span class="line"><span class="string"> </span> <span class="string">crashpad</span></span><br><span class="line"><span class="string"> </span> <span class="string">dart</span></span><br><span class="line"><span class="string"> </span> <span class="string">depot_tools</span></span><br><span class="line"><span class="string"> </span> <span class="string">goma_client</span></span><br><span class="line"><span class="string"> </span> <span class="string">gyp</span></span><br><span class="line"><span class="string"> </span> <span class="string">infra</span></span><br><span class="line"><span class="string"> </span> <span class="string">infra_internal</span></span><br><span class="line"><span class="string"> </span> <span class="string">inspector_protocol</span></span><br><span class="line"><span class="string"> </span> <span class="string">ios</span></span><br><span class="line"><span class="string"> </span> <span class="string">ios_internal</span></span><br><span class="line"><span class="string"> </span> <span class="string">nacl</span></span><br><span class="line"><span class="string"> </span> <span class="string">naclports</span></span><br><span class="line"><span class="string"> </span> <span class="string">node-ci</span></span><br><span class="line"><span class="string"> </span> <span class="string">pdfium</span></span><br><span class="line"><span class="string"> </span> <span class="string">skia</span></span><br><span class="line"><span class="string"> </span> <span class="string">skia_buildbot</span></span><br><span class="line"><span class="string"> </span> <span class="string">syzygy</span></span><br><span class="line"><span class="string"> </span> <span class="string">v8</span></span><br><span class="line"><span class="string"> </span> <span class="string">webrtc</span></span><br><span class="line"><span class="string"> </span> <span class="string">webrtc_android</span></span><br><span class="line"><span class="string"> </span> <span class="string">webrtc_ios</span></span><br><span class="line"><span class="string">suntongmiandeMacBook-</span><span class="string">Pro:webrtc </span><span class="string">suntongmian$</span></span><br></pre></td></tr></table></figure>
+
+<p>打印上面的信息，说明 depot_tools 工具包已经成功安装。接下来就可以通过 depot_tools 工具下载 WebRTC 源码了。</p>
+<blockquote>
+<h1 id="二、下载-WebRTC-源码"><a href="#二、下载-WebRTC-源码" class="headerlink" title="二、下载 WebRTC 源码"></a>二、下载 WebRTC 源码</h1></blockquote>
+<p>WebRTC 文件量较大，在下载之前，磁盘的剩余可用容量要满足：</p>
+<p>Linux: 6.4 GB.<br>Linux (with Android): 16 GB (of which ~8 GB is Android SDK+NDK images).<br>Mac (with iOS support): 5.6GB</p>
+<p>我使用的是 MacBook Pro 2015款机器：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">macOS Mojave</span><br><span class="line">版本 <span class="number">10.14</span><span class="number">.4</span></span><br><span class="line"></span><br><span class="line">MacBook Pro (Retina, <span class="number">13</span>-inch, Early <span class="number">2015</span>)</span><br><span class="line">处理器 <span class="number">2.7</span> GHz Intel Core i5</span><br><span class="line">内存 <span class="number">8</span> GB <span class="number">1867</span> MHz DDR3</span><br><span class="line">启动磁盘 Macintosh HD</span><br><span class="line">图形卡 Intel Iris Graphics <span class="number">6100</span> <span class="number">1536</span> MB</span><br><span class="line">磁盘空间 <span class="number">128</span> GB</span><br><span class="line">可用磁盘空间 <span class="number">17.11</span> GB</span><br></pre></td></tr></table></figure>
+
+<p>我的 Mac 电脑可用磁盘空间 17.11 GB，是足以装的下 5.6 GB 文件的，好了，接下来就可以放心下载源码了。</p>
+<h2 id="step-1-1"><a href="#step-1-1" class="headerlink" title="step 1"></a>step 1</h2><p>下载所需要的工程，在终端执行命令</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="comment">--nohooks webrtc_ios</span></span><br></pre></td></tr></table></figure>
+
+<p>在 “安装 depot_tools 工具包” 的步骤中，通过 <strong>fetch –help</strong>，可以看到代码目录 webrtc，webrtc_android，webrtc_ios 等。我要在 iOS 平台上使用，就选择了 webrtc_ios。选择依据见 <a href="https://webrtc.org/native-code/ios/" target="_blank" rel="noopener">WebRTC Native Code, iOS</a> 中提到的 “This will fetch a regular WebRTC checkout with the iOS-specific parts added.”</p>
+<p>这条命令执行时，要下载的文件比较多，需要耐心等待命令的执行结果。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">suntongmiandeMacBook-Pro:webrtc suntongmian$ fetch --nohooks webrtc_ios</span></span><br><span class="line"><span class="section">Running: gclient root</span></span><br><span class="line"><span class="section">WARNING: Your metrics.cfg file was invalid or nonexistent. A new one will be created.</span></span><br><span class="line"><span class="section">Running: gclient config --spec 'solutions = [</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">"https://webrtc.googlesource.com/src.git"</span>,</span><br><span class="line">    <span class="string">"managed"</span>: False,</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"src"</span>,</span><br><span class="line">    <span class="string">"deps_file"</span>: <span class="string">"DEPS"</span>,</span><br><span class="line">    <span class="string">"custom_deps"</span>: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br><span class="line">target_os = [<span class="string">"ios"</span>, <span class="string">"mac"</span>]</span><br><span class="line">'</span><br><span class="line"><span class="section">Running: gclient sync --nohooks --with_branch_heads</span></span><br><span class="line"></span><br><span class="line">________ running 'git -c core.deltaBaseCacheLimit=2g clone --no-checkout --progress https://webrtc.googlesource.com/src.git /Users/suntongmian/Documents/develop/webrtc/_gclient_src_twA2Fg' in '/Users/suntongmian/Documents/develop/webrtc'</span><br><span class="line">Cloning into '/Users/suntongmian/Documents/develop/webrtc/_gclient_src_twA2Fg'...</span><br><span class="line"><span class="section">remote: Sending approximately 253.71 MiB ...        </span></span><br><span class="line"><span class="section">remote: Counting objects: 22, done        </span></span><br><span class="line"><span class="section">remote: Finding sources: 100% (22/22)           </span></span><br><span class="line">Receiving objects:  57% (183907/320504), 74.04 MiB | 1.88 MiB/s    </span><br><span class="line"><span class="section">[0:01:00] Still working on:</span></span><br><span class="line"><span class="section">[0:01:00]   src</span></span><br><span class="line">Receiving objects:  60% (192303/320504), 88.48 MiB | 1.35 MiB/s   </span><br><span class="line"><span class="section">[0:01:10] Still working on:</span></span><br><span class="line"><span class="section">[0:01:10]   src</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="section">[2:03:36] Still working on:</span></span><br><span class="line"><span class="section">[2:03:36]   src/third_party/icu</span></span><br><span class="line"></span><br><span class="line"><span class="section">[2:03:46] Still working on:</span></span><br><span class="line"><span class="section">[2:03:46]   src/third_party/icu</span></span><br><span class="line"></span><br><span class="line"><span class="section">[2:03:52] Still working on:</span></span><br><span class="line"><span class="section">[2:03:52]   src/third_party/icu</span></span><br><span class="line">Syncing projects: 100% (38/38), done.                              </span><br><span class="line"><span class="section">Running: git submodule foreach 'git config -f $toplevel/.git/config submodule.$name.ignore all'</span></span><br><span class="line"><span class="section">Running: git config --add remote.origin.fetch '+refs/tags/*:refs/tags/*'</span></span><br><span class="line"><span class="section">Running: git config diff.ignoreSubmodules all</span></span><br><span class="line"><span class="section">suntongmiandeMacBook-Pro:webrtc suntongmian$</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="step-2-1"><a href="#step-2-1" class="headerlink" title="step 2"></a>step 2</h2><p>与远端 repo 进行代码同步，在终端执行命令</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gclient <span class="keyword">sync</span></span><br></pre></td></tr></table></figure>
+
+<p>这条命令执行时，要下载的文件比较多，需要耐心等待命令的执行结果。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ gclient sync</span><br><span class="line">Syncing projects: 100% (38/38), done.                                           </span><br><span class="line"></span><br><span class="line">________ running '/usr/bin/python src/build/mac_toolchain.py' <span class="keyword">in</span> '/Users/suntongmian/Documents/develop/webrtc'</span><br><span class="line">Skipping <span class="keyword">Mac</span> toolchain installation <span class="keyword">for</span> <span class="keyword">mac</span></span><br><span class="line"></span><br><span class="line">________ running '/usr/bin/python src/tools/clang/scripts/<span class="keyword">update</span>.py' <span class="keyword">in</span> '/Users/suntongmian/Documents/develop/webrtc'</span><br><span class="line">Downloading https:<span class="comment">//commondatastorage.googleapis.com/chromium-browser-clang/Mac/clang-359912-2.tgz </span></span><br><span class="line">&lt;urlopen <span class="keyword">error</span> [Errno 54] Connection reset <span class="keyword">by</span> peer&gt;</span><br><span class="line">Retrying <span class="keyword">in</span> 5 s ...</span><br><span class="line">Downloading https:<span class="comment">//commondatastorage.googleapis.com/chromium-browser-clang/Mac/clang-359912-2.tgz Traceback (most recent call last):</span></span><br><span class="line">  <span class="keyword">File</span> <span class="string">"src/tools/clang/scripts/update.py"</span>, <span class="keyword">line</span> 322, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    sys.<span class="keyword">exit</span>(main())</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"src/tools/clang/scripts/update.py"</span>, <span class="keyword">line</span> 318, <span class="keyword">in</span> main</span><br><span class="line">    <span class="keyword">return</span> UpdateClang()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"src/tools/clang/scripts/update.py"</span>, <span class="keyword">line</span> 252, <span class="keyword">in</span> UpdateClang</span><br><span class="line">    DownloadAndUnpackClangPackage(sys.platform, LLVM_BUILD_DIR)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"src/tools/clang/scripts/update.py"</span>, <span class="keyword">line</span> 171, <span class="keyword">in</span> DownloadAndUnpackClangPackage</span><br><span class="line">    DownloadAndUnpack(cds_full_url, output_dir, path_prefix)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"src/tools/clang/scripts/update.py"</span>, <span class="keyword">line</span> 141, <span class="keyword">in</span> DownloadAndUnpack</span><br><span class="line">    DownloadUrl(url, f)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"src/tools/clang/scripts/update.py"</span>, <span class="keyword">line</span> 100, <span class="keyword">in</span> DownloadUrl</span><br><span class="line">    response = urllib.urlopen(url)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py"</span>, <span class="keyword">line</span> 154, <span class="keyword">in</span> urlopen</span><br><span class="line">    <span class="keyword">return</span> opener.<span class="keyword">open</span>(url, data, timeout)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py"</span>, <span class="keyword">line</span> 431, <span class="keyword">in</span> <span class="keyword">open</span></span><br><span class="line">    response = self._open(req, data)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py"</span>, <span class="keyword">line</span> 449, <span class="keyword">in</span> _open</span><br><span class="line">    '_open', req)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py"</span>, <span class="keyword">line</span> 409, <span class="keyword">in</span> _call_chain</span><br><span class="line">    result = func(*<span class="keyword">args</span>)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py"</span>, <span class="keyword">line</span> 1240, <span class="keyword">in</span> https_open</span><br><span class="line">    context=self._context)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py"</span>, <span class="keyword">line</span> 1194, <span class="keyword">in</span> do_open</span><br><span class="line">    <span class="keyword">h</span>.request(req.get_method(), req.get_selector(), req.data, headers)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 1053, <span class="keyword">in</span> request</span><br><span class="line">    self._send_request(method, url, body, headers)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 1093, <span class="keyword">in</span> _send_request</span><br><span class="line">    self.endheaders(body)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 1049, <span class="keyword">in</span> endheaders</span><br><span class="line">    self._send_output(message_body)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 893, <span class="keyword">in</span> _send_output</span><br><span class="line">    self.send(msg)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 855, <span class="keyword">in</span> send</span><br><span class="line">    self.connect()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 1266, <span class="keyword">in</span> connect</span><br><span class="line">    HTTPConnection.connect(self)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 835, <span class="keyword">in</span> connect</span><br><span class="line">    self._tunnel()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 812, <span class="keyword">in</span> _tunnel</span><br><span class="line">    (<span class="keyword">version</span>, code, message) = response._read_status()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/httplib.py"</span>, <span class="keyword">line</span> 417, <span class="keyword">in</span> _read_status</span><br><span class="line">    raise BadStatusLine(<span class="keyword">line</span>)</span><br><span class="line">httplib.BadStatusLine: ''</span><br><span class="line"><span class="keyword">Error</span>: Command '/usr/bin/python src/tools/clang/scripts/<span class="keyword">update</span>.py' returned non-zero <span class="keyword">exit</span> status 1 <span class="keyword">in</span> /Users/suntongmian/Documents/develop/webrtc</span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p><strong>出现了错误 “Error: Command ‘/usr/bin/python src/tools/clang/scripts/update.py’”，暂时不用管，继续后续的步骤。</strong></p>
+<p>执行结果中的 <code>src/tools/clang/scripts/update.py</code>, <a href="https://commondatastorage.googleapis.com/chromium-browser-clang/Mac/clang-359912-2.tgz" target="_blank" rel="noopener">https://commondatastorage.googleapis.com/chromium-browser-clang/Mac/clang-359912-2.tgz</a> 后面的步骤会用到。</p>
+<blockquote>
+<h1 id="三、执行编译"><a href="#三、执行编译" class="headerlink" title="三、执行编译"></a>三、执行编译</h1></blockquote>
+<p>在执行编译前，我们需要配置好编译的参数和环境，生产出构建文件。这里就需要用到 <a href="https://gn.googlesource.com/gn/+/master/README.md" target="_blank" rel="noopener">GN</a> 这个工具了。GN 是一个为 Ninja 生成构建文件的元构建系统。<a href="https://ninja-build.org/" target="_blank" rel="noopener">Ninja</a> 是一个小型构建系统，特点是构建速度快。</p>
+<h2 id="step-1-2"><a href="#step-1-2" class="headerlink" title="step 1"></a>step 1</h2><p>使用 GN 来生产 Ninja 工程文件，在终端执行命令</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">gn</span> gen out/ios --<span class="built_in">args</span>='target_os=<span class="string">"ios"</span> target_cpu=<span class="string">"arm64"</span> is_debug=<span class="literal">true</span>'</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ gn gen out/ios <span class="attribute">--args</span>=<span class="string">'target_os="ios" target_cpu="arm64" is_debug=true'</span></span><br><span class="line">Warning: Multiple codesigning identities match <span class="string">"iPhone Developer"</span></span><br><span class="line">Warning: - D78B0B7AF39CEFA4D0F673B4D3AA517D312C97CC (selected)</span><br><span class="line">Warning: - 5634EAED50D1AD95ED76F6AC8298E06590FE476B</span><br><span class="line">Warning: - 2843CD233EB6A93C79C2332E4F4FC601BEDA13BC</span><br><span class="line">Warning: Please use either ios_code_signing_identity <span class="keyword">or</span> </span><br><span class="line">Warning: ios_code_signing_identity_description variable <span class="keyword">to</span> </span><br><span class="line">Warning: control which<span class="built_in"> identity </span>is selected.</span><br><span class="line"></span><br><span class="line">Done. Made 1378 targets <span class="keyword">from</span> 189 files <span class="keyword">in</span> 2200ms</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>产生的工程文件在目录 <strong>/src/out/ios</strong> 下。通过命令查看下改目录下有哪些文件，在终端执行命令</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> <span class="keyword">out</span>/ios</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ ls out/ios</span><br><span class="line">args.gn</span><br><span class="line">build.ninja</span><br><span class="line">build<span class="selector-class">.ninja</span><span class="selector-class">.d</span></span><br><span class="line">clang_x64</span><br><span class="line">low_bandwidth_audio_perf_test.runtime_deps</span><br><span class="line">obj</span><br><span class="line">toolchain.ninja</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<h2 id="step-2-2"><a href="#step-2-2" class="headerlink" title="step 2"></a>step 2</h2><p>编译 APP 工程，在终端执行命令</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ninja -C <span class="keyword">out</span>/ios AppRTCMobile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ ninja -C out/ios AppRTCMobile</span><br><span class="line">ninja: Entering directory `out/ios'</span><br><span class="line">[1/2732] CXX obj/api/audio_codecs/audio_codecs_api/audio_codec_pair_id.o</span><br><span class="line">FAILED: obj/api/audio_codecs/audio_codecs_api/audio_codec_pair_id.o </span><br><span class="line">../../third_party/llvm-build/<span class="keyword">Release</span>+Asserts/<span class="keyword">bin</span>/clang++ -MMD -MF obj/api/audio_codecs/audio_codecs_api/</span><br><span class="line">/<span class="keyword">bin</span>/sh: ../../third_party/llvm-<span class="keyword">build</span>/<span class="keyword">Release</span>+Asserts/<span class="keyword">bin</span>/clang++: <span class="keyword">No</span> such <span class="keyword">file</span> <span class="keyword">or</span> <span class="keyword">directory</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">/<span class="keyword">bin</span>/sh: ../../third_party/llvm-<span class="keyword">build</span>/<span class="keyword">Release</span>+Asserts/<span class="keyword">bin</span>/clang++: <span class="keyword">No</span> such <span class="keyword">file</span> <span class="keyword">or</span> <span class="keyword">directory</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">isystem../../buildtools/third_party/libc++abi/trunk/<span class="keyword">include</span> -fvisibility-inlines-hidden -Wnon-<span class="keyword">virtual</span>-dtor -Woverloaded-<span class="keyword">virtual</span> -c ../../api/audio_codecs/ilbc/audio_encoder_ilbc.cc -o obj/api/audio_codecs/ilbc/audio_encoder_ilbc/audio_encoder_ilbc.o</span><br><span class="line">/<span class="keyword">bin</span>/sh: ../../third_party/llvm-<span class="keyword">build</span>/<span class="keyword">Release</span>+Asserts/<span class="keyword">bin</span>/clang++: <span class="keyword">No</span> such <span class="keyword">file</span> <span class="keyword">or</span> <span class="keyword">directory</span></span><br><span class="line">ninja: <span class="keyword">build</span> stopped: subcommand failed.</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>出现错误 “/bin/sh: ../../third_party/llvm-build/Release+Asserts/bin/clang++: No such file or directory”。原因是 <code>/src/third_party/llvm-build</code> 目录下找不到可执行文件 clang++。</p>
+<p>先查看 <code>/src/third_party/llvm-build</code> 目录下的文件，在终端执行命令</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> third_party/llvm-build</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ <span class="keyword">ls</span> third_party/llvm-build</span><br><span class="line">cr_build_revision</span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>发现确实没有可执行文件 <code>clang++</code>。 那就手动下载文件包，放置到对应的目录下。根据 <strong>“二、下载 WebRTC 源码”</strong> 的 <strong>step 2</strong> 命令执行结果中提到的的下载地址 <a href="https://commondatastorage.googleapis.com/chromium-browser-clang/Mac/clang-359912-2.tgz" target="_blank" rel="noopener">https://commondatastorage.googleapis.com/chromium-browser-clang/Mac/clang-359912-2.tgz</a>，在终端执行命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https:<span class="regexp">//</span>commondatastorage.googleapis.com<span class="regexp">/chromium-browser-clang/</span>Mac<span class="regexp">/clang-359912-2.tgz -o third_party/</span>llvm-build<span class="regexp">/clang.tgz</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="symbol">Pro:</span>src suntongmian<span class="variable">$ </span>curl <span class="symbol">https:</span>/<span class="regexp">/commondatastorage.googleapis.com/chromium</span>-browser-clang/Mac/clang-<span class="number">359912</span>-<span class="number">2</span>.tgz -o third_party/llvm-build/clang.tgz</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line"><span class="number">100</span> <span class="number">27.9</span>M  <span class="number">100</span> <span class="number">27.9</span>M    <span class="number">0</span>     <span class="number">0</span>  <span class="number">1167</span>k      <span class="number">0</span>  <span class="number">0</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">24</span>  <span class="number">0</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">24</span> --<span class="symbol">:--</span><span class="symbol">:--</span> <span class="number">1469</span>k</span><br><span class="line">suntongmiandeMacBook-<span class="symbol">Pro:</span>src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>将下载的 clang.tgz 压缩包解压并根据报错信息重命名为 <code>Release+Asserts</code>，在终端执行命令</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ls third_party/llvm-<span class="keyword">build</span></span><br><span class="line">mkdir third_party/llvm-<span class="keyword">build</span>/Release+Asserts</span><br><span class="line">tar zxvf third_party/llvm-<span class="keyword">build</span>/clang.tgz -C third_party/llvm-<span class="keyword">build</span>/Release+Asserts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ ls third_party/llvm-<span class="keyword">build</span></span><br><span class="line"><span class="keyword">clang.tgz	</span>cr_build_revision</span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ </span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ mkdir third_party/llvm-<span class="keyword">build/Release+Asserts</span></span><br><span class="line"><span class="keyword">suntongmiandeMacBook-Pro:src </span>suntongmian$ </span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ tar zxvf third_party/llvm-<span class="keyword">build/clang.tgz </span>-C third_party/llvm-<span class="keyword">build/Release+Asserts</span></span><br><span class="line"><span class="keyword">x </span><span class="keyword">bin/</span></span><br><span class="line"><span class="keyword">x </span><span class="keyword">bin/clang</span></span><br><span class="line"><span class="keyword">x </span><span class="keyword">bin/clang++</span></span><br><span class="line"><span class="keyword">x </span><span class="keyword">bin/clang-cl</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">...</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">x </span><span class="meta">include</span>/c++/<span class="built_in">v1</span>/ios</span><br><span class="line">x <span class="meta">include</span>/c++/<span class="built_in">v1</span>/iosfwd</span><br><span class="line">x <span class="meta">include</span>/c++/<span class="built_in">v1</span>/iostream</span><br><span class="line"></span><br><span class="line"><span class="symbol">...</span></span><br><span class="line"></span><br><span class="line">x <span class="meta">include</span>/c++/<span class="built_in">v1</span>/support/<span class="keyword">android/</span></span><br><span class="line"><span class="keyword">x </span><span class="meta">include</span>/c++/<span class="built_in">v1</span>/support/<span class="keyword">android/locale_bionic.h</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">...</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">x </span><span class="meta">include</span>/c++/<span class="built_in">v1</span>/version</span><br><span class="line">x <span class="meta">include</span>/c++/<span class="built_in">v1</span>/wchar.h</span><br><span class="line">x <span class="meta">include</span>/c++/<span class="built_in">v1</span>/wctype.h</span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ </span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ ls third_party/llvm-<span class="keyword">build/Release+Asserts/</span></span><br><span class="line"><span class="keyword">bin	</span>	<span class="keyword">buildlog.txt	</span><span class="meta">include</span>		lib</span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ </span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$ ls third_party/llvm-<span class="keyword">build/Release+Asserts/bin</span></span><br><span class="line"><span class="keyword">clang	</span>	clang-cl	llvm-symbolizer</span><br><span class="line"><span class="symbol">clang</span>++		llvm-pdbutil	llvm-undname</span><br><span class="line"><span class="symbol">suntongmiandeMacBook</span>-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p><strong>为什么要将下载的 clang.tgz 压缩包解压并根据报错信息重命名为 <code>Release+Asserts</code>？</strong> 这是依据 <strong>“二、下载 WebRTC 源码”</strong> 的 <strong>step 2</strong> 命令执行结果中提到的信息 <code>src/tools/clang/scripts/update.py</code>，在终端执行命令查看该脚本的信息</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cat</span> tools/clang/scripts/<span class="keyword">update</span>.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ cat tools/clang/scripts/update.py</span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># Copyright (c) 2012 The Chromium Authors. All rights reserved.</span></span><br><span class="line"><span class="comment"># Use of this source code is governed by a BSD-style license that can be</span></span><br><span class="line"><span class="comment"># found in the LICENSE file.</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""This script is used to download prebuilt clang binaries. It runs as a</span></span><br><span class="line"><span class="string">"gclient hook" in Chromium checkouts.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">It can also be run stand-alone as a convenient way of installing a well-tested</span></span><br><span class="line"><span class="string">near-tip-of-tree clang version:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  $ curl -s https://raw.githubusercontent.com/chromium/chromium/master/tools/clang/scripts/update.py | python - --clang-dir=.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># <span class="doctag">TODO:</span> Running stand-alone won't work on Windows due to the dia dll copying.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="meta">... </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">  <span class="keyword">import</span> urllib2 <span class="keyword">as</span> urllib</span><br><span class="line"><span class="keyword">except</span> ImportError: <span class="comment"># For Py3 compatibility</span></span><br><span class="line">  <span class="keyword">import</span> urllib.request <span class="keyword">as</span> urllib</span><br><span class="line">  <span class="keyword">import</span> urllib.error <span class="keyword">as</span> urllib</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Do NOT CHANGE this if you don't know what you're doing -- see</span></span><br><span class="line"><span class="comment"># https://chromium.googlesource.com/chromium/src/+/master/docs/updating_clang.md</span></span><br><span class="line"><span class="comment"># Reverting problematic clang rolls is safe, though.</span></span><br><span class="line">CLANG_REVISION = <span class="string">'359912'</span></span><br><span class="line">CLANG_SUB_REVISION = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">PACKAGE_VERSION = <span class="string">'%s-%s'</span> % (CLANG_REVISION, CLANG_SUB_REVISION)</span><br><span class="line">RELEASE_VERSION = <span class="string">'9.0.0'</span></span><br><span class="line"></span><br><span class="line">CDS_URL = os.environ.get(<span class="string">'CDS_CLANG_BUCKET_OVERRIDE'</span>,</span><br><span class="line">    <span class="string">'https://commondatastorage.googleapis.com/chromium-browser-clang'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Path constants. (All of these should be absolute paths.)</span></span><br><span class="line">THIS_DIR = os.path.abspath(os.path.dirname(__file__))</span><br><span class="line">CHROMIUM_DIR = os.path.abspath(os.path.join(THIS_DIR, <span class="string">'..'</span>, <span class="string">'..'</span>, <span class="string">'..'</span>))</span><br><span class="line">LLVM_BUILD_DIR = os.path.join(CHROMIUM_DIR, <span class="string">'third_party'</span>, <span class="string">'llvm-build'</span>,</span><br><span class="line">                              <span class="string">'Release+Asserts'</span>)</span><br><span class="line"></span><br><span class="line">STAMP_FILE = os.path.normpath(</span><br><span class="line">    os.path.join(LLVM_BUILD_DIR, <span class="string">'..'</span>, <span class="string">'cr_build_revision'</span>))</span><br><span class="line">FORCE_HEAD_REVISION_FILE = os.path.normpath(os.path.join(LLVM_BUILD_DIR, <span class="string">'..'</span>,</span><br><span class="line">                                                   <span class="string">'force_head_revision'</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DownloadUrl</span><span class="params">(url, output_file)</span>:</span></span><br><span class="line">  <span class="string">"""Download url into output_file."""</span></span><br><span class="line">  CHUNK_SIZE = <span class="number">4096</span></span><br><span class="line">  TOTAL_DOTS = <span class="number">10</span></span><br><span class="line">  num_retries = <span class="number">3</span></span><br><span class="line">  retry_wait_s = <span class="number">5</span>  <span class="comment"># Doubled at each retry.</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">      sys.stdout.write(<span class="string">'Downloading %s '</span> % url)</span><br><span class="line">      sys.stdout.flush()</span><br><span class="line">      response = urllib.urlopen(url)</span><br><span class="line">      total_size = int(response.info().getheader(<span class="string">'Content-Length'</span>).strip())</span><br><span class="line">      bytes_done = <span class="number">0</span></span><br><span class="line">      dots_printed = <span class="number">0</span>     </span><br><span class="line">      </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> urllib.URLError <span class="keyword">as</span> e:</span><br><span class="line">      sys.stdout.write(<span class="string">'\n'</span>)</span><br><span class="line">      print(e)</span><br><span class="line">      <span class="keyword">if</span> num_retries == <span class="number">0</span> <span class="keyword">or</span> isinstance(e, urllib.HTTPError) <span class="keyword">and</span> e.code == <span class="number">404</span>:</span><br><span class="line">        <span class="keyword">raise</span> e</span><br><span class="line">      num_retries -= <span class="number">1</span></span><br><span class="line">      print(<span class="string">'Retrying in %d s ...'</span> % retry_wait_s)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DownloadAndUnpack</span><span class="params">(url, output_dir, path_prefix=None)</span>:</span></span><br><span class="line">  <span class="string">"""Download an archive from url and extract into output_dir. If path_prefix </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">def DownloadAndUnpackClangPackage(platform, output_dir, runtimes_only=False):</span></span><br><span class="line"><span class="string">  cds_file = "clang-%s.tgz" %  PACKAGE_VERSION</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">def UpdateClang():</span></span><br><span class="line"><span class="string">  GCLIENT_CONFIG = os.path.join(os.path.dirname(CHROMIUM_DIR), '.gclient')</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  DownloadAndUnpackClangPackage(sys.platform, LLVM_BUILD_DIR)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  if args.llvm_force_head_revision:</span></span><br><span class="line"><span class="string">    print('--llvm-force-head-revision can only be used for --print-revision')</span></span><br><span class="line"><span class="string">    return 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  if args.clang_dir:</span></span><br><span class="line"><span class="string">    global LLVM_BUILD_DIR, STAMP_FILE</span></span><br><span class="line"><span class="string">    LLVM_BUILD_DIR = os.path.abspath(args.clang_dir)</span></span><br><span class="line"><span class="string">    STAMP_FILE = os.path.join(LLVM_BUILD_DIR, 'cr_build_revision')</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  return UpdateClang()</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">if __name__ == '__main__':</span></span><br><span class="line"><span class="string">  sys.exit(main())</span></span><br><span class="line"><span class="string">suntongmiandeMacBook-Pro:src suntongmian$</span></span><br></pre></td></tr></table></figure>
+
+<p>从该脚本的注释信息 <code>This script is used to download prebuilt clang binaries</code> 可以得知该脚本作用就是下载 <code>clang</code> 可执行文件。其中 <code>clang</code> 的版本信息为 <code>CLANG_REVISION = &#39;359912&#39; CLANG_SUB_REVISION = 2 RELEASE_VERSION = &#39;9.0.0&#39;</code>，<code>llvm-build</code> 的目录信息为 <code>LLVM_BUILD_DIR = os.path.join(CHROMIUM_DIR, &#39;third_party&#39;, &#39;llvm-build&#39;, &#39;Release+Asserts&#39;)</code>。</p>
+<p>再次在终端执行命令 </p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ninja -C <span class="keyword">out</span>/ios AppRTCMobile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ ninja -C <span class="keyword">out</span>/ios AppRTCMobile</span><br><span class="line">ninja: Entering directory `<span class="keyword">out</span>/ios'</span><br><span class="line">[2735/2736] CODE SIGNING <span class="comment">//examples:Ap...//build/toolchain/mac:ios_clang_arm64)</span></span><br><span class="line">FAILED: AppRTCMobile.<span class="keyword">app</span>/AppRTCMobile AppRTCMobile.<span class="keyword">app</span>/_CodeSignature/CodeResources AppRTCMobile.<span class="keyword">app</span>/embedded.mobileprovision AppRTCMobile.<span class="keyword">app</span>/Info.plist </span><br><span class="line">python ../../build/config/ios/codesign.py code-sign-bundle -t=iphoneos -i=D78B0B7AF39CEFA4D0F673B4D3AA517D312C97CC -b=obj/examples/AppRTCMobile -<span class="keyword">e</span>=../../build/config/ios/entitlements.plist AppRTCMobile.<span class="keyword">app</span> -P=../../build/config/<span class="keyword">mac</span>/plist_util.py -p=<span class="keyword">gen</span>/examples/AppRTCMobile_generate_info_plist.plist -p=<span class="keyword">gen</span>/examples/AppRTCMobile_partial_info.plist</span><br><span class="line"><span class="keyword">Error</span>: <span class="keyword">no</span> mobile provisioning profile found <span class="keyword">for</span> <span class="string">"com.google.AppRTCMobile"</span>.</span><br><span class="line">ninja: build stopped: subcommand failed.</span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>至此，编译 APP 的过程结束了。虽然出现了 “Error: no mobile provisioning profile found for “com.google.AppRTCMobile”.” 的报错，但这并不是太重要，我只关心编译过程的其它环节正确无误。这个 Error 信息表示 APP 的包名 “com.google.AppRTCMobile” 没有与之对应的苹果开发者证书的配置文件，将该 APP 安装到手机上后，会因证书配置文件的问题无法使用。这个问题很好解决，就是改 APP 的包名，在编译的时候选择对应的苹果开发者证书的配置文件后，重新编译就行了。</p>
+<p>进入目录 <code>/src/out/ios</code> 可以看下编译后产生了哪些文件。在终端执行命令</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> <span class="keyword">out</span>/ios</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ ls out/ios</span><br><span class="line">AppRTCMobile.app</span><br><span class="line">WebRTC.framework</span><br><span class="line">args.gn</span><br><span class="line">build.ninja</span><br><span class="line">build<span class="selector-class">.ninja</span><span class="selector-class">.d</span></span><br><span class="line">clang_x64</span><br><span class="line">gen</span><br><span class="line">low_bandwidth_audio_perf_test.runtime_deps</span><br><span class="line">obj</span><br><span class="line">pyproto</span><br><span class="line">toolchain.ninja</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>在这一步，其实可以得到我想要的 WebRTC 库文件了，即 <code>WebRTC.framework</code>。</p>
+<h2 id="step-3-1"><a href="#step-3-1" class="headerlink" title="step 3"></a>step 3</h2><p>虽然上一步，在编译 WebRTC 的演示 APP 时，可以得到 <code>WebRTC.framework</code> 库文件，但这不是正常获取库文件的路子。编译 WebRTC 库文件的方法有2种，分别为 ninja 命令行，python 脚本。</p>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法 1"></a>方法 1</h3><p>使用 <code>ninja</code> 命令行编译，在终端执行命令</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ninja -C <span class="keyword">out</span>/ios framework_objc</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ ninja -C <span class="keyword">out</span>/ios framework_objc</span><br><span class="line">ninja: Entering directory `<span class="keyword">out</span>/ios'</span><br><span class="line">ninja: <span class="keyword">no</span> work to <span class="keyword">do</span>.</span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 “ninja: no work to do.”，为什么会提示这条信息呢？原因在于上一步骤中已经编译产生了 <code>WebRTC.framework</code> 库文件。如果想看看只编译库文件的过程，那可以不执行上一步骤中编译 APP 的环节，即不执行命令 <code>ninja -C out/ios AppRTCMobile</code>，现在的情况是我们已经执行了该条命令，那直接删掉已经存在的 <code>WebRTC.framework</code> 库文件就行了。在终端执行命令</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rm</span> -rf <span class="keyword">out</span>/ios/WebRTC.framework</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ rm -rf out/ios/WebRTC.framework</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ </span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ ls out/ios</span><br><span class="line">AppRTCMobile.app</span><br><span class="line">args.gn</span><br><span class="line">build.ninja</span><br><span class="line">build<span class="selector-class">.ninja</span><span class="selector-class">.d</span></span><br><span class="line">clang_x64</span><br><span class="line">gen</span><br><span class="line">low_bandwidth_audio_perf_test.runtime_deps</span><br><span class="line">obj</span><br><span class="line">pyproto</span><br><span class="line">toolchain.ninja</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>再次在终端执行命令</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ninja -C <span class="keyword">out</span>/ios framework_objc</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ ninja -C <span class="keyword">out</span>/ios framework_objc</span><br><span class="line">ninja: Entering directory `<span class="keyword">out</span>/ios'</span><br><span class="line">[97/97] STAMP obj/sdk/framework_objc.stamp</span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ </span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$ <span class="keyword">ls</span> <span class="keyword">out</span>/ios</span><br><span class="line">AppRTCMobile.<span class="keyword">app</span></span><br><span class="line">WebRTC.framework</span><br><span class="line"><span class="keyword">args</span>.gn</span><br><span class="line">build.ninja</span><br><span class="line">build.ninja.<span class="built_in">d</span></span><br><span class="line">clang_x64</span><br><span class="line"><span class="keyword">gen</span></span><br><span class="line">low_bandwidth_audio_perf_test.runtime_deps</span><br><span class="line">obj</span><br><span class="line">pyproto</span><br><span class="line">toolchain.ninja</span><br><span class="line">suntongmiandeMacBook-<span class="keyword">Pro</span>:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>生成的 <code>WebRTC.framework</code> 库文件在 <code>out/ios</code> 目录下。</p>
+<h3 id="方法-2"><a href="#方法-2" class="headerlink" title="方法 2"></a>方法 2</h3><p>使用 python 脚本 <code>/src/tools_webrtc/ios/build_ios_libs.py</code> 编译，在终端执行命令</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tools_webrtc/ios/build_ios_libs<span class="selector-class">.py</span> --bitcode</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ python tools_webrtc/ios/build_ios_libs.py --bitcode</span><br><span class="line">INFO:root:Building WebRTC with args: <span class="attribute">target_os</span>=<span class="string">"ios"</span> <span class="attribute">ios_enable_code_signing</span>=<span class="literal">false</span> <span class="attribute">use_xcode_clang</span>=<span class="literal">true</span> <span class="attribute">is_component_build</span>=<span class="literal">false</span> <span class="attribute">is_debug</span>=<span class="literal">false</span> <span class="attribute">target_cpu</span>=<span class="string">"arm64"</span> <span class="attribute">ios_deployment_target</span>=<span class="string">"10.0"</span> <span class="attribute">rtc_libvpx_build_vp9</span>=<span class="literal">false</span> <span class="attribute">enable_ios_bitcode</span>=<span class="literal">true</span> <span class="attribute">use_goma</span>=<span class="literal">false</span> <span class="attribute">enable_stripping</span>=<span class="literal">true</span></span><br><span class="line">Done. Made 1376 targets <span class="keyword">from</span> 189 files <span class="keyword">in</span> 1727ms</span><br><span class="line">INFO:root:Building target: framework_objc</span><br><span class="line">ninja: Entering directory `/Users/suntongmian/Documents/develop/webrtc/src/out_ios_libs/arm64_libs'</span><br><span class="line">[2614/2614] STAMP obj/sdk/framework_objc.stamp</span><br><span class="line">INFO:root:Building WebRTC with args: <span class="attribute">target_os</span>=<span class="string">"ios"</span> <span class="attribute">ios_enable_code_signing</span>=<span class="literal">false</span> <span class="attribute">use_xcode_clang</span>=<span class="literal">true</span> <span class="attribute">is_component_build</span>=<span class="literal">false</span> <span class="attribute">is_debug</span>=<span class="literal">false</span> <span class="attribute">target_cpu</span>=<span class="string">"arm"</span> <span class="attribute">ios_deployment_target</span>=<span class="string">"10.0"</span> <span class="attribute">rtc_libvpx_build_vp9</span>=<span class="literal">false</span> <span class="attribute">enable_ios_bitcode</span>=<span class="literal">true</span> <span class="attribute">use_goma</span>=<span class="literal">false</span> <span class="attribute">enable_stripping</span>=<span class="literal">true</span></span><br><span class="line">Done. Made 1377 targets <span class="keyword">from</span> 189 files <span class="keyword">in</span> 1953ms</span><br><span class="line">INFO:root:Building target: framework_objc</span><br><span class="line">ninja: Entering directory `/Users/suntongmian/Documents/develop/webrtc/src/out_ios_libs/arm_libs'</span><br><span class="line">[2656/2656] STAMP obj/sdk/framework_objc.stamp</span><br><span class="line">INFO:root:Building WebRTC with args: <span class="attribute">target_os</span>=<span class="string">"ios"</span> <span class="attribute">ios_enable_code_signing</span>=<span class="literal">false</span> <span class="attribute">use_xcode_clang</span>=<span class="literal">true</span> <span class="attribute">is_component_build</span>=<span class="literal">false</span> <span class="attribute">is_debug</span>=<span class="literal">false</span> <span class="attribute">target_cpu</span>=<span class="string">"x64"</span> <span class="attribute">ios_deployment_target</span>=<span class="string">"10.0"</span> <span class="attribute">rtc_libvpx_build_vp9</span>=<span class="literal">false</span> <span class="attribute">enable_ios_bitcode</span>=<span class="literal">true</span> <span class="attribute">use_goma</span>=<span class="literal">false</span> <span class="attribute">enable_stripping</span>=<span class="literal">true</span></span><br><span class="line">Done. Made 1402 targets <span class="keyword">from</span> 192 files <span class="keyword">in</span> 5101ms</span><br><span class="line">INFO:root:Building target: framework_objc</span><br><span class="line">ninja: Entering directory `/Users/suntongmian/Documents/develop/webrtc/src/out_ios_libs/x64_libs'</span><br><span class="line">[2777/2777] STAMP obj/sdk/framework_objc.stamp</span><br><span class="line">INFO:root:Building WebRTC with args: <span class="attribute">target_os</span>=<span class="string">"ios"</span> <span class="attribute">ios_enable_code_signing</span>=<span class="literal">false</span> <span class="attribute">use_xcode_clang</span>=<span class="literal">true</span> <span class="attribute">is_component_build</span>=<span class="literal">false</span> <span class="attribute">is_debug</span>=<span class="literal">false</span> <span class="attribute">target_cpu</span>=<span class="string">"x86"</span> <span class="attribute">ios_deployment_target</span>=<span class="string">"10.0"</span> <span class="attribute">rtc_libvpx_build_vp9</span>=<span class="literal">false</span> <span class="attribute">enable_ios_bitcode</span>=<span class="literal">true</span> <span class="attribute">use_goma</span>=<span class="literal">false</span> <span class="attribute">enable_stripping</span>=<span class="literal">true</span></span><br><span class="line">Done. Made 1402 targets <span class="keyword">from</span> 192 files <span class="keyword">in</span> 1754ms</span><br><span class="line">INFO:root:Building target: framework_objc</span><br><span class="line">ninja: Entering directory `/Users/suntongmian/Documents/develop/webrtc/src/out_ios_libs/x86_libs'</span><br><span class="line">[2771/2771] STAMP obj/sdk/framework_objc.stamp</span><br><span class="line">INFO:root:Merging framework slices.</span><br><span class="line">INFO:root:Done.</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ </span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ ls out_ios_libs</span><br><span class="line">WebRTC.framework	arm_libs		x86_libs</span><br><span class="line">arm64_libs		x64_libs</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p>生成的库文件在 <code>out_ios_lib</code> 目录下。脚本 <code>tools_webrtc/ios/build_ios_libs.py</code> 默认编译的架构是 <code>DEFAULT_ARCHS = ENABLED_ARCHS = [&#39;arm64&#39;, &#39;arm&#39;, &#39;x64&#39;, &#39;x86&#39;]</code>，编译出来的库为动态库。查看库支持的架构，以及是静态库还是动态库，在终端执行命令</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lipo -info out_ios_libs<span class="regexp">/WebRTC.framework/</span>WebRTC</span><br><span class="line"><span class="keyword">file</span> out_ios_libs<span class="regexp">/arm64_libs/</span>WebRTC.framework<span class="regexp">/WebRTC</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ lipo -info out_ios_libs/WebRTC.framework/WebRTC</span><br><span class="line">Architectures <span class="keyword">in</span> the fat <span class="keyword">file</span>: out_ios_libs/WebRTC.framework/WebRTC are: x86_64 i386 armv7 arm64 </span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ </span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$ <span class="keyword">file</span> out_ios_libs/WebRTC.framework/WebRTC</span><br><span class="line">out_ios_libs/WebRTC.framework/WebRTC: Mach-O universal binary <span class="keyword">with</span> <span class="number">4</span> architectures: [x86_64:Mach-O <span class="number">64</span>-<span class="built_in">bit</span> dynamically linked <span class="keyword">shared</span> <span class="keyword">library</span> x86_64] [arm64]</span><br><span class="line">out_ios_libs/WebRTC.framework/WebRTC (<span class="keyword">for</span> <span class="keyword">architecture</span> x86_64):	Mach-O <span class="number">64</span>-<span class="built_in">bit</span> dynamically linked <span class="keyword">shared</span> <span class="keyword">library</span> x86_64</span><br><span class="line">out_ios_libs/WebRTC.framework/WebRTC (<span class="keyword">for</span> <span class="keyword">architecture</span> i386):	Mach-O dynamically linked <span class="keyword">shared</span> <span class="keyword">library</span> i386</span><br><span class="line">out_ios_libs/WebRTC.framework/WebRTC (<span class="keyword">for</span> <span class="keyword">architecture</span> armv7):	Mach-O dynamically linked <span class="keyword">shared</span> <span class="keyword">library</span> arm_v7</span><br><span class="line">out_ios_libs/WebRTC.framework/WebRTC (<span class="keyword">for</span> <span class="keyword">architecture</span> arm64):	Mach-O <span class="number">64</span>-<span class="built_in">bit</span> dynamically linked <span class="keyword">shared</span> <span class="keyword">library</span> arm64</span><br><span class="line">suntongmiandeMacBook-Pro:src suntongmian$</span><br></pre></td></tr></table></figure>
+
+<p><strong>提示：使用了动态库的 APP 在上架 APP Store 时，会报错不支持模拟器架构 <code>[&#39;x64&#39;, &#39;x86&#39;]</code>，所以，需要剔除动态库中的模拟器架构，只使用真机架构 [‘arm64’, ‘arm’]。</strong></p>
+<p>可以修改脚本 <code>tools_webrtc/ios/build_ios_libs.py</code> 中的参数，将编译的架构改成 <code>DEFAULT_ARCHS = ENABLED_ARCHS = [&#39;arm64&#39;]</code>。为什么去掉了 arm？因为现在人们使用的苹果设备几乎都是 arm64 架构了，arm 架构的苹果设备几乎绝迹，去掉 arm，也可以减轻 WebRTC 库的体积。</p>
+<blockquote>
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1></blockquote>
+<p>编译 WebRTC 库的步骤就那么几步，但实际我们在编译的过程中会遇到各种各样的问题，看似简单的事情变得很是折磨人。出现问题并不可怕，根据报错的信息，耐心仔细检查、搜集资料、寻求帮助、反复尝试，是可以解决问题的。解决问题的过程中，切忌浮躁，没有一个平稳的心态，事情会变得一波多折。</p>
+<p>本文篇幅很长，详细记录了每一步操作，可以方便自己以后回顾，也能给看该文的同行一些启发。为方便浏览，总结编译步骤如下：</p>
+<p>第一步：安装 depot_tools，配置环境变量</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone <span class="symbol">https:</span>/<span class="regexp">/chromium.googlesource.com/chromium</span><span class="regexp">/tools/depot</span>_tools.git</span><br><span class="line">export PATH=<span class="variable">$PATH</span><span class="symbol">:/Users/suntongmian/Documents/develop/webrtc/depot_tools</span></span><br></pre></td></tr></table></figure>
+
+<p>第二步：下载 WebRTC 源码</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="comment">--nohooks webrtc_ios</span></span><br><span class="line">gclient sync</span><br></pre></td></tr></table></figure>
+
+<p>第三步：编译 WebRTC</p>
+<p>方法 1</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gn <span class="keyword">gen</span> <span class="keyword">out</span>/ios --<span class="keyword">args</span>='target_os=<span class="string">"ios"</span> target_cpu=<span class="string">"arm64"</span> is_debug=true'</span><br><span class="line">ninja -C <span class="keyword">out</span>/ios framework_objc</span><br></pre></td></tr></table></figure>
+
+<p>方法 2</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/ios <span class="params">--args=</span>'target_os=<span class="string">"ios"</span> target_cpu=<span class="string">"arm64"</span> is_debug=<span class="literal">true</span>'</span><br><span class="line">python tools_webrtc/ios/build_ios_libs.py <span class="params">--bitcode</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1></blockquote>
+<p>[1] <a href="https://webrtc.org/" target="_blank" rel="noopener">WebRTC Home</a></p>
+<p>[2] <a href="https://www.w3.org/2017/11/media-advisory-webrtc10-cr.html.en" target="_blank" rel="noopener">WebRTC becomes design-complete strengthening the Web Platform as a solid actor in the telecommunications arena</a></p>
+<p>[3] <a href="https://www.w3.org/TR/2017/CR-webrtc-20171102/" target="_blank" rel="noopener">WebRTC 1.0: Real-time Communication Between Browsers</a>, W3C Candidate Recommendation 02 November 2017</p>
+<p>[4] <a href="https://www.w3.org/TR/webrtc/" target="_blank" rel="noopener">WebRTC 1.0: Real-time Communication Between Browsers</a>, W3C Candidate Recommendation 27 September 2018</p>
+<p>[5] <a href="https://webrtc.googlesource.com/src" target="_blank" rel="noopener">WebRTC SRC</a></p>
+<p>[6] <a href="https://webrtc.org/release-notes/" target="_blank" rel="noopener">WebRTC Release Notes</a> </p>
+<p>[7] <a href="https://webrtc.org/native-code/development/" target="_blank" rel="noopener">WebRTC Native Code, Development</a></p>
+<p>[8] <a href="https://webrtc.org/native-code/ios/" target="_blank" rel="noopener">WebRTC Native Code, iOS</a></p>
+<p>[9] <a href="https://www.chromium.org/developers/how-tos/depottools" target="_blank" rel="noopener">Using depot_tools</a></p>
+<p>[10] <a href="https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html" target="_blank" rel="noopener">depot_tools_tutorial(7) Manual Page</a></p>
+<p>[11] <a href="https://blog.csdn.net/jiajiayouba/article/details/81453398" target="_blank" rel="noopener">MAC 终端走代理服务器</a></p>
+<p>[12] <a href="https://blog.fazero.me/2015/09/15/%E8%AE%A9%E7%BB%88%E7%AB%AF%E8%B5%B0%E4%BB%A3%E7%90%86%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" target="_blank" rel="noopener">让终端走代理的几种方法</a></p>
+<p>[13] <a href="https://gn.googlesource.com/gn/+/master/README.md" target="_blank" rel="noopener">GN</a></p>
+<p>[14] <a href="https://ninja-build.org/" target="_blank" rel="noopener">Ninja</a></p>
+<p>[15] <a href="https://blog.csdn.net/mogoweb/article/details/73650218" target="_blank" rel="noopener">chromium中的GN构建系统</a></p>
+<p>[16] <a href="https://www.wolfcstech.com/2016/11/16/ChromiumGN%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">Chromium GN构建工具的使用</a></p>
+<p>[17] <a href="https://blog.csdn.net/liuchunming033/article/details/45368237" target="_blank" rel="noopener">【Git学习笔记】Git冲突：commit your changes or stash them before you can merge.</a></p>
+<p>[18] <a href="https://www.cyberciti.biz/faq/download-a-file-with-curl-on-linux-unix-command-line/" target="_blank" rel="noopener">Download a file with curl on Linux / Unix command line</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Minmin.Sun wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/音视频处理/" rel="tag"># 音视频处理</a>
+          
+            <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/webrtc-development-1-preface/" rel="next" title="WebRTC 开发（一）引言">
+                <i class="fa fa-chevron-left"></i> WebRTC 开发（一）引言
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/04/webrtc-development-3-analysis-of-architectural-design/" rel="prev" title="WebRTC 开发（三）架构设计剖析">
+                WebRTC 开发（三）架构设计剖析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- BlogAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2304335236058241" data-ad-slot="8084137562" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Minmin.Sun">
+            
+              <p class="site-author-name" itemprop="name">Minmin.Sun</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/depthlove" title="GitHub &rarr; https://github.com/depthlove" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:suntongmian@163.com" title="E-Mail &rarr; mailto:suntongmian@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、安装-depot-tools-工具包"><span class="nav-number">1.</span> <span class="nav-text">一、安装 depot_tools 工具包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#step-1"><span class="nav-number">1.1.</span> <span class="nav-text">step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-2"><span class="nav-number">1.2.</span> <span class="nav-text">step 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-3"><span class="nav-number">1.3.</span> <span class="nav-text">step 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-4"><span class="nav-number">1.4.</span> <span class="nav-text">step 4</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、下载-WebRTC-源码"><span class="nav-number">2.</span> <span class="nav-text">二、下载 WebRTC 源码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#step-1-1"><span class="nav-number">2.1.</span> <span class="nav-text">step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-2-1"><span class="nav-number">2.2.</span> <span class="nav-text">step 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、执行编译"><span class="nav-number">3.</span> <span class="nav-text">三、执行编译</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#step-1-2"><span class="nav-number">3.1.</span> <span class="nav-text">step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-2-2"><span class="nav-number">3.2.</span> <span class="nav-text">step 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#step-3-1"><span class="nav-number">3.3.</span> <span class="nav-text">step 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">方法 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-2"><span class="nav-number">3.3.2.</span> <span class="nav-text">方法 2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- BlogAd -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2304335236058241" data-ad-slot="8084137562" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Minmin.Sun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '023374e22942af4046f9',
+    clientSecret: '5cedecd7c2b07700433ee7c72cac9ae1057a9092',
+    repo: 'depthlove.github.io',
+    owner: 'depthlove',
+    admin: ['depthlove'],
+    id: md5(location.pathname),
+    
+      language: window.navigator.language || window.navigator.userLanguage,
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'I0MNwNavGR4emmV0Vq9IRTeE-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'I0MNwNavGR4emmV0Vq9IRTeE-gzGzoHsz',
+                'X-LC-Key': 'jukR11B6qIiKA7bRYTXBe8bd',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
