@@ -95,18 +95,23 @@
 
 
 
-  <meta name="description" content="Part 1. 推流端推流，就是将采集到的音频，视频数据通过流媒体协议发送到流媒体服务器。 一、选择流媒体协议现在直播应用，采用 RTMP 协议居多，也有部分使用 HLS 协议。 采用RTMP协议，就要看下它与流媒体服务器交互的过程，RTMP协议的默认端口是1935，采用 TCP 协议。并且需要了解 FLV 的封装格式。 采用 HLS 协议，因为涉及到切片，延时会比较大，需要了解 TS 流。">
-<meta name="keywords" content="音视频处理">
+  <meta name="description" content="前文 WebRTC 开发（六）摄像头采集与视频渲染分析 提到了 WebRTC 视频渲染的大概流程，但没有具体分析每个实现文件的功能，本文会深入到具体的实现文件。  渲染的代码位置 代码位置：webrtc/src/sdk/objc/components/renderer 12345678910# openglRTCNSGLVideoView.h          RTCNSGLVideoView.m">
+<meta name="keywords" content="音视频处理,WebRTC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="移动端直播应用的开发流程">
-<meta property="og:url" content="https://depthlove.github.io/2016/05/09/live-broadcast-development-process/index.html">
+<meta property="og:title" content="WebRTC 开发（八）使用 OpenGL 渲染视频">
+<meta property="og:url" content="https://depthlove.github.io/2019/10/28/webrtc-development-8-render-video-with-opengl/index.html">
 <meta property="og:site_name" content="Minmin.Sun Blog">
-<meta property="og:description" content="Part 1. 推流端推流，就是将采集到的音频，视频数据通过流媒体协议发送到流媒体服务器。 一、选择流媒体协议现在直播应用，采用 RTMP 协议居多，也有部分使用 HLS 协议。 采用RTMP协议，就要看下它与流媒体服务器交互的过程，RTMP协议的默认端口是1935，采用 TCP 协议。并且需要了解 FLV 的封装格式。 采用 HLS 协议，因为涉及到切片，延时会比较大，需要了解 TS 流。">
+<meta property="og:description" content="前文 WebRTC 开发（六）摄像头采集与视频渲染分析 提到了 WebRTC 视频渲染的大概流程，但没有具体分析每个实现文件的功能，本文会深入到具体的实现文件。  渲染的代码位置 代码位置：webrtc/src/sdk/objc/components/renderer 12345678910# openglRTCNSGLVideoView.h          RTCNSGLVideoView.m">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-25T08:07:24.159Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-4.png">
+<meta property="og:updated_time" content="2019-10-28T11:48:44.768Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="移动端直播应用的开发流程">
-<meta name="twitter:description" content="Part 1. 推流端推流，就是将采集到的音频，视频数据通过流媒体协议发送到流媒体服务器。 一、选择流媒体协议现在直播应用，采用 RTMP 协议居多，也有部分使用 HLS 协议。 采用RTMP协议，就要看下它与流媒体服务器交互的过程，RTMP协议的默认端口是1935，采用 TCP 协议。并且需要了解 FLV 的封装格式。 采用 HLS 协议，因为涉及到切片，延时会比较大，需要了解 TS 流。">
+<meta name="twitter:title" content="WebRTC 开发（八）使用 OpenGL 渲染视频">
+<meta name="twitter:description" content="前文 WebRTC 开发（六）摄像头采集与视频渲染分析 提到了 WebRTC 视频渲染的大概流程，但没有具体分析每个实现文件的功能，本文会深入到具体的实现文件。  渲染的代码位置 代码位置：webrtc/src/sdk/objc/components/renderer 12345678910# openglRTCNSGLVideoView.h          RTCNSGLVideoView.m">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-1.png">
 
 
 
@@ -114,7 +119,7 @@
 
   
   
-  <link rel="canonical" href="https://depthlove.github.io/2016/05/09/live-broadcast-development-process/">
+  <link rel="canonical" href="https://depthlove.github.io/2019/10/28/webrtc-development-8-render-video-with-opengl/">
 
 
 
@@ -124,7 +129,7 @@
   };
 </script>
 
-  <title>移动端直播应用的开发流程 | Minmin.Sun Blog</title>
+  <title>WebRTC 开发（八）使用 OpenGL 渲染视频 | Minmin.Sun Blog</title>
   
 
 
@@ -407,7 +412,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/05/09/live-broadcast-development-process/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/10/28/webrtc-development-8-render-video-with-opengl/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Minmin.Sun">
@@ -424,7 +429,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">移动端直播应用的开发流程
+          <h1 class="post-title" itemprop="name headline">WebRTC 开发（八）使用 OpenGL 渲染视频
 
               
             
@@ -450,7 +455,7 @@
                 
               
 
-              <time title="创建时间：2016-05-09 10:14:54" itemprop="dateCreated datePublished" datetime="2016-05-09T10:14:54+08:00">2016-05-09</time>
+              <time title="创建时间：2019-10-28 18:13:43" itemprop="dateCreated datePublished" datetime="2019-10-28T18:13:43+08:00">2019-10-28</time>
             
 
             
@@ -468,7 +473,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/直播/" itemprop="url" rel="index"><span itemprop="name">直播</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
 
                 
                 
@@ -483,7 +488,7 @@
 
           
           
-            <span id="/2016/05/09/live-broadcast-development-process/" class="leancloud_visitors" data-flag-title="移动端直播应用的开发流程">
+            <span id="/2019/10/28/webrtc-development-8-render-video-with-opengl/" class="leancloud_visitors" data-flag-title="WebRTC 开发（八）使用 OpenGL 渲染视频">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -514,27 +519,46 @@
       
 
       
-        <h2 id="Part-1-推流端"><a href="#Part-1-推流端" class="headerlink" title="Part 1. 推流端"></a>Part 1. 推流端</h2><p>推流，就是将采集到的音频，视频数据通过流媒体协议发送到流媒体服务器。</p>
-<h3 id="一、选择流媒体协议"><a href="#一、选择流媒体协议" class="headerlink" title="一、选择流媒体协议"></a>一、选择流媒体协议</h3><p>现在直播应用，采用 RTMP 协议居多，也有部分使用 HLS 协议。</p>
-<p>采用RTMP协议，就要看下它与流媒体服务器交互的过程，RTMP协议的默认端口是1935，采用 TCP 协议。并且需要了解 FLV 的封装格式。</p>
-<p>采用 HLS 协议，因为涉及到切片，延时会比较大，需要了解 TS 流。</p>
+        <p>前文 <a href="https://depthlove.github.io/2019/10/22/webrtc-development-6-video-rendering-analysis/">WebRTC 开发（六）摄像头采集与视频渲染分析</a> 提到了 WebRTC 视频渲染的大概流程，但没有具体分析每个实现文件的功能，本文会深入到具体的实现文件。</p>
+<blockquote>
+<h3 id="渲染的代码位置"><a href="#渲染的代码位置" class="headerlink" title="渲染的代码位置"></a>渲染的代码位置</h3></blockquote>
+<p>代码位置：webrtc/src/sdk/objc/components/renderer</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># <span class="selector-tag">opengl</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">RTCNSGLVideoView</span><span class="selector-class">.h</span>          <span class="selector-tag">RTCNSGLVideoView</span><span class="selector-class">.m</span></span><br><span class="line"><span class="selector-tag">RTCEAGLVideoView</span><span class="selector-class">.h</span>          <span class="selector-tag">RTCEAGLVideoView</span><span class="selector-class">.m</span></span><br><span class="line"><span class="selector-tag">RTCOpenGLDefines</span><span class="selector-class">.h</span>          <span class="selector-tag">RTCVideoViewShading</span><span class="selector-class">.h</span></span><br><span class="line"><span class="selector-tag">RTCDefaultShader</span><span class="selector-class">.h</span>          <span class="selector-tag">RTCDefaultShader</span><span class="selector-class">.mm</span></span><br><span class="line"><span class="selector-tag">RTCShader</span><span class="selector-class">.h</span>                 <span class="selector-tag">RTCShader</span><span class="selector-class">.mm</span></span><br><span class="line"><span class="selector-tag">RTCNV12TextureCache</span><span class="selector-class">.h</span>       <span class="selector-tag">RTCNV12TextureCache</span><span class="selector-class">.m</span></span><br><span class="line"><span class="selector-tag">RTCI420TextureCache</span><span class="selector-class">.h</span>       <span class="selector-tag">RTCI420TextureCache</span><span class="selector-class">.mm</span></span><br><span class="line"><span class="selector-tag">RTCDisplayLinkTimer</span><span class="selector-class">.h</span>       <span class="selector-tag">RTCDisplayLinkTimer</span><span class="selector-class">.m</span></span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<h3 id="二、采集音视频数据"><a href="#二、采集音视频数据" class="headerlink" title="二、采集音视频数据"></a>二、采集音视频数据</h3><p>做直播，数据的来源不可缺少，就是采集摄像头，麦克风的数据。</p>
-<p>iOS 平台上采集音视频数据，需要使用 AVFoundation.Framework 框架，从 captureSession 会话的回调中获取音频，视频数据。</p>
-<h3 id="三、硬编码，软编码音视频数据"><a href="#三、硬编码，软编码音视频数据" class="headerlink" title="三、硬编码，软编码音视频数据"></a>三、硬编码，软编码音视频数据</h3><p>软编码就是利用 CPU 资源来压缩音视频数据，硬编码与之相反。</p>
-<p>软编码的话，现在广泛采用 FFmpeg 库结合编码库来实现，FFmpeg+X624 来编码视频数据 YUV/RGB 输出 H264 数据，<br>FFmpeg+fdk_aac 来编码音频数据 PCM 输出 AAC 数据。</p>
-<h3 id="四、根据所选流媒体协议封包音视频数据"><a href="#四、根据所选流媒体协议封包音视频数据" class="headerlink" title="四、根据所选流媒体协议封包音视频数据"></a>四、根据所选流媒体协议封包音视频数据</h3><p>将音频，视频打包成 packet。</p>
-<h3 id="五、与服务器交互发送封包数据"><a href="#五、与服务器交互发送封包数据" class="headerlink" title="五、与服务器交互发送封包数据"></a>五、与服务器交互发送封包数据</h3><p>根据所选流媒体协议，发送相应指令连接服务器，连接服务器成功后，就可以发送 packet 数据了。</p>
-<h2 id="Part-2-拉流端"><a href="#Part-2-拉流端" class="headerlink" title="Part 2. 拉流端"></a>Part 2. 拉流端</h2><p>拉流，就是从流媒体服务器获取音频，视频数据。</p>
-<h3 id="一、解析协议"><a href="#一、解析协议" class="headerlink" title="一、解析协议"></a>一、解析协议</h3><p>播放器端根据URL解析所用的流媒体协议（RTMP，HLS）。</p>
-<h3 id="二、解封装"><a href="#二、解封装" class="headerlink" title="二、解封装"></a>二、解封装</h3><p>解封装，就是 demux 的过程，从容器格式（FLV，TS）中，分离出音视频数据。</p>
-<h3 id="三、解码"><a href="#三、解码" class="headerlink" title="三、解码"></a>三、解码</h3><p>解码，就是把获取到的数据解压缩，恢复成原始数据。解码就是将 H264 变成 YUV，AAC 变成 PCM。</p>
-<p>解码可以使用软解码，硬解码。</p>
-<p>软解码就是利用 CPU 资源去解压缩数据，采用的方式是FFmpeg解码。</p>
-<p>硬解码，对于 iOS 平台来说，可以使用 VideoToolbox.Framework（该框架只能在iOS 8.0及以上系统使用）<br>硬解码视频数据。Android 平台上，可以使用 MediaCodec 来硬解码视频数据。</p>
-<h3 id="四、渲染数据"><a href="#四、渲染数据" class="headerlink" title="四、渲染数据"></a>四、渲染数据</h3><p>采用 OpenGL 渲染 YUV 数据，呈现视频画面。将PCM送入设备的硬件资源播放，产生声音。</p>
-<p>iOS 播放流式音频，使用 Audio Queue 的方式，即，利用 AudioToolbox.Framework 框架。</p>
+<blockquote>
+<h3 id="渲染的核心代码块"><a href="#渲染的核心代码块" class="headerlink" title="渲染的核心代码块"></a>渲染的核心代码块</h3></blockquote>
+<blockquote>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4></blockquote>
+<blockquote>
+<h5 id="RTCNSGLVideoView-m"><a href="#RTCNSGLVideoView-m" class="headerlink" title="RTCNSGLVideoView.m"></a>RTCNSGLVideoView.m</h5></blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">NSRect</span>)frame pixelFormat:(<span class="built_in">NSOpenGLPixelFormat</span> *)format &#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="keyword">self</span> initWithFrame:frame pixelFormat:format shader:[[RTCDefaultShader alloc] init]];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">NSRect</span>)frame</span><br><span class="line">                  pixelFormat:(<span class="built_in">NSOpenGLPixelFormat</span> *)format</span><br><span class="line">                       shader:(<span class="keyword">id</span>&lt;RTCVideoViewShading&gt;)shader &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame pixelFormat:format]) &#123;</span><br><span class="line">    _shader = shader;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h4 id="图像绘制"><a href="#图像绘制" class="headerlink" title="图像绘制"></a>图像绘制</h4></blockquote>
+<p>目前，WebRTC 在 Mac 端只支持 I420 的绘制，不支持 NV12 的绘制。具体见 <strong>RTCDefaultShader.m</strong> 中 <strong>- (void)drawFrame</strong> 方法中的注释： </p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> Rendering native CVPixelBuffer <span class="keyword">is</span> <span class="keyword">not</span> supported <span class="literal">on</span> OS X.</span><br><span class="line"><span class="regexp">//</span> TODO(magjed): Add support <span class="keyword">for</span> NV12 texture cache <span class="literal">on</span> OS X.</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="RTCNSGLVideoView-m-1"><a href="#RTCNSGLVideoView-m-1" class="headerlink" title="RTCNSGLVideoView.m"></a>RTCNSGLVideoView.m</h5></blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)drawFrame &#123;</span><br><span class="line">  RTCVideoFrame *frame = <span class="keyword">self</span>.videoFrame;</span><br><span class="line">  <span class="keyword">if</span> (!frame || frame == _lastDrawnFrame) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// This method may be called from CVDisplayLink callback which isn't on the</span></span><br><span class="line">  <span class="comment">// main thread so we have to lock the GL context before drawing.</span></span><br><span class="line">  <span class="built_in">NSOpenGLContext</span> *context = [<span class="keyword">self</span> openGLContext];</span><br><span class="line">  <span class="built_in">CGLLockContext</span>([context <span class="built_in">CGLContextObj</span>]);</span><br><span class="line"></span><br><span class="line">  [<span class="keyword">self</span> ensureGLContext];</span><br><span class="line">  glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Rendering native CVPixelBuffer is not supported on OS X.</span></span><br><span class="line">  <span class="comment">// TODO(magjed): Add support for NV12 texture cache on OS X.</span></span><br><span class="line">  frame = [frame newI420VideoFrame];</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">self</span>.i420TextureCache) &#123;</span><br><span class="line">    <span class="keyword">self</span>.i420TextureCache = [[RTCI420TextureCache alloc] initWithContext:context];</span><br><span class="line">  &#125;</span><br><span class="line">  RTCI420TextureCache *i420TextureCache = <span class="keyword">self</span>.i420TextureCache;</span><br><span class="line">  <span class="keyword">if</span> (i420TextureCache) &#123;</span><br><span class="line">    [i420TextureCache uploadFrameToTextures:frame];</span><br><span class="line">    [_shader applyShadingForFrameWithWidth:frame.width</span><br><span class="line">                                    height:frame.height</span><br><span class="line">                                  rotation:frame.rotation</span><br><span class="line">                                    yPlane:i420TextureCache.yTexture</span><br><span class="line">                                    uPlane:i420TextureCache.uTexture</span><br><span class="line">                                    vPlane:i420TextureCache.vTexture];</span><br><span class="line">    [context flushBuffer];</span><br><span class="line">    _lastDrawnFrame = frame;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">CGLUnlockContext</span>([context <span class="built_in">CGLContextObj</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="RTCI420TextureCache-mm"><a href="#RTCI420TextureCache-mm" class="headerlink" title="RTCI420TextureCache.mm"></a>RTCI420TextureCache.mm</h5></blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)uploadPlane:(<span class="keyword">const</span> uint8_t *)plane</span><br><span class="line">            texture:(GLuint)texture</span><br><span class="line">              <span class="built_in">width</span>:(size_t)<span class="built_in">width</span></span><br><span class="line">             <span class="built_in">height</span>:(size_t)<span class="built_in">height</span></span><br><span class="line">             stride:(int32_t)stride &#123;</span><br><span class="line">  glBindTexture(GL_TEXTURE_2D, texture);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> uint8_t *uploadPlane = plane;</span><br><span class="line">  <span class="built_in">if</span> ((size_t)stride != <span class="built_in">width</span>) &#123;</span><br><span class="line">   <span class="built_in">if</span> (_hasUnpackRowLength) &#123;</span><br><span class="line">      <span class="comment">// GLES3 allows us to specify stride.</span></span><br><span class="line">      glPixelStorei(GL_UNPACK_ROW_LENGTH, stride);</span><br><span class="line">      glTexImage2D(GL_TEXTURE_2D,</span><br><span class="line">                   <span class="number">0</span>,</span><br><span class="line">                   RTC_PIXEL_FORMAT,</span><br><span class="line">                   <span class="keyword">static_cast</span>&lt;GLsizei&gt;(<span class="built_in">width</span>),</span><br><span class="line">                   <span class="keyword">static_cast</span>&lt;GLsizei&gt;(<span class="built_in">height</span>),</span><br><span class="line">                   <span class="number">0</span>,</span><br><span class="line">                   RTC_PIXEL_FORMAT,</span><br><span class="line">                   GL_UNSIGNED_BYTE,</span><br><span class="line">                   uploadPlane);</span><br><span class="line">      glPixelStorei(GL_UNPACK_ROW_LENGTH, <span class="number">0</span>);</span><br><span class="line">      <span class="built_in">return</span>;</span><br><span class="line">    &#125; <span class="built_in">else</span> &#123;</span><br><span class="line">      <span class="comment">// Make an unpadded copy and upload that instead. Quick profiling showed</span></span><br><span class="line">      <span class="comment">// that this is faster than uploading row by row using glTexSubImage2D.</span></span><br><span class="line">      uint8_t *unpaddedPlane = _planeBuffer.data();</span><br><span class="line">      <span class="built_in">for</span> (size_t y = <span class="number">0</span>; y &lt; <span class="built_in">height</span>; ++y) &#123;</span><br><span class="line">        memcpy(unpaddedPlane + y * <span class="built_in">width</span>, plane + y * stride, <span class="built_in">width</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      uploadPlane = unpaddedPlane;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  glTexImage2D(GL_TEXTURE_2D,</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               RTC_PIXEL_FORMAT,</span><br><span class="line">               <span class="keyword">static_cast</span>&lt;GLsizei&gt;(<span class="built_in">width</span>),</span><br><span class="line">               <span class="keyword">static_cast</span>&lt;GLsizei&gt;(<span class="built_in">height</span>),</span><br><span class="line">               <span class="number">0</span>,</span><br><span class="line">               RTC_PIXEL_FORMAT,</span><br><span class="line">               GL_UNSIGNED_BYTE,</span><br><span class="line">               uploadPlane);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)uploadFrameToTextures:(RTCVideoFrame *)frame &#123;</span><br><span class="line">  _currentTextureSet = (_currentTextureSet + <span class="number">1</span>) % kNumTextureSets;</span><br><span class="line"></span><br><span class="line">  id&lt;RTCI420Buffer&gt; <span class="built_in">buffer</span> = [frame.<span class="built_in">buffer</span> toI420];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> chromaWidth = <span class="built_in">buffer</span>.chromaWidth;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> chromaHeight = <span class="built_in">buffer</span>.chromaHeight;</span><br><span class="line">  <span class="built_in">if</span> (<span class="built_in">buffer</span>.strideY != frame.<span class="built_in">width</span> || <span class="built_in">buffer</span>.strideU != chromaWidth ||</span><br><span class="line">      <span class="built_in">buffer</span>.strideV != chromaWidth) &#123;</span><br><span class="line">    _planeBuffer.resize(<span class="built_in">buffer</span>.<span class="built_in">width</span> * <span class="built_in">buffer</span>.<span class="built_in">height</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  [self uploadPlane:<span class="built_in">buffer</span>.dataY</span><br><span class="line">            texture:self.yTexture</span><br><span class="line">              <span class="built_in">width</span>:<span class="built_in">buffer</span>.<span class="built_in">width</span></span><br><span class="line">             <span class="built_in">height</span>:<span class="built_in">buffer</span>.<span class="built_in">height</span></span><br><span class="line">             stride:<span class="built_in">buffer</span>.strideY];</span><br><span class="line"></span><br><span class="line">  [self uploadPlane:<span class="built_in">buffer</span>.dataU</span><br><span class="line">            texture:self.uTexture</span><br><span class="line">              <span class="built_in">width</span>:chromaWidth</span><br><span class="line">             <span class="built_in">height</span>:chromaHeight</span><br><span class="line">             stride:<span class="built_in">buffer</span>.strideU];</span><br><span class="line"></span><br><span class="line">  [self uploadPlane:<span class="built_in">buffer</span>.dataV</span><br><span class="line">            texture:self.vTexture</span><br><span class="line">              <span class="built_in">width</span>:chromaWidth</span><br><span class="line">             <span class="built_in">height</span>:chromaHeight</span><br><span class="line">             stride:<span class="built_in">buffer</span>.strideV];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="RTCDefaultShader-mm"><a href="#RTCDefaultShader-mm" class="headerlink" title="RTCDefaultShader.mm"></a>RTCDefaultShader.mm</h5></blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)applyShadingForFrameWithWidth:(<span class="keyword">int</span>)<span class="built_in">width</span></span><br><span class="line">                               <span class="built_in">height</span>:(<span class="keyword">int</span>)<span class="built_in">height</span></span><br><span class="line">                             rotation:(RTCVideoRotation)rotation</span><br><span class="line">                               yPlane:(GLuint)yPlane</span><br><span class="line">                               uPlane:(GLuint)uPlane</span><br><span class="line">                               vPlane:(GLuint)vPlane &#123;</span><br><span class="line">  <span class="built_in">if</span> (![self prepareVertexBufferWithRotation:rotation]) &#123;</span><br><span class="line">    <span class="built_in">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">if</span> (!_i420Program &amp;&amp; ![self createAndSetupI420Program]) &#123;</span><br><span class="line">    RTCLog(@<span class="string">"Failed to setup I420 program"</span>);</span><br><span class="line">    <span class="built_in">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  glUseProgram(_i420Program);</span><br><span class="line"></span><br><span class="line">  glActiveTexture(<span class="keyword">static_cast</span>&lt;GLenum&gt;(GL_TEXTURE0 + kYTextureUnit));</span><br><span class="line">  glBindTexture(GL_TEXTURE_2D, yPlane);</span><br><span class="line"></span><br><span class="line">  glActiveTexture(<span class="keyword">static_cast</span>&lt;GLenum&gt;(GL_TEXTURE0 + kUTextureUnit));</span><br><span class="line">  glBindTexture(GL_TEXTURE_2D, uPlane);</span><br><span class="line"></span><br><span class="line">  glActiveTexture(<span class="keyword">static_cast</span>&lt;GLenum&gt;(GL_TEXTURE0 + kVTextureUnit));</span><br><span class="line">  glBindTexture(GL_TEXTURE_2D, vPlane);</span><br><span class="line"></span><br><span class="line">  glDrawArrays(GL_TRIANGLE_FAN, <span class="number">0</span>, <span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h3 id="渲染的调用逻辑"><a href="#渲染的调用逻辑" class="headerlink" title="渲染的调用逻辑"></a>渲染的调用逻辑</h3></blockquote>
+<p>渲染的实现逻辑，可以通过加 <code>断点</code> 的方式来查看。</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-1.png" alt="pic-1"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-2.png" alt="pic-2"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-3.png" alt="pic-3"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-4.png" alt="pic-4"></p>
 
       
     </div>
@@ -566,6 +590,8 @@
           
             <a href="/tags/音视频处理/" rel="tag"># 音视频处理</a>
           
+            <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
+          
         </div>
       
 
@@ -577,8 +603,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/24/review-multithreading-and-memory-management-for-ios-and-osx/" rel="next" title="重温《Objective-C高级编程iOS与OSX多线程和内存管理》一书">
-                <i class="fa fa-chevron-left"></i> 重温《Objective-C高级编程iOS与OSX多线程和内存管理》一书
+              <a href="/2019/10/28/webrtc-development-7-solve-build-error-in-xcode-11/" rel="next" title="WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案">
+                <i class="fa fa-chevron-left"></i> WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案
               </a>
             
           </div>
@@ -586,10 +612,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/06/feeling-of-TwoYear-after-master-graduation/" rel="prev" title="硕士毕业2年对现阶段的思考">
-                硕士毕业2年对现阶段的思考 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -811,7 +833,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-1-推流端"><span class="nav-number">1.</span> <span class="nav-text">Part 1. 推流端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、选择流媒体协议"><span class="nav-number">1.1.</span> <span class="nav-text">一、选择流媒体协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、采集音视频数据"><span class="nav-number">1.2.</span> <span class="nav-text">二、采集音视频数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、硬编码，软编码音视频数据"><span class="nav-number">1.3.</span> <span class="nav-text">三、硬编码，软编码音视频数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、根据所选流媒体协议封包音视频数据"><span class="nav-number">1.4.</span> <span class="nav-text">四、根据所选流媒体协议封包音视频数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、与服务器交互发送封包数据"><span class="nav-number">1.5.</span> <span class="nav-text">五、与服务器交互发送封包数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2-拉流端"><span class="nav-number">2.</span> <span class="nav-text">Part 2. 拉流端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、解析协议"><span class="nav-number">2.1.</span> <span class="nav-text">一、解析协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、解封装"><span class="nav-number">2.2.</span> <span class="nav-text">二、解封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、解码"><span class="nav-number">2.3.</span> <span class="nav-text">三、解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、渲染数据"><span class="nav-number">2.4.</span> <span class="nav-text">四、渲染数据</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染的代码位置"><span class="nav-number">1.</span> <span class="nav-text">渲染的代码位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染的核心代码块"><span class="nav-number">2.</span> <span class="nav-text">渲染的核心代码块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RTCNSGLVideoView-m"><span class="nav-number">2.1.1.</span> <span class="nav-text">RTCNSGLVideoView.m</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图像绘制"><span class="nav-number">2.2.</span> <span class="nav-text">图像绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RTCNSGLVideoView-m-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">RTCNSGLVideoView.m</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RTCI420TextureCache-mm"><span class="nav-number">2.2.2.</span> <span class="nav-text">RTCI420TextureCache.mm</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RTCDefaultShader-mm"><span class="nav-number">2.2.3.</span> <span class="nav-text">RTCDefaultShader.mm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染的调用逻辑"><span class="nav-number">3.</span> <span class="nav-text">渲染的调用逻辑</span></a></li></ol></div>
             
 
           </div>
