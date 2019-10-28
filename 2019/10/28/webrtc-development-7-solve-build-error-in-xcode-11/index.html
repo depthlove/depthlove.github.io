@@ -95,18 +95,23 @@
 
 
 
-  <meta name="description" content="2014年7月1日毕业，2014年4月23日第一天正式上班，1个半月就从试用期转正，到今天已经工作1年2个月了。工作了1年多，重新思考以前自己面对的问题，以前对毕业之后究竟要找一个什么样的公司很模糊，听到的是进大公司好，福利好，做颗小螺丝钉，小公司加班多，待遇差，锻炼人。究竟大公司与小公司对初入社会的毕业生今后的职业生涯与生存状态有多大影响？ 小公司与大公司的直接明了的区别就是职员人数，几十个人的">
-<meta name="keywords" content="生活">
+  <meta name="description" content="将 Xcode 升级到 Xcode 11.1 版本后，工程 AppRTCMobile 编译报错 “code object is not signed at all”。详细信息如下： 123456789101112Showing Recent MessagesCodeSign /Users/suntongmian/Documents/workplace/webrtc/src/out/mac/AppR">
+<meta name="keywords" content="音视频处理,WebRTC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我对毕业生进大公司与小公司的看法">
-<meta property="og:url" content="https://depthlove.github.io/2015/06/18/view-graduates-which-enter-the-large-companies-or-small-companies/index.html">
+<meta property="og:title" content="WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案">
+<meta property="og:url" content="https://depthlove.github.io/2019/10/28/webrtc-development-7-solve-build-error-in-xcode-11/index.html">
 <meta property="og:site_name" content="Minmin.Sun Blog">
-<meta property="og:description" content="2014年7月1日毕业，2014年4月23日第一天正式上班，1个半月就从试用期转正，到今天已经工作1年2个月了。工作了1年多，重新思考以前自己面对的问题，以前对毕业之后究竟要找一个什么样的公司很模糊，听到的是进大公司好，福利好，做颗小螺丝钉，小公司加班多，待遇差，锻炼人。究竟大公司与小公司对初入社会的毕业生今后的职业生涯与生存状态有多大影响？ 小公司与大公司的直接明了的区别就是职员人数，几十个人的">
+<meta property="og:description" content="将 Xcode 升级到 Xcode 11.1 版本后，工程 AppRTCMobile 编译报错 “code object is not signed at all”。详细信息如下： 123456789101112Showing Recent MessagesCodeSign /Users/suntongmian/Documents/workplace/webrtc/src/out/mac/AppR">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-25T08:07:24.165Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/before-modify-signing.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/after-modify-signing.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-success.png">
+<meta property="og:updated_time" content="2019-10-28T06:50:19.720Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我对毕业生进大公司与小公司的看法">
-<meta name="twitter:description" content="2014年7月1日毕业，2014年4月23日第一天正式上班，1个半月就从试用期转正，到今天已经工作1年2个月了。工作了1年多，重新思考以前自己面对的问题，以前对毕业之后究竟要找一个什么样的公司很模糊，听到的是进大公司好，福利好，做颗小螺丝钉，小公司加班多，待遇差，锻炼人。究竟大公司与小公司对初入社会的毕业生今后的职业生涯与生存状态有多大影响？ 小公司与大公司的直接明了的区别就是职员人数，几十个人的">
+<meta name="twitter:title" content="WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案">
+<meta name="twitter:description" content="将 Xcode 升级到 Xcode 11.1 版本后，工程 AppRTCMobile 编译报错 “code object is not signed at all”。详细信息如下： 123456789101112Showing Recent MessagesCodeSign /Users/suntongmian/Documents/workplace/webrtc/src/out/mac/AppR">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png">
 
 
 
@@ -114,7 +119,7 @@
 
   
   
-  <link rel="canonical" href="https://depthlove.github.io/2015/06/18/view-graduates-which-enter-the-large-companies-or-small-companies/">
+  <link rel="canonical" href="https://depthlove.github.io/2019/10/28/webrtc-development-7-solve-build-error-in-xcode-11/">
 
 
 
@@ -124,7 +129,7 @@
   };
 </script>
 
-  <title>我对毕业生进大公司与小公司的看法 | Minmin.Sun Blog</title>
+  <title>WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案 | Minmin.Sun Blog</title>
   
 
 
@@ -407,7 +412,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/06/18/view-graduates-which-enter-the-large-companies-or-small-companies/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/10/28/webrtc-development-7-solve-build-error-in-xcode-11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Minmin.Sun">
@@ -424,7 +429,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">我对毕业生进大公司与小公司的看法
+          <h1 class="post-title" itemprop="name headline">WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案
 
               
             
@@ -450,7 +455,7 @@
                 
               
 
-              <time title="创建时间：2015-06-18 12:14:57" itemprop="dateCreated datePublished" datetime="2015-06-18T12:14:57+08:00">2015-06-18</time>
+              <time title="创建时间：2019-10-28 13:11:50" itemprop="dateCreated datePublished" datetime="2019-10-28T13:11:50+08:00">2019-10-28</time>
             
 
             
@@ -468,7 +473,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
 
                 
                 
@@ -483,7 +488,7 @@
 
           
           
-            <span id="/2015/06/18/view-graduates-which-enter-the-large-companies-or-small-companies/" class="leancloud_visitors" data-flag-title="我对毕业生进大公司与小公司的看法">
+            <span id="/2019/10/28/webrtc-development-7-solve-build-error-in-xcode-11/" class="leancloud_visitors" data-flag-title="WebRTC 开发（七）升级 Xcode 11 后 AppRTCMobile 编译报错的解决方案">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -514,15 +519,21 @@
       
 
       
-        <p>2014年7月1日毕业，2014年4月23日第一天正式上班，1个半月就从试用期转正，到今天已经工作1年2个月了。工作了1年多，重新思考以前自己面对的问题，以前对毕业之后究竟要找一个什么样的公司很模糊，听到的是进大公司好，福利好，做颗小螺丝钉，小公司加班多，待遇差，锻炼人。究竟大公司与小公司对初入社会的毕业生今后的职业生涯与生存状态有多大影响？</p>
-<p>小公司与大公司的直接明了的区别就是职员人数，几十个人的公司虽在业务经济效益上可能取胜人数上百的大公司，但是整个公司的建制体系跟数百人上千人的公司是无法比的。</p>
+        <p>将 Xcode 升级到 Xcode 11.1 版本后，工程 AppRTCMobile 编译报错 “code object is not signed at all”。详细信息如下：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Showing Recent Messages</span><br><span class="line">CodeSign <span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>workplace<span class="regexp">/webrtc/</span>src<span class="regexp">/out/</span>mac/AppRTCMobile.app (<span class="keyword">in</span> target <span class="string">'AppRTCMobile'</span> from project <span class="string">'products'</span>)</span><br><span class="line">    cd <span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>workplace<span class="regexp">/webrtc/</span>src<span class="regexp">/out/</span>mac</span><br><span class="line">    export CODESIGN_ALLOCATE=<span class="regexp">/Applications/</span>Xcode.app<span class="regexp">/Contents/</span>Developer<span class="regexp">/Toolchains/</span>XcodeDefault.xctoolchain<span class="regexp">/usr/</span>bin/codesign_allocate</span><br><span class="line">    </span><br><span class="line">Signing <span class="string">Identity:</span>     <span class="string">"-"</span></span><br><span class="line"></span><br><span class="line">    <span class="regexp">/usr/</span>bin<span class="regexp">/codesign --force --sign - --entitlements /</span>Users<span class="regexp">/suntongmian/</span>Library<span class="regexp">/Developer/</span>Xcode<span class="regexp">/DerivedData/</span>all-cnckbsrgoylvrsaprwpepbkuujvx<span class="regexp">/Build/</span>Intermediates.noindex<span class="regexp">/products.build/</span>mac<span class="regexp">/AppRTCMobile.build/</span>AppRTCMobile.app.xcent --timestamp=none <span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>workplace<span class="regexp">/webrtc/</span>src<span class="regexp">/out/</span>mac/AppRTCMobile.app</span><br><span class="line"></span><br><span class="line"><span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>workplace<span class="regexp">/webrtc/</span>src<span class="regexp">/out/</span>mac/AppRTCMobile.<span class="string">app:</span> code object is not signed at all</span><br><span class="line">In <span class="string">subcomponent:</span> <span class="regexp">/Users/</span>suntongmian<span class="regexp">/Documents/</span>workplace<span class="regexp">/webrtc/</span>src<span class="regexp">/out/</span>mac<span class="regexp">/AppRTCMobile.app/</span>Contents<span class="regexp">/Frameworks/</span>WebRTC.framework</span><br><span class="line">Command CodeSign failed with a nonzero exit code</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<p>我的第一份工作是在一家小型互联网公司，在小公司行为与装束可以随意，上班可以穿个拖鞋就啪啪啪的去公司开工了。若想在小公司开拓眼界以及技术的延伸，就不要指望公司的条件了，自个掏钱自个多关注信息。以前，总想着公司能请些牛人给我们做讲座，给我们充充电，或者希望公司能安排去参加一些好的讲座，这些在小公司简直就是自己在瞎想，不切实际。</p>
-<p>对于小公司锻炼人这个说法，其实我并不认同，为什么能锻炼人，不就是公司在使用少的人力资源在员工上获取更大的回报。但是，员工收到利益上的回报有变化吗，没有。锻炼人，也是在员工花更多的私人时间泡在公司加班或在家加班的投入所致，这是投入大量时间之后，应有的收获。与小公司能锻炼人其实并无因果关系。小公司能发挥自己更大的能力，有更大的自由发挥空间？公司项目与业务的决策，一个小职员究竟有多大的份量，刚出来的毕业生懂得不多，几乎是不懂，就是想发挥也没地。</p>
-<p>小公司做事的流程好吗？没有大公司复杂的流程，但面临的是上面的指令下达后，朝令夕改。这个对于程序员来说，实在是不堪重负的。在小公司天天见到老板，在大公司除了能看见或认识所在部门的一些人，其它部门的人基本就是陌生的，好像在另一个未知区域。</p>
-<p>在大一点的公司里面做事，首先是格局与视野层面上对自己以后的发展有好处，其次，现在就职的公司就是以后跳槽或转行的平台，对加薪和升职影响很大。</p>
-<p>非诚勿扰里面有句经典话语，“宁愿坐在宝马车上哭，也不愿坐在自行车上笑”，虽然这句对人的道德观和价值观有很大的扭曲，但是直接反映了这个社会的真实情况，作为工薪一族，“宁愿在大公司拼，也不愿在小公司做”，好的职业背景，带给自己的不仅仅是金钱上的优势，更有助于成就一番或大或小的事业。</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png" alt="build-error-info"></p>
+<p>解决方案是：</p>
+<p>(1) 选择 target <code>AppRTCMobile</code></p>
+<p>(2) 点击 <code>Build Settings</code></p>
+<p>(3) 修改 <code>Signing</code> 一栏下的 <code>Other Code Signing Flags</code>，增加 <code>--deep</code></p>
+<p>(4) 修改后，先 clean 下工程，再次执行编译，可以看到编译通过。</p>
+<p>如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/before-modify-signing.png" alt="before-modify-signing"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/after-modify-signing.png" alt="after-modify-signing"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-success.png" alt="build-success"></p>
 
       
     </div>
@@ -552,7 +563,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/生活/" rel="tag"># 生活</a>
+            <a href="/tags/音视频处理/" rel="tag"># 音视频处理</a>
+          
+            <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
           
         </div>
       
@@ -565,8 +578,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/15/help-platform-department-to-solve-the-bug-of-chongqing-project/" rel="next" title="帮助平台部解决重庆项目的bug">
-                <i class="fa fa-chevron-left"></i> 帮助平台部解决重庆项目的bug
+              <a href="/2019/10/22/webrtc-development-6-video-rendering-analysis/" rel="next" title="WebRTC 开发（六）摄像头采集与视频渲染分析">
+                <i class="fa fa-chevron-left"></i> WebRTC 开发（六）摄像头采集与视频渲染分析
               </a>
             
           </div>
@@ -574,10 +587,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/07/01/feeling-of-OneYear-after-master-graduation/" rel="prev" title="硕士毕业一年的感受">
-                硕士毕业一年的感受 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
