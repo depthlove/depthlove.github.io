@@ -95,23 +95,23 @@
 
 
 
-  <meta name="description" content="在上一篇文章 WebRTC 开发（五）编译与运行 Mac 工程 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本篇文章将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。 不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频帧，然后通过 cpu 或 g">
+  <meta name="description" content="在上一篇文章 WebRTC 开发（五）编译与运行 Mac 工程 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本文基于 WebRTC M76  ，将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。 不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频">
 <meta name="keywords" content="音视频处理,WebRTC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebRTC 开发（六）摄像头采集与视频渲染分析">
 <meta property="og:url" content="https://depthlove.github.io/2019/10/22/webrtc-development-6-video-rendering-analysis/index.html">
 <meta property="og:site_name" content="Minmin.Sun Blog">
-<meta property="og:description" content="在上一篇文章 WebRTC 开发（五）编译与运行 Mac 工程 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本篇文章将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。 不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频帧，然后通过 cpu 或 g">
+<meta property="og:description" content="在上一篇文章 WebRTC 开发（五）编译与运行 Mac 工程 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本文基于 WebRTC M76  ，将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。 不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-6-video-rendering-analysis/WebRTC-Demo.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-6-video-rendering-analysis/Macbook-Pro-15-inch.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-6-video-rendering-analysis/Macbook-Pro-13-inch.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-6-video-rendering-analysis/metal-render.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-6-video-rendering-analysis/openl-render.png">
-<meta property="og:updated_time" content="2019-12-14T09:39:34.990Z">
+<meta property="og:updated_time" content="2019-12-18T09:48:45.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC 开发（六）摄像头采集与视频渲染分析">
-<meta name="twitter:description" content="在上一篇文章 WebRTC 开发（五）编译与运行 Mac 工程 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本篇文章将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。 不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频帧，然后通过 cpu 或 g">
+<meta name="twitter:description" content="在上一篇文章 WebRTC 开发（五）编译与运行 Mac 工程 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本文基于 WebRTC M76  ，将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。 不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-6-video-rendering-analysis/WebRTC-Demo.png">
 
 
@@ -520,7 +520,7 @@
       
 
       
-        <p>在上一篇文章 <a href="https://depthlove.github.io/2019/10/18/webrtc-development-5-run-mac-project/">WebRTC 开发（五）编译与运行 Mac 工程</a> 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本篇文章将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。</p>
+        <p>在上一篇文章 <a href="https://depthlove.github.io/2019/10/18/webrtc-development-5-run-mac-project/">WebRTC 开发（五）编译与运行 Mac 工程</a> 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本文基于 <a href="https://groups.google.com/forum/#!msg/discuss-webrtc/Y7TIuNbgP8M/UoXP-RuxAwAJ" target="_blank" rel="noopener">WebRTC M76 </a> ，将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。</p>
 <p>不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频帧，然后通过 cpu 或 gpu 的处理将视频帧，也就是一张图片呈现到显示器上。WebRTC 的视频帧处理逻辑以及渲染逻辑是怎样的呢？这需要通过阅读代码来理清楚流程。</p>
 <a id="more"></a>
 
