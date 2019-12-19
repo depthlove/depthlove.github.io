@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Minmin.Sun Blog">
 <meta property="og:description" content="本文基于 WebRTC M76 来分析下 Mac 端的音频采集和渲染逻辑。  代码位置 代码位置：webrtc/src/modules/audio_device/mac 12345audio_device_mac.h                    audio_device_mac.ccaudio_mixer_manager_mac.h         audio_mixer_manager">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-18T09:41:35.756Z">
+<meta property="og:updated_time" content="2019-12-19T01:56:05.319Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC 开发（九）音频采集与渲染">
 <meta name="twitter:description" content="本文基于 WebRTC M76 来分析下 Mac 端的音频采集和渲染逻辑。  代码位置 代码位置：webrtc/src/modules/audio_device/mac 12345audio_device_mac.h                    audio_device_mac.ccaudio_mixer_manager_mac.h         audio_mixer_manager">
@@ -517,14 +517,14 @@
         <p>本文基于 <a href="https://groups.google.com/forum/#!msg/discuss-webrtc/Y7TIuNbgP8M/UoXP-RuxAwAJ" target="_blank" rel="noopener">WebRTC M76</a> 来分析下 Mac 端的音频采集和渲染逻辑。</p>
 <blockquote>
 <h3 id="代码位置"><a href="#代码位置" class="headerlink" title="代码位置"></a>代码位置</h3></blockquote>
-<p>代码位置：webrtc/src/modules/audio_device/mac</p>
+<p>代码位置：<a href="https://chromium.googlesource.com/external/webrtc/+/9863f3d246e2da7a2e1f42bbc5757f6af5ec5682/modules/audio_device/mac/" target="_blank" rel="noopener">webrtc/src/modules/audio_device/mac</a></p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">audio_device_mac<span class="selector-class">.h</span>                    </span><br><span class="line">audio_device_mac.cc</span><br><span class="line"></span><br><span class="line">audio_mixer_manager_mac<span class="selector-class">.h</span>         </span><br><span class="line">audio_mixer_manager_mac.cc</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
 
 <blockquote>
 <h3 id="浏览头文件"><a href="#浏览头文件" class="headerlink" title="浏览头文件"></a>浏览头文件</h3></blockquote>
-<p>预览 <code>webrtc/src/modules/audio_device/mac/audio_device_mac.h</code>，可以看到音频采集和渲染的很多信息。</p>
+<p>预览 <a href="https://chromium.googlesource.com/external/webrtc/+/9863f3d246e2da7a2e1f42bbc5757f6af5ec5682/modules/audio_device/mac/audio_device_mac.h" target="_blank" rel="noopener">webrtc/src/modules/audio_device/mac/audio_device_mac.h</a>，可以看到音频采集和渲染的很多信息。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">采集的采样率：<span class="keyword">const</span> <span class="keyword">uint32_t</span> N_REC_SAMPLES_PER_SEC = <span class="number">48000</span>;</span><br><span class="line">播放的采样率：<span class="keyword">const</span> <span class="keyword">uint32_t</span> N_PLAY_SAMPLES_PER_SEC = <span class="number">48000</span>;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">采集的声道数目： <span class="keyword">const</span> <span class="keyword">uint32_t</span> N_REC_CHANNELS = <span class="number">1</span>;   <span class="comment">// default is mono recording</span></span><br><span class="line">播放的声道数目：<span class="keyword">const</span> <span class="keyword">uint32_t</span> N_PLAY_CHANNELS = <span class="number">2</span>;  <span class="comment">// default is stereo playout</span></span><br></pre></td></tr></table></figure>
@@ -540,6 +540,7 @@
 <h3 id="浏览代码实现"><a href="#浏览代码实现" class="headerlink" title="浏览代码实现"></a>浏览代码实现</h3></blockquote>
 <p>WebRTC 的代码因为是跨平台的，为了兼容各个平台，API 接口写的有些繁琐。如果想快速看出代码的执行逻辑，最快最实用的就是加断点，单步调试。如果对各个系统（iOS，Mac，Android）的系统音视频 API 比较熟悉的话，那是可以直接通过读代码来梳理逻辑的。</p>
 <p>下面列举下音视频采集和渲染中很关键的点：<strong>音频采集回调</strong>，<strong>音频渲染回调</strong>，<strong>音频路由切换监听事件</strong>。</p>
+<p>预览 <a href="https://chromium.googlesource.com/external/webrtc/+/9863f3d246e2da7a2e1f42bbc5757f6af5ec5682/modules/audio_device/mac/audio_device_mac.cc" target="_blank" rel="noopener">webrtc/src/modules/audio_device/mac/audio_device_mac.cc</a></p>
 <p>音频采集的回调：</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int32_t AudioDeviceMac::InitRecording() &#123;</span><br><span class="line">  RTC_LOG(LS_INFO) &lt;&lt; <span class="string">"InitRecording"</span>;</span><br><span class="line">  </span><br><span class="line">  ......</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (_twoDevices) &#123;</span><br><span class="line">    WEBRTC_CA_RETURN_ON_ERR(AudioDeviceCreateIOProcID(</span><br><span class="line">        _inputDeviceID, inDeviceIOProc, this, &amp;_inDeviceIOProcID));</span><br><span class="line">  &#125; else <span class="keyword">if</span> (!_playIsInitialized) &#123;</span><br><span class="line">    WEBRTC_CA_RETURN_ON_ERR(AudioDeviceCreateIOProcID(</span><br><span class="line">        _inputDeviceID, deviceIOProc, this, &amp;_deviceIOProcID));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  ......</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
