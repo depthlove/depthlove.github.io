@@ -403,6 +403,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/12/20/solve-ffplay-error-no-matches-found/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Minmin.Sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Minmin.Sun Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/12/20/solve-ffplay-error-no-matches-found/" class="post-title-link" itemprop="url">ffplay 播放视频报错 no matches found 的解决方法</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-20 19:18:06" itemprop="dateCreated datePublished" datetime="2019-12-20T19:18:06+08:00">2019-12-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/12/20/solve-ffplay-error-no-matches-found/" class="leancloud_visitors" data-flag-title="ffplay 播放视频报错 no matches found 的解决方法">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>做音视频相关的产品，不可避免的要 dump 一些音视频数据用来分析音视频处理逻辑的正确性。FFmpeg 工具会经常用到，比如用 ffplay 播放视频。今天在分析一段视频数据时，想用 ffplay 来播放视频看看数据的正确性，结果在执行命令后遇到了 “zsh: no matches found: 1920*1024” 报错，导致无法使用 ffplay。</p>
+<h1 id="遇到问题"><a href="#遇到问题" class="headerlink" title="遇到问题"></a>遇到问题</h1><p>在给出解决方案前，先描述下问题是如何产生的。</p>
+<p>在 Mac 电脑的终端下执行命令：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay -f rawvideo -pixel_format yuv420p -video_size <span class="number">1920</span>*<span class="number">1024</span> -framerate <span class="number">15</span> dump<span class="number">-1920</span>x1024.yuv</span><br></pre></td></tr></table></figure>
+
+<p>执行后，终端显示结果为：<strong>zsh: no matches found: 1920*1024</strong>。从这个报错信息可以看出，“*” 这个符号没有被支持。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/12/20/solve-ffplay-error-no-matches-found/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/12/19/use-flutter-on-macos/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1991,185 +2170,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/06/02/establish-vpn-server-02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Minmin.Sun">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Minmin.Sun Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/02/establish-vpn-server-02/" class="post-title-link" itemprop="url">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 IP 被墙</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-02 15:22:41" itemprop="dateCreated datePublished" datetime="2019-06-02T15:22:41+08:00">2019-06-02</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-            <span id="/2019/06/02/establish-vpn-server-02/" class="leancloud_visitors" data-flag-title="搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 IP 被墙">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>《搬瓦工搭建 ShadowSocks 翻墙（VPN）系列》</p>
-<p>(1) <a href="https://depthlove.github.io/2019/03/29/establish-vpn-server/">搬瓦工搭建 ShadowSocks 翻墙（VPN）</a><br>(2) <a href="https://depthlove.github.io/2019/06/02/establish-vpn-server-02/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 IP 被墙</a><br>(3) <a href="https://depthlove.github.io/2019/06/03/establish-vpn-server-03/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 port 被封</a><br>(4) <a href="https://depthlove.github.io/2019/06/04/establish-vpn-server-04/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 更换密码</a></p>
-<p><a href="https://depthlove.github.io/2019/03/29/establish-vpn-server/">使用搬瓦工搭建 ShadowSocks 翻墙（VPN）</a> 一文中写了如何搭建 VPN 翻墙工具，但对于可能出现的问题没有提及。本文要说的是 VPN 服务所在的主机 IP 被墙后导致 VPN 服务无法使用的问题。</p>
-<p>事情经过是这样的，今天我想使用 VPN 服务访问 Google 的服务，发现 <a href="google.com">google.com</a> 响应超时。有点想不通，因为前几天 VPN 服务可以正常使用。出现这种问题，那就需要排查问题所在了。</p>
-<h1 id="一、排查问题"><a href="#一、排查问题" class="headerlink" title="一、排查问题"></a>一、排查问题</h1><p>（1）访问 <a href="https://bwh88.net" target="_blank" rel="noopener">搬瓦工 (BandwagonHost)</a> 主页，登录之后，查看主机的运行状态。</p>
-<p>结果：主机处在正常运行中。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/06/02/establish-vpn-server-02/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2218,7 +2218,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">88</span>
+                    <span class="site-state-item-count">89</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2251,7 +2251,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2298,7 +2300,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
