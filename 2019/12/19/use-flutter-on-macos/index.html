@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Minmin.Sun Blog">
 <meta property="og:description" content="废话不多说，直接上步骤。 下载 Flutter SDK在终端执行命令： 123cd /Users/suntongmian/Documents/workplacegit clone -b v1.13.2 git@github.com:flutter/flutter.git flutter  配置环境变量配置环境变量前，需要获知电脑默认使用的 shell 类型，在终端执行命令： 1echo $SHEL">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-19T13:36:30.404Z">
+<meta property="og:updated_time" content="2019-12-20T02:24:14.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macOS 系统上 Android Studio 配置 Flutter 开发环境">
 <meta name="twitter:description" content="废话不多说，直接上步骤。 下载 Flutter SDK在终端执行命令： 123cd /Users/suntongmian/Documents/workplacegit clone -b v1.13.2 git@github.com:flutter/flutter.git flutter  配置环境变量配置环境变量前，需要获知电脑默认使用的 shell 类型，在终端执行命令： 1echo $SHEL">
@@ -545,7 +545,7 @@
 <h1 id="执行命令-flutter-precache"><a href="#执行命令-flutter-precache" class="headerlink" title="执行命令 flutter precache"></a>执行命令 flutter precache</h1><p>在终端执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> flutter</span><br><span class="line"></span><br><span class="line">flutter precache</span><br></pre></td></tr></table></figure>
 
-<h1 id="执行命令-flutter-precache-1"><a href="#执行命令-flutter-precache-1" class="headerlink" title="执行命令 flutter precache"></a>执行命令 flutter precache</h1><p>在终端继续执行命令：</p>
+<h1 id="执行命令-flutter-doctor"><a href="#执行命令-flutter-doctor" class="headerlink" title="执行命令 flutter doctor"></a>执行命令 flutter doctor</h1><p>在终端继续执行命令：</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">flutter doctor</span></span><br></pre></td></tr></table></figure>
 
 <p>若执行结果中出现警告：</p>
@@ -555,6 +555,10 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">gem</span> <span class="selector-tag">uninstall</span> <span class="selector-tag">cocoapods</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">gem</span> <span class="selector-tag">install</span> <span class="selector-tag">cocoapods</span> <span class="selector-tag">-v</span> 1<span class="selector-class">.7</span><span class="selector-class">.5</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">pod</span> <span class="selector-tag">setup</span></span><br></pre></td></tr></table></figure>
 
 <p>执行完上面的操作后，再次执行命令 <code>flutter doctor</code> 检测是否有其它插件的安装警告。</p>
+<h1 id="检测默认使用的-Flutter-版本"><a href="#检测默认使用的-Flutter-版本" class="headerlink" title="检测默认使用的 Flutter 版本"></a>检测默认使用的 Flutter 版本</h1><p>在终端执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> flutter</span><br></pre></td></tr></table></figure>
+
+<p>执行结果为：<strong>/Users/suntongmian/Documents/workplace/flutter/bin/flutter</strong>，符合预期。</p>
 <h1 id="新建-Flutter-项目"><a href="#新建-Flutter-项目" class="headerlink" title="新建 Flutter 项目"></a>新建 Flutter 项目</h1><p>打开 Android Studio，在启动界面看到 “Start a new Flutter project” 一项，就说明 Flutter 配置生效了。新建一个 Flutter 工程。就可以在  <code>Android Studio -&gt; Preferences... -&gt; Languages &amp; Frameworks</code> 看使用的  Flutter，Dart 的 SDK 是哪个版本。</p>
 <h1 id="更换-Flutter-Dart-SDK"><a href="#更换-Flutter-Dart-SDK" class="headerlink" title="更换 Flutter / Dart SDK"></a>更换 Flutter / Dart SDK</h1><p>如果想切换到某个团队维护的 Flutter SDK，那么，就需要将前面的步骤重新来一遍。最后到 <code>Android Studio -&gt; Preferences... -&gt; Languages &amp; Frameworks</code> 配置 Flutter，Dart 的 SDK 的路径。</p>
 <p><strong>备注</strong>：所有的步骤包括新建一个工程并打开这个工程，如果不打开一个 Flutter 工程，那么在 <code>Android Studio -&gt; Preferences... -&gt; Languages &amp; Frameworks</code>  看不到  Flutter，Dart  配置选项。</p>
@@ -837,7 +841,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载-Flutter-SDK"><span class="nav-number">1.</span> <span class="nav-text">下载 Flutter SDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行命令-flutter-precache"><span class="nav-number">3.</span> <span class="nav-text">执行命令 flutter precache</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行命令-flutter-precache-1"><span class="nav-number">4.</span> <span class="nav-text">执行命令 flutter precache</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新建-Flutter-项目"><span class="nav-number">5.</span> <span class="nav-text">新建 Flutter 项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换-Flutter-Dart-SDK"><span class="nav-number">6.</span> <span class="nav-text">更换 Flutter / Dart SDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载-Flutter-SDK"><span class="nav-number">1.</span> <span class="nav-text">下载 Flutter SDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行命令-flutter-precache"><span class="nav-number">3.</span> <span class="nav-text">执行命令 flutter precache</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行命令-flutter-doctor"><span class="nav-number">4.</span> <span class="nav-text">执行命令 flutter doctor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检测默认使用的-Flutter-版本"><span class="nav-number">5.</span> <span class="nav-text">检测默认使用的 Flutter 版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新建-Flutter-项目"><span class="nav-number">6.</span> <span class="nav-text">新建 Flutter 项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更换-Flutter-Dart-SDK"><span class="nav-number">7.</span> <span class="nav-text">更换 Flutter / Dart SDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
