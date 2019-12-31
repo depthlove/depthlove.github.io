@@ -403,6 +403,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/06/03/establish-vpn-server-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Minmin.Sun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Minmin.Sun Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/03/establish-vpn-server-03/" class="post-title-link" itemprop="url">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 port 被封</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-03 21:07:34" itemprop="dateCreated datePublished" datetime="2019-06-03T21:07:34+08:00">2019-06-03</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/06/03/establish-vpn-server-03/" class="leancloud_visitors" data-flag-title="搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 port 被封">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>《搬瓦工搭建 ShadowSocks 翻墙（VPN）系列》</p>
+<p>(1) <a href="https://depthlove.github.io/2019/03/29/establish-vpn-server/">搬瓦工搭建 ShadowSocks 翻墙（VPN）</a><br>(2) <a href="https://depthlove.github.io/2019/06/02/establish-vpn-server-02/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 IP 被墙</a><br>(3) <a href="https://depthlove.github.io/2019/06/03/establish-vpn-server-03/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 port 被封</a><br>(4) <a href="https://depthlove.github.io/2019/06/04/establish-vpn-server-04/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 更换密码</a></p>
+<p>在上一篇 <a href="https://depthlove.github.io/2019/06/02/establish-vpn-server-02/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 IP 被墙</a> 谈到了如何解决 IP 被墙的问题，但没有提及端口 port 被封的问题。本文就来说一下 port 被封导致 VPN 服务无法使用的问题。</p>
+<p>之前我在使用过程中，出现过 VPN 突然无法使用的问题。定位下来的原因是 IP 被墙了。其实更详细的原因是 IP 被墙，端口 port 被封。我用工具检测了 IP 地址、port 端口，检测结果是 IP 地址国内检测点超时，国外监测点正常，port 端口处于关闭状态。我在 <a href="https://depthlove.github.io/2019/06/02/establish-vpn-server-02/">搬瓦工搭建 ShadowSocks 翻墙（VPN）- 解决 IP 被墙</a> 一文中只提到了更换 IP 的解决途径。为什么我没有提到要更换 port 端口呢？原因在于使用更换后的 IP 地址，也就是新的 IP 地址搭建 VPN 服务时，默认的 VPN 服务端口 port 跟以前搭建的 VPN 服务的默认端口 port 不一样，我每次搭建 VPN 服务的时候，都是使用提示的默认端口号 port，这让 port 端口被封导致 VPN 服务无法使用的问题没有暴露出来。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/06/03/establish-vpn-server-03/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/06/02/establish-vpn-server-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1976,182 +2153,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2018/03/18/install-spark-in-mac/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Minmin.Sun">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Minmin.Sun Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/03/18/install-spark-in-mac/" class="post-title-link" itemprop="url">Mac 上安装 Spark</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-18 14:35:25" itemprop="dateCreated datePublished" datetime="2018-03-18T14:35:25+08:00">2018-03-18</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/大数据/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-            <span id="/2018/03/18/install-spark-in-mac/" class="leancloud_visitors" data-flag-title="Mac 上安装 Spark">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-安装-JDK"><a href="#1-安装-JDK" class="headerlink" title="1. 安装 JDK"></a>1. 安装 JDK</h2><h3 id="1-1-检查-JDK-版本"><a href="#1-1-检查-JDK-版本" class="headerlink" title="1.1 检查 JDK 版本"></a>1.1 检查 JDK 版本</h3><p>检查 Mac 上是否已经安装了 jdk，在终端上执行命令</p>
-<p>java -version</p>
-<p>Spark 是使用 scala 语言开发的，如果要使用 Scala，就需要安装与之对应的 jdk 版本，Scala 的下载地址：<a href="http://www.scala-lang.org/download/" target="_blank" rel="noopener">http://www.scala-lang.org/download/</a>。下载地址页面明确说明了要使用 Scala 就必须要求 java version 为 1.8 以上，也就是 Java 8 JDK 以上版本。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/03/18/install-spark-in-mac/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2200,7 +2201,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">89</span>
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

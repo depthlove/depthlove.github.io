@@ -95,18 +95,15 @@
 
 
 
-  <meta name="description" content="在使用一个工具的时候，首先要搞清楚它的定义［见 wiki ：OpenGL］，其次才是用它来做实践开发。我个人对它的理解是，OpenGL 是一个用于做图形处理的工具库，基于 GPU 硬件资源用来绘制和渲染 2D，3D 图形。要做比较炫的图形渲染，图形变化，选择 OpenGL 来开发可以降低设备对 CPU 资源的消耗。现在流行的 VR 开发，无外乎也是基于 OpenGL 来做的。知道 OpenGL 能">
-<meta name="keywords" content="iOS,OpenGL">
+  <meta name="keywords" content="音视频处理,WebRTC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对OpenGL开发实践的思考">
-<meta property="og:url" content="https://depthlove.github.io/2016/09/29/opengl-practice-description/index.html">
+<meta property="og:title" content="WebRTC 开发（十）编译与运行 iOS 工程">
+<meta property="og:url" content="https://depthlove.github.io/2019/12/31/webrtc-development-10-run-ios-project/index.html">
 <meta property="og:site_name" content="Minmin.Sun Blog">
-<meta property="og:description" content="在使用一个工具的时候，首先要搞清楚它的定义［见 wiki ：OpenGL］，其次才是用它来做实践开发。我个人对它的理解是，OpenGL 是一个用于做图形处理的工具库，基于 GPU 硬件资源用来绘制和渲染 2D，3D 图形。要做比较炫的图形渲染，图形变化，选择 OpenGL 来开发可以降低设备对 CPU 资源的消耗。现在流行的 VR 开发，无外乎也是基于 OpenGL 来做的。知道 OpenGL 能">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-25T08:07:24.159Z">
+<meta property="og:updated_time" content="2019-12-31T06:21:11.117Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对OpenGL开发实践的思考">
-<meta name="twitter:description" content="在使用一个工具的时候，首先要搞清楚它的定义［见 wiki ：OpenGL］，其次才是用它来做实践开发。我个人对它的理解是，OpenGL 是一个用于做图形处理的工具库，基于 GPU 硬件资源用来绘制和渲染 2D，3D 图形。要做比较炫的图形渲染，图形变化，选择 OpenGL 来开发可以降低设备对 CPU 资源的消耗。现在流行的 VR 开发，无外乎也是基于 OpenGL 来做的。知道 OpenGL 能">
+<meta name="twitter:title" content="WebRTC 开发（十）编译与运行 iOS 工程">
 
 
 
@@ -114,7 +111,7 @@
 
   
   
-  <link rel="canonical" href="https://depthlove.github.io/2016/09/29/opengl-practice-description/">
+  <link rel="canonical" href="https://depthlove.github.io/2019/12/31/webrtc-development-10-run-ios-project/">
 
 
 
@@ -124,7 +121,7 @@
   };
 </script>
 
-  <title>对OpenGL开发实践的思考 | Minmin.Sun Blog</title>
+  <title>WebRTC 开发（十）编译与运行 iOS 工程 | Minmin.Sun Blog</title>
   
 
 
@@ -407,7 +404,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/09/29/opengl-practice-description/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/12/31/webrtc-development-10-run-ios-project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Minmin.Sun">
@@ -424,7 +421,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">对OpenGL开发实践的思考
+          <h1 class="post-title" itemprop="name headline">WebRTC 开发（十）编译与运行 iOS 工程
 
               
             
@@ -450,7 +447,7 @@
                 
               
 
-              <time title="创建时间：2016-09-29 17:33:34" itemprop="dateCreated datePublished" datetime="2016-09-29T17:33:34+08:00">2016-09-29</time>
+              <time title="创建时间：2019-12-31 14:20:13" itemprop="dateCreated datePublished" datetime="2019-12-31T14:20:13+08:00">2019-12-31</time>
             
 
             
@@ -468,7 +465,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a></span>
 
                 
                 
@@ -483,7 +480,7 @@
 
           
           
-            <span id="/2016/09/29/opengl-practice-description/" class="leancloud_visitors" data-flag-title="对OpenGL开发实践的思考">
+            <span id="/2019/12/31/webrtc-development-10-run-ios-project/" class="leancloud_visitors" data-flag-title="WebRTC 开发（十）编译与运行 iOS 工程">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -514,12 +511,7 @@
       
 
       
-        <p>在使用一个工具的时候，首先要搞清楚它的定义［见 wiki ：<a href="https://en.wikipedia.org/wiki/OpenGL" target="_blank" rel="noopener">OpenGL</a>］，其次才是用它来做实践开发。我个人对它的理解是，OpenGL 是一个用于做图形处理的工具库，基于 GPU 硬件资源用来绘制和渲染 2D，3D 图形。要做比较炫的图形渲染，图形变化，选择 OpenGL 来开发可以降低设备对 CPU 资源的消耗。现在流行的 VR 开发，无外乎也是基于 OpenGL 来做的。知道 OpenGL 能干什么了，随之而来的是写个小程序把我们对 OpenGL 的好奇心实践下。</p>
-<a id="more"></a>
-
-<p>怎样写出一个自己能懂的程序？自己写的程序难道自己不懂吗，可能你真的不懂。接触一个新的事物时，我们大多数时候，就是寻找资源去仿造，至于原理和用法为什么是那样，我们其实是一头雾水。人类的本质是具备探索新事物运行原理的，在本质的驱动下，我们或多或少会去研究为什么是那样。研究的深入层度，无形中划分了不同人在该领域的级别。那么如何去探究 OpenGL？网络博客，论坛，QQ群，还是书籍。我的看法是，快速入门就是筛选一些写的精简的博客，然后买几本该方向很权威和专业的书籍细看。</p>
-<p>写了这么多，我想表达的是，要有自己学习新东西的方法和策略。</p>
-
+        
       
     </div>
 
@@ -548,9 +540,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS/" rel="tag"># iOS</a>
+            <a href="/tags/音视频处理/" rel="tag"># 音视频处理</a>
           
-            <a href="/tags/OpenGL/" rel="tag"># OpenGL</a>
+            <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
           
         </div>
       
@@ -563,8 +555,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/25/a-week-in-Shanghai-City/" rel="next" title="在上海总部工作一周的感受">
-                <i class="fa fa-chevron-left"></i> 在上海总部工作一周的感受
+              <a href="/2019/12/20/solve-ffplay-error-no-matches-found/" rel="next" title="ffplay 播放视频报错 no matches found 的解决方法">
+                <i class="fa fa-chevron-left"></i> ffplay 播放视频报错 no matches found 的解决方法
               </a>
             
           </div>
@@ -572,10 +564,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/02/living-in-the-present/" rel="prev" title="对当下的思考">
-                对当下的思考 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
