@@ -270,6 +270,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
+
+        <!-- Google Ads Embed -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+            style="display:block; text-align:center;"
+            data-ad-layout="in-article"
+            data-ad-format="fluid"
+            data-ad-client="ca-pub-2304335236058241"
+            data-ad-slot="8930971915"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
         <p>现在的工作是播放器库的开发，可不是调用iOS系统自带的播放器框架进行一些简单的功能和界面定制，这些没什么含量。涉及iOS开发有3个年头了，现在的工作算是有点含金量了。涉及播放器的开发，FFmpeg的架构和功能是必须清楚的。FFmpeg自带的三个工程：ffplay， ffmpeg， ffprobe。这三个工程的代码量太大，如何切入进去，一窥其中的奥秘为自己所用呢？从核心切入，编码和解码。编码和解码的核心API接口就那十几个，通过这些深入然后剖析源代码，目标就明确了。</p>
 <p>就我个人而言，首先要了解FFmpeg整个的运行机制，哪一部分工作需要调用FFmpeg的哪一块，这个必须清楚。播放器库的开发，解码播放这就是核心，我就需要从FFmpeg的解码流程入手了。FFmpeg源代码结构图 - 解码 这篇文章太好了，看得我两眼放光，精华。这篇文章读透了，完全可以把控FFmpeg的使用。我接下来的学习任务，那就是认真研读和敲代码研习，光看是不顶用的，需要动手写。</p>
 <a id="more"></a>
@@ -415,17 +428,17 @@
 
       </div>
 
+      <!-- Google Ads -->
       <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- BlogAd -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2304335236058241"
-     data-ad-slot="8084137562"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-2304335236058241"
+          data-ad-slot="8084137562"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
 
     </div>
   </aside>

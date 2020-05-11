@@ -1,4 +1,28 @@
 <blockquote>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1></blockquote>
+<p>下面所有的用 {% include ‘../_custom/google_adsense.swig’ %} 的地方，都用广告代码的替换，避免 <code>hexo g</code> 报错，即使用</p>
+<pre><code>&lt;!-- Google Ads --&gt;
+&lt;script async src=&quot;//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
+&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-2304335236058241&quot;
+     data-ad-slot=&quot;8084137562&quot;
+     data-ad-format=&quot;auto&quot;
+     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;
+&lt;script&gt;
+     (adsbygoogle = window.adsbygoogle || []).push({});
+&lt;/script&gt;</code></pre><p>或者广告的内嵌模式代码</p>
+<pre><code>&lt;!-- Google Ads Embed --&gt;
+&lt;script async src=&quot;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
+&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block; text-align:center;&quot;
+     data-ad-layout=&quot;in-article&quot;
+     data-ad-format=&quot;fluid&quot;
+     data-ad-client=&quot;ca-pub-2304335236058241&quot;
+     data-ad-slot=&quot;8930971915&quot;&gt;&lt;/ins&gt;
+&lt;script&gt;
+     (adsbygoogle = window.adsbygoogle || []).push({});
+&lt;/script&gt;</code></pre><blockquote>
 <h1 id="添加广告-ads-txt-文件"><a href="#添加广告-ads-txt-文件" class="headerlink" title="添加广告 ads.txt 文件"></a>添加广告 ads.txt 文件</h1></blockquote>
 <p>添加 ~/depthloveBlog/themes/next/source/ads.txt 文件。该文件来至于 Google Adsense 网站下的个人账号。</p>
 <blockquote>
