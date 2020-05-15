@@ -20,15 +20,25 @@
     var CONFIG = {"hostname":"depthlove.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="keywords" content="音视频处理,WebRTC">
+  <meta name="description" content="在 WebRTC 开发（五）编译与运行 Mac 工程 一文中，介绍了如何运行 Mac 工程，可以参考其流程，来运行 iOS 工程，将 WebRTC 应用安装到 iOS 设备上。  编译 WebRTC 的 iOS 工程  进入 WebRTC 源码目录 123cd /Users/suntongmian/Documents/workplace cd webrtc/src   修改 iOS 应用的 Inf">
+<meta name="keywords" content="音视频处理,WebRTC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebRTC 开发（十）编译与运行 iOS 工程">
 <meta property="og:url" content="https://depthlove.github.io/2019/12/31/webrtc-development-10-run-ios-project/index.html">
 <meta property="og:site_name" content="Depth Love Blog">
+<meta property="og:description" content="在 WebRTC 开发（五）编译与运行 Mac 工程 一文中，介绍了如何运行 Mac 工程，可以参考其流程，来运行 iOS 工程，将 WebRTC 应用安装到 iOS 设备上。  编译 WebRTC 的 iOS 工程  进入 WebRTC 源码目录 123cd /Users/suntongmian/Documents/workplace cd webrtc/src   修改 iOS 应用的 Inf">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-15T03:40:15.217Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/modify-info-plist.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/ios-project.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/select-info-plist.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/load-info-plist.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/ios-app-home.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/ios-app-meeting.png">
+<meta property="og:updated_time" content="2020-05-15T04:28:31.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC 开发（十）编译与运行 iOS 工程">
+<meta name="twitter:description" content="在 WebRTC 开发（五）编译与运行 Mac 工程 一文中，介绍了如何运行 Mac 工程，可以参考其流程，来运行 iOS 工程，将 WebRTC 应用安装到 iOS 设备上。  编译 WebRTC 的 iOS 工程  进入 WebRTC 源码目录 123cd /Users/suntongmian/Documents/workplace cd webrtc/src   修改 iOS 应用的 Inf">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/modify-info-plist.png">
 
 <link rel="canonical" href="https://depthlove.github.io/2019/12/31/webrtc-development-10-run-ios-project/">
 
@@ -280,7 +290,60 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
-        
+        <p>在 <a href="https://depthlove.github.io/2019/10/18/webrtc-development-5-run-mac-project/">WebRTC 开发（五）编译与运行 Mac 工程</a> 一文中，介绍了如何运行 Mac 工程，可以参考其流程，来运行 iOS 工程，将 WebRTC 应用安装到 iOS 设备上。</p>
+<blockquote>
+<h3 id="编译-WebRTC-的-iOS-工程"><a href="#编译-WebRTC-的-iOS-工程" class="headerlink" title="编译 WebRTC 的 iOS 工程"></a>编译 WebRTC 的 iOS 工程</h3></blockquote>
+<blockquote>
+<h4 id="进入-WebRTC-源码目录"><a href="#进入-WebRTC-源码目录" class="headerlink" title="进入 WebRTC 源码目录"></a>进入 WebRTC 源码目录</h4></blockquote>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> <span class="string">/Users/suntongmian/Documents/workplace</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> webrtc/src</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h4 id="修改-iOS-应用的-Info-plist-文件"><a href="#修改-iOS-应用的-Info-plist-文件" class="headerlink" title="修改 iOS 应用的 Info.plist 文件"></a>修改 iOS 应用的 Info.plist 文件</h4></blockquote>
+<p>为什么要修改 Info.plist 文件？原因是运行 iOS 应用，应用的 bundle id 和 iOS 证书要匹配。</p>
+<p>编辑 <code>examples/objc/AppRTCMobile/ios/Info.plist</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi examples<span class="regexp">/objc/</span>AppRTCMobile<span class="regexp">/ios/</span>Info.plist</span><br></pre></td></tr></table></figure>
+
+<p>根据 iOS 证书来指定一个可用的 bundle id，替换下面的 <code>com.google.AppRTCMobile</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>CFBundleIdentifier<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span>&gt;</span>com.google.AppRTCMobile<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>改为</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">key</span>&gt;</span>CFBundleIdentifier<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">string</span>&gt;</span>com.tms.AppRTCMobile<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/modify-info-plist.png" alt="modify-info-plist.png"></p>
+<blockquote>
+<h4 id="配置-depot-tools-工具的路径"><a href="#配置-depot-tools-工具的路径" class="headerlink" title="配置 depot_tools 工具的路径"></a>配置 depot_tools 工具的路径</h4></blockquote>
+<p>查看 ~/.bashrc 文件中是否配置有工具 depot_tools 的路径</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.bashrc</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$PATH</span>:/Users/suntongmian/Documents/workplace/webrtc/depot_tools</span><br></pre></td></tr></table></figure>
+
+<p>启动 gn 工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h4 id="创建-iOS-工程"><a href="#创建-iOS-工程" class="headerlink" title="创建 iOS 工程"></a>创建 iOS 工程</h4></blockquote>
+<p>生成 iOS 平台的 Xcode 工程</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gn gen out/ios <span class="params">--args=</span>'target_os=<span class="string">"ios"</span> target_cpu=<span class="string">"arm64"</span> ios_enable_code_signing=<span class="literal">true</span> ios_code_signing_identity=<span class="string">"Apple Development: tongmiansun@gmail.com (7XVLGK8W92)"</span>' <span class="params">--ide=xcode</span></span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Generating Xcode projects took <span class="number">108</span>ms</span><br><span class="line">Done. Made <span class="number">1357</span> targets from <span class="number">190</span> files in <span class="number">5167</span>ms</span><br></pre></td></tr></table></figure>
+
+<p>启动 Xcode 工程</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open -<span class="selector-tag">a</span> Xcode<span class="selector-class">.app</span> out/ios/all.xcworkspace</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h4 id="配置-iOS-工程"><a href="#配置-iOS-工程" class="headerlink" title="配置 iOS 工程"></a>配置 iOS 工程</h4></blockquote>
+<p>打开 iOS 工程后，需要配置工程的 Info.plist，选择 examples/objc/AppRTCMobile/ios/Info.plist 作为工程的配置文件。</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/ios-project.png" alt="ios-project.png"></p>
+<p>选择 Info.plist 文件</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/select-info-plist.png" alt="select-info-plist.png"></p>
+<p>加载 Info.plist 文件后</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/load-info-plist.png" alt="load-info-plist.png"></p>
+<blockquote>
+<h4 id="运行-iOS-工程"><a href="#运行-iOS-工程" class="headerlink" title="运行 iOS 工程"></a>运行 iOS 工程</h4></blockquote>
+<p>按下 <code>command + R</code> 键运行工程，好点的机器耗时5分钟，差一点的机器需要耗时10分钟，就可以将 WebRTC APP 安装到 iOS 设备上了。</p>
+<p>工程编译时间长短跟 Mac 设备性能有关系，性能强的 Mac 设备编译速度快很多，如果你的设备耗时 10分钟以上了，说明你要换 Mac 设备了。</p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/ios-app-home.png" alt="ios-app-home.png"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-10-run-ios-project/ios-app-meeting.png" alt="ios-app-meeting.png"></p>
+
     </div>
 
     
@@ -362,6 +425,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译-WebRTC-的-iOS-工程"><span class="nav-number">1.</span> <span class="nav-text">编译 WebRTC 的 iOS 工程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进入-WebRTC-源码目录"><span class="nav-number">1.1.</span> <span class="nav-text">进入 WebRTC 源码目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-iOS-应用的-Info-plist-文件"><span class="nav-number">1.2.</span> <span class="nav-text">修改 iOS 应用的 Info.plist 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-depot-tools-工具的路径"><span class="nav-number">1.3.</span> <span class="nav-text">配置 depot_tools 工具的路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-iOS-工程"><span class="nav-number">1.4.</span> <span class="nav-text">创建 iOS 工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-iOS-工程"><span class="nav-number">1.5.</span> <span class="nav-text">配置 iOS 工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行-iOS-工程"><span class="nav-number">1.6.</span> <span class="nav-text">运行 iOS 工程</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
