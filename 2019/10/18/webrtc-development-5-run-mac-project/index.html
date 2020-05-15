@@ -29,7 +29,7 @@
 <meta property="og:description" content="在 WebRTC 开发（四）源码下载与更新 一文中，我们获取到了可以在 iOS，macOS 平台运行的 WebRTC 源码。其中，在执行命令 fetch --nohooks webrtc_ios 时，我们可以明确看到代码支持的平台 ios, mac。 12345678910111213suntongmiandeMacBook-Pro:webrtc suntongmian$ fetch --noho">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-5-run-mac-project/webrtc-mac-project.png">
-<meta property="og:updated_time" content="2019-10-25T08:07:24.167Z">
+<meta property="og:updated_time" content="2020-05-15T03:07:56.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebRTC 开发（五）编译与运行 Mac 工程">
 <meta name="twitter:description" content="在 WebRTC 开发（四）源码下载与更新 一文中，我们获取到了可以在 iOS，macOS 平台运行的 WebRTC 源码。其中，在执行命令 fetch --nohooks webrtc_ios 时，我们可以明确看到代码支持的平台 ios, mac。 12345678910111213suntongmiandeMacBook-Pro:webrtc suntongmian$ fetch --noho">
@@ -285,7 +285,7 @@
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
-        <p>在 <a href="http://depthlove.github.io/2019/10/18/webrtc-development-4-source-code-download-and-update/">WebRTC 开发（四）源码下载与更新</a> 一文中，我们获取到了可以在 iOS，macOS 平台运行的 WebRTC 源码。其中，在执行命令 <code>fetch --nohooks webrtc_ios</code> 时，我们可以明确看到代码支持的平台 <strong>ios, mac</strong>。</p>
+        <p>在 <a href="https://depthlove.github.io/2019/10/18/webrtc-development-4-source-code-download-and-update/">WebRTC 开发（四）源码下载与更新</a> 一文中，我们获取到了可以在 iOS，macOS 平台运行的 WebRTC 源码。其中，在执行命令 <code>fetch --nohooks webrtc_ios</code> 时，我们可以明确看到代码支持的平台 <strong>ios, mac</strong>。</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">suntongmiandeMacBook-Pro:webrtc suntongmian$ fetch --nohooks webrtc_ios</span></span><br><span class="line"><span class="section">Running: gclient root</span></span><br><span class="line"><span class="section">WARNING: Your metrics.cfg file was invalid or nonexistent. A new one will be created.</span></span><br><span class="line"><span class="section">Running: gclient config --spec 'solutions = [</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">"https://webrtc.googlesource.com/src.git"</span>,</span><br><span class="line">    <span class="string">"managed"</span>: False,</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"src"</span>,</span><br><span class="line">    <span class="string">"deps_file"</span>: <span class="string">"DEPS"</span>,</span><br><span class="line">    <span class="string">"custom_deps"</span>: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br><span class="line">target_os = [<span class="string">"ios"</span>, <span class="string">"mac"</span>]</span><br></pre></td></tr></table></figure>
 
 <p>以前，我的精力一直放在 iOS 平台的项目开发上，现在主要投入 Mac 平台的项目开发，所以，对 Mac 项目的关注度更大一些。下面的编译也以 Mac 为切入点。</p>
