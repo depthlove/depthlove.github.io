@@ -1,0 +1,199 @@
+<blockquote>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1></blockquote>
+<p>下面所有的用 {% include ‘../_custom/google_adsense.swig’ %} 的地方，都用广告代码的替换，避免 <code>hexo g</code> 报错，即使用</p>
+<pre><code>&lt;!-- Google Ads --&gt;
+&lt;script async src=&quot;//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
+&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-2304335236058241&quot;
+     data-ad-slot=&quot;8084137562&quot;
+     data-ad-format=&quot;auto&quot;
+     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;
+&lt;script&gt;
+     (adsbygoogle = window.adsbygoogle || []).push({});
+&lt;/script&gt;</code></pre><p>或者广告的内嵌模式代码</p>
+<pre><code>&lt;!-- Google Ads Embed --&gt;
+&lt;script async src=&quot;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
+&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block; text-align:center;&quot;
+     data-ad-layout=&quot;in-article&quot;
+     data-ad-format=&quot;fluid&quot;
+     data-ad-client=&quot;ca-pub-2304335236058241&quot;
+     data-ad-slot=&quot;8930971915&quot;&gt;&lt;/ins&gt;
+&lt;script&gt;
+     (adsbygoogle = window.adsbygoogle || []).push({});
+&lt;/script&gt;</code></pre><blockquote>
+<h1 id="添加广告-ads-txt-文件"><a href="#添加广告-ads-txt-文件" class="headerlink" title="添加广告 ads.txt 文件"></a>添加广告 ads.txt 文件</h1></blockquote>
+<p>添加 ~/depthloveBlog/themes/next/source/ads.txt 文件。该文件来至于 Google Adsense 网站下的个人账号。</p>
+<blockquote>
+<h1 id="新建广告模版"><a href="#新建广告模版" class="headerlink" title="新建广告模版"></a>新建广告模版</h1></blockquote>
+<p>新建 ~/depthloveBlog/themes/next/layout/_custom/google_adsense.swig 文件，加入广告代码</p>
+<pre><code>&lt;script async src=&quot;//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
+&lt;!-- BlogAd --&gt;
+&lt;ins class=&quot;adsbygoogle&quot;
+     style=&quot;display:block&quot;
+     data-ad-client=&quot;ca-pub-2304335236058241&quot;
+     data-ad-slot=&quot;8084137562&quot;
+     data-ad-format=&quot;auto&quot;
+     data-full-width-responsive=&quot;true&quot;&gt;&lt;/ins&gt;
+&lt;script&gt;
+     (adsbygoogle = window.adsbygoogle || []).push({});
+&lt;/script&gt;</code></pre><p>新建 ~/depthloveBlog/themes/next/layout/_custom/sidebar.swig 空白文件</p>
+<p>备注：不新建 sidebar.swig 这3个空白文档，在执行 hexo g 命令时会报错。</p>
+<blockquote>
+<h1 id="插入广告"><a href="#插入广告" class="headerlink" title="插入广告"></a>插入广告</h1></blockquote>
+<h2 id="博客顶部广告"><a href="#博客顶部广告" class="headerlink" title="博客顶部广告"></a>博客顶部广告</h2><p>往 ~/depthloveBlog/themes/next/layout/_partials/head/head.swig 引入 google_adsense.swig 文件，引入方式为 {% include ‘../_custom/google_adsense.swig’ %}</p>
+<pre><code>{# Export some HEXO Configurations to Front-End #}
+&lt;script id=&quot;hexo.configurations&quot;&gt;
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: &apos;{{ theme.root }}&apos;,
+    scheme: &apos;{{ theme.scheme }}&apos;,
+    version: &apos;{{ version }}&apos;,
+    sidebar: {{ theme.sidebar | json_encode }},
+    back2top: {{ theme.back2top.enable }},
+    back2top_sidebar: {{ theme.back2top.sidebar }},
+    fancybox: {{ theme.fancybox }},
+    fastclick: {{ theme.fastclick }},
+    lazyload: {{ theme.lazyload }},
+    tabs: {{ theme.tabs.enable }},
+    motion: {{ theme.motion | json_encode }},
+    algolia: {
+      applicationID: &apos;{{ theme.algolia.applicationID }}&apos;,
+      apiKey: &apos;{{ theme.algolia.apiKey }}&apos;,
+      indexName: &apos;{{ theme.algolia.indexName }}&apos;,
+      hits: {{ theme.algolia_search.hits | json_encode }},
+      labels: {{ theme.algolia_search.labels | json_encode }}
+    }
+  };
+&lt;/script&gt;
+
+{% if theme.custom_file_path.head %}
+  {% set custom_head = &apos;../../../../../&apos; + theme.custom_file_path.head %}
+{% else %}
+  {% set custom_head = &apos;../../_custom/head.swig&apos; %}
+{% endif %}
+{% include custom_head %}
+
+{% include &apos;../../_custom/google_adsense.swig&apos; %}</code></pre><h2 id="博客底部广告"><a href="#博客底部广告" class="headerlink" title="博客底部广告"></a>博客底部广告</h2><p>往 ~/depthloveBlog/themes/next/layout/_partials/footer.swig 引入 google_adsense.swig 文件，引入方式为 {% include ‘../_custom/google_adsense.swig’ %}</p>
+<pre><code>{% include &apos;../_custom/google_adsense.swig&apos; %}
+
+&lt;div class=&quot;copyright&quot;&gt;{#
+#}{% set current = date(Date.now(), &quot;YYYY&quot;) %}{#
+#}{% if theme.footer.beian.enable %}{#
+#}  {{ next_url(&apos;http://www.beian.miit.gov.cn&apos;, theme.footer.beian.icp + &apos; &apos;) }}{#
+#}{% endif %}{#
+#}&amp;copy; {% if theme.footer.since and theme.footer.since != current %}{{ theme.footer.since }} – {% endif %}{#
+#}&lt;span itemprop=&quot;copyrightYear&quot;&gt;{{ current }}&lt;/span&gt;
+  &lt;span class=&quot;with-love&quot; id=&quot;animate&quot;&gt;
+    &lt;i class=&quot;fa fa-{{ theme.footer.icon.name }}&quot;&gt;&lt;/i&gt;
+  &lt;/span&gt;
+  &lt;span class=&quot;author&quot; itemprop=&quot;copyrightHolder&quot;&gt;{{ theme.footer.copyright || author }}&lt;/span&gt;
+
+  {% if config.symbols_count_time.total_symbols %}
+    &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;
+    &lt;span class=&quot;post-meta-item-icon&quot;&gt;
+      &lt;i class=&quot;fa fa-area-chart&quot;&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    {% if theme.symbols_count_time.item_text_total %}
+      &lt;span class=&quot;post-meta-item-text&quot;&gt;{{ __(&apos;symbols_count_time.count_total&apos;) + __(&apos;symbol.colon&apos;) }}&lt;/span&gt;
+    {% endif %}
+    &lt;span title=&quot;{{ __(&apos;symbols_count_time.count_total&apos;) }}&quot;&gt;{#
+    #}{{ symbolsCountTotal(site) }}{#
+  #}&lt;/span&gt;
+  {% endif %}</code></pre><h2 id="侧边栏广告"><a href="#侧边栏广告" class="headerlink" title="侧边栏广告"></a>侧边栏广告</h2><p>往 ~/depthloveBlog/themes/next/layout/_macro/sidebar.swig 引入 google_adsense.swig 文件，引入方式为 {% include ‘../_custom/google_adsense.swig’ %}</p>
+<pre><code>      {% if theme.back2top.enable and theme.back2top.sidebar %}
+        &lt;div class=&quot;back-to-top&quot;&gt;
+          &lt;i class=&quot;fa fa-arrow-up&quot;&gt;&lt;/i&gt;
+          {% if theme.back2top.scrollpercent %}
+            &lt;span id=&quot;scrollpercent&quot;&gt;&lt;span&gt;0&lt;/span&gt;%&lt;/span&gt;
+          {% endif %}
+        &lt;/div&gt;
+      {% endif %}
+
+      {% include &apos;../_custom/google_adsense.swig&apos; %}
+
+    &lt;/div&gt;
+  &lt;/aside&gt;
+  {% if theme.sidebar.dimmer %}
+    &lt;div id=&quot;sidebar-dimmer&quot;&gt;&lt;/div&gt;
+  {% endif %}
+{% endmacro %}</code></pre><h2 id="文章广告"><a href="#文章广告" class="headerlink" title="文章广告"></a>文章广告</h2><p>往 ~/depthloveBlog/themes/next/layout/_macro/post.swig 引入 google_adsense.swig 文件，引入方式为 {% include ‘../_custom/google_adsense.swig’ %}</p>
+<pre><code>      {% if not is_index and (post.prev or post.next) %}
+        {% include &apos;../_custom/google_adsense.swig&apos; %}
+        &lt;div class=&quot;post-nav&quot;&gt;
+          &lt;div class=&quot;post-nav-next post-nav-item&quot;&gt;
+            {% if post.next %}
+              &lt;a href=&quot;{{ url_for(post.next.path) }}&quot; rel=&quot;next&quot; title=&quot;{{ post.next.title }}&quot;&gt;
+                &lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt; {{ post.next.title }}
+              &lt;/a&gt;
+            {% endif %}
+          &lt;/div&gt;
+
+          &lt;span class=&quot;post-nav-divider&quot;&gt;&lt;/span&gt;
+
+          &lt;div class=&quot;post-nav-prev post-nav-item&quot;&gt;
+            {% if post.prev %}
+              &lt;a href=&quot;{{ url_for(post.prev.path) }}&quot; rel=&quot;prev&quot; title=&quot;{{ post.prev.title }}&quot;&gt;
+                {{ post.prev.title }} &lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;
+              &lt;/a&gt;
+            {% endif %}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      {% endif %}
+
+      {% set isLast = loop.index % page.per_page === 0 %}
+      {% if is_index and not isLast %}
+        &lt;div class=&quot;post-eof&quot;&gt;&lt;/div&gt;
+      {% endif %}
+    &lt;/footer&gt;
+  &lt;/div&gt;
+  {######################}
+  {### END POST BLOCK ###}
+  {######################}
+  &lt;/article&gt;
+
+{% endmacro %}</code></pre><pre><code>      &lt;!--/noindex--&gt;
+    {% else %}
+      {% if post.type === &apos;picture&apos; %}
+        &lt;a href=&quot;{{ url_for(post.path) }}&quot;&gt;{{ post.content }}&lt;/a&gt;
+      {% else %}
+        {{ post.content }}
+      {% endif %}
+    {% endif %}
+  {% else %}
+    {% include &apos;../_custom/google_adsense.swig&apos; %}
+    {{ post.content }}
+  {% endif %}
+&lt;/div&gt;
+
+{% if theme.related_posts.enable and (theme.related_posts.display_in_home or not is_index) %}
+  {% include &apos;../_partials/post/post-related.swig&apos; with { post: post } %}
+{% endif %}
+
+{#####################}
+{### END POST BODY ###}
+{#####################}</code></pre><h2 id="评论区广告"><a href="#评论区广告" class="headerlink" title="评论区广告"></a>评论区广告</h2><p>往 ~/depthloveBlog/themes/next/layout/_partials/comments.swig 文件，引入方式为 {% include ‘../_custom/google_adsense.swig’ %}</p>
+<pre><code>  {% elif theme.gitment.enable %}
+    &lt;div class=&quot;comments&quot; id=&quot;comments&quot;&gt;
+      {% if theme.gitment.lazy %}
+        &lt;div onclick=&quot;showGitment()&quot; id=&quot;gitment-display-button&quot;&gt;{{ __(&apos;gitmentbutton&apos;) }}&lt;/div&gt;
+        &lt;div id=&quot;gitment-container&quot; style=&quot;display: none&quot;&gt;&lt;/div&gt;
+      {% else %}
+        &lt;div id=&quot;gitment-container&quot;&gt;&lt;/div&gt;
+      {% endif %}
+    &lt;/div&gt;
+
+  {% elif theme.valine.enable and theme.valine.appid and theme.valine.appkey %}
+    &lt;div class=&quot;comments&quot; id=&quot;comments&quot;&gt;
+    &lt;/div&gt;
+
+  {% elif theme.gitalk.enable %}
+    &lt;div class=&quot;comments&quot; id=&quot;gitalk-container&quot;&gt;
+    &lt;/div&gt;
+
+  {% endif %}
+
+  {% include &apos;../_custom/google_adsense.swig&apos; %}
+
+{% endif %}</code></pre>

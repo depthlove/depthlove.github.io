@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[WebRTC 开发（十二）Google WebRTC 视频会议产品 Google Meet]]></title>
+    <url>%2F2020%2F06%2F16%2Fwebrtc-development-12-google-meet%2F</url>
+    <content type="text"><![CDATA[Google 的视频会议应用：Google Meet Google Meet 的新变化 我在 Mac 设备上使用过 Google Meet，其音视频质量和应用交互的体验都很不错，Google Meet 可以作为视频会议类产品的参考了。]]></content>
+      <categories>
+        <category>WebRTC</category>
+      </categories>
+      <tags>
+        <tag>音视频处理</tag>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[WebRTC 开发（十一）WebRTC 开发指南主页的域名被变更]]></title>
     <url>%2F2020%2F06%2F15%2Fwebrtc-development-11-website-domain-name-changed%2F</url>
     <content type="text"><![CDATA[以往文章中引用的 WebRTC 开发指南主页的文档无法访问了，查了一下，原因是以前的网址前缀由 https://webrtc.org/ 变更为 https://webrtc.github.io/webrtc-org/ 了，导致之前的文章中的链接都失效了。之前文章中的链接，比如 https://webrtc.org/native-code/ios/ 出现 404 错误。如果要想继续访问，现在就需要使用 https://webrtc.github.io/webrtc-org/native-code/ios/。 链接的域名由 webrtc.org 变为 webrtc.github.io 了，webrtc.org 变成了一个纯粹的 WebRTC 产品介绍的主页了，说明 Google 对 WebRTC 产品更加重视了，会将其作为一个产品来重点推广应用。]]></content>
