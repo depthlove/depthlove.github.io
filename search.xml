@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2020年总结]]></title>
+    <url>%2F2020%2F12%2F20%2Fthe-summary-of-2020-year%2F</url>
+    <content type="text"><![CDATA[还有十天就进入2021年了，时间过的真快，写篇随笔回顾下过去。 来上海工作一年半了，工作上一直非常忙。做了 macOS，iOS，C++ Windows/macOS，.Node, .TS，Electron 上 SDK/Demo 开发，拿过公司的 Spot Bonus 工作成绩突出奖。但是身体严重透支，很累，最近一周去医院检查了2次，医生建议我休息一段时间。从明天开始就进入休假模式了，一直休息到元旦节后。 工作上高强度，对生活影响比较大。对2021年的规划就是工作上有原则： （1）非规划内的需求一律不接 （2）人力不够的需求一律不接 （3）规划内的需求一律不加急]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>工作</tag>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[WebRTC 开发（十二）Google WebRTC 视频会议产品 Google Meet]]></title>
     <url>%2F2020%2F06%2F16%2Fwebrtc-development-12-google-meet%2F</url>
     <content type="text"><![CDATA[Google 的视频会议应用：Google Meet Google Meet 的新变化 我在 Mac 设备上使用过 Google Meet，其音视频质量和应用交互的体验都很不错，Google Meet 可以作为视频会议类产品的参考了。]]></content>

@@ -209,6 +209,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2017/07/01/analyse-h265-flv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/07/01/analyse-h265-flv/" class="post-title-link" itemprop="url">分析 H.265 + AAC 的 FLV 文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-07-01 18:38:19" itemprop="dateCreated datePublished" datetime="2017-07-01T18:38:19+08:00">2017-07-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/07/01/analyse-h265-flv/" class="post-meta-item leancloud_visitors" data-flag-title="分析 H.265 + AAC 的 FLV 文件" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>常见的 FLV 文件里封装的是 H.264 和 AAC 数据。对于 H.265(HEVC)，FLV 支不支持呢，答案是官方版本不支持。想用 FLV 封装 H.265 数据，那该怎么搞？首先，需要一套 H.265 的编解码器，其次，就是扩展 FLV 的头 header，其实是增加对 H.265 CodecID 的支持。</p>
+<p>今年6月6日苹果开发者大会开放了 iOS 平台的 HEVC API，也就是开发者可以调用 iOS 系统的 API 进行 H.265 硬编码了，但是只能在 iOS 11.0 及以上版本使用。目前，iOS 11.0 正式版还未正式发布，需要等到今年的9月份。不建议开发者将自己的 iOS 设备刷到 iOS 11.0 beta 版，因为升级 beta 版后非常卡。经测试，苹果的 H.265 编码出来的图像质量还是可以的，但是消耗码率较高。</p>
+<p>苹果开放 H.265 编解码 API 势必会影响到整个 H.265 行业的发展，但 H.265 离真正落地和普及还需要时间。明年（2018年）再看 H.265 对整个音视频行业的影响。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/07/01/analyse-h265-flv/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2017/05/21/use-cmake-to-build-ios-lib/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -965,90 +1050,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/12/how-to-love/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/10/12/how-to-love/" class="post-title-link" itemprop="url">如何去爱</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-10-12 20:45:05" itemprop="dateCreated datePublished" datetime="2016-10-12T20:45:05+08:00">2016-10-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/10/12/how-to-love/" class="post-meta-item leancloud_visitors" data-flag-title="如何去爱" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>如何去爱？关于这个问题，我想说的是到了一定年纪才会懂得。爱，不是一时情感的寄托，一时的喜好。看着小年轻们，经常上演死去活来的剧情，我内心深处想表达的是这些所谓的爱只是一时的爱慕，只是以后回忆青春年华的一个所谓的美景而已。年纪轻轻，没有太多的经历，自以为是男欢女爱，到底有多少能修到甜蜜与和谐的生活。到了一定年龄，经历过社会的锤炼，对男女之情才会有成熟的看法，对家庭的观念才有全局的认识。</p>
-<p>古有三十而立，四十不惑之说，真的很佩服古人的总结。到三十的年纪，会多角度去看待事物，自身的角度，换位思考的角度。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/10/12/how-to-love/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1120,7 +1121,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">94</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

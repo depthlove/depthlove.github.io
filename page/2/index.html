@@ -209,6 +209,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/10/22/webrtc-development-6-video-rendering-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/22/webrtc-development-6-video-rendering-analysis/" class="post-title-link" itemprop="url">WebRTC 开发（六）摄像头采集与视频渲染分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-22 12:04:08" itemprop="dateCreated datePublished" datetime="2019-10-22T12:04:08+08:00">2019-10-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/10/22/webrtc-development-6-video-rendering-analysis/" class="post-meta-item leancloud_visitors" data-flag-title="WebRTC 开发（六）摄像头采集与视频渲染分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在上一篇文章 <a href="https://depthlove.github.io/2019/10/18/webrtc-development-5-run-mac-project/">WebRTC 开发（五）编译与运行 Mac 工程</a> 中，我们编译了 WebRTC 的工程 AppRTCMobile，也看到了 App 启动后的初始界面。本文基于 <a href="https://groups.google.com/forum/#!msg/discuss-webrtc/Y7TIuNbgP8M/UoXP-RuxAwAJ" target="_blank" rel="noopener">WebRTC M76 </a> ，将通过展示两人加入视频会议的 App 界面来分析视频画面的渲染流程。</p>
+<p>不管是远端还是本地的用户的视频画面渲染，我们可以将网络或本地的一些预处理看成一个盒子或者模块，我们可以从盒子或模块中不断的取出视频帧，然后通过 cpu 或 gpu 的处理将视频帧，也就是一张图片呈现到显示器上。WebRTC 的视频帧处理逻辑以及渲染逻辑是怎样的呢？这需要通过阅读代码来理清楚流程。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/22/webrtc-development-6-video-rendering-analysis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/10/18/webrtc-development-5-run-mac-project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -986,91 +1070,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/04/10/audio-and-video-development-skills-list/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/04/10/audio-and-video-development-skills-list/" class="post-title-link" itemprop="url">音视频开发技能列表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-04-10 16:10:22" itemprop="dateCreated datePublished" datetime="2019-04-10T16:10:22+08:00">2019-04-10</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/04/10/audio-and-video-development-skills-list/" class="post-meta-item leancloud_visitors" data-flag-title="音视频开发技能列表" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<h2 id="流媒体协议"><a href="#流媒体协议" class="headerlink" title="流媒体协议"></a>流媒体协议</h2></blockquote>
-<h3 id="RTMP"><a href="#RTMP" class="headerlink" title="RTMP"></a>RTMP</h3><p><a href="https://www.jianshu.com/p/b2144f9bbe28" target="_blank" rel="noopener">带你吃透RTMP</a><br><a href="https://www.jianshu.com/p/00aceabce944" target="_blank" rel="noopener">直播推流实现RTMP协议的一些注意事项</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/04/10/audio-and-video-development-skills-list/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1142,7 +1141,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">94</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
