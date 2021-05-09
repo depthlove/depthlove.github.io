@@ -1,0 +1,10 @@
+<h2 id="文章置顶功能"><a href="#文章置顶功能" class="headerlink" title="文章置顶功能"></a>文章置顶功能</h2><p>修改 ~/depthloveBlog/themes/next/layout/_macro/post.swig</p>
+<p>在 </p>
+<pre><code>{%- if post.description and (not theme.excerpt_description or not is_index) %}
+    &lt;div class=&quot;post-description&quot;&gt;{{ post.description }}&lt;/div&gt;
+{%- endif %}</code></pre><p>后面添加代码</p>
+<pre><code>{% if post.top %}
+    &lt;i class=&quot;fa fa-thumb-tack&quot;&gt;&lt;/i&gt;
+    &lt;font color=green&gt;置顶&lt;/font&gt;
+    &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;
+{% endif %}</code></pre>
