@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Depth.Love Blog">
 <meta property="og:description" content="前文 WebRTC 开发（六）摄像头采集与视频渲染分析 提到了 WebRTC 视频渲染的大概流程，但没有具体分析每个实现文件的功能，本文会深入到具体的实现文件。  渲染的代码位置 代码位置：webrtc&#x2F;src&#x2F;sdk&#x2F;objc&#x2F;components&#x2F;renderer 12345678910# openglRTCNSGLVideoView.h          RTCNSGLVideoView.m">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-2.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-4.png">
 <meta property="article:published_time" content="2019-10-28T10:13:43.000Z">
-<meta property="article:modified_time" content="2019-12-19T02:03:20.956Z">
+<meta property="article:modified_time" content="2022-05-05T17:49:04.267Z">
 <meta property="article:author" content="Depth.Love">
 <meta property="article:tag" content="音视频处理">
 <meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-1.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-1.png">
 
 <link rel="canonical" href="https://depthlove.github.io/2019/10/28/webrtc-development-8-render-video-with-opengl/">
 
@@ -313,10 +313,10 @@
 <blockquote>
 <h3 id="渲染的调用逻辑"><a href="#渲染的调用逻辑" class="headerlink" title="渲染的调用逻辑"></a>渲染的调用逻辑</h3></blockquote>
 <p>渲染的实现逻辑，可以通过加 <code>断点</code> 的方式来查看。</p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-1.png" alt="pic-1"></p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-2.png" alt="pic-2"></p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-3.png" alt="pic-3"></p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-8-render-video-with-opengl/pic-4.png" alt="pic-4"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-1.png" alt="pic-1"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-2.png" alt="pic-2"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-3.png" alt="pic-3"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-8-render-video-with-opengl/pic-4.png" alt="pic-4"></p>
 
     </div>
 
@@ -470,7 +470,7 @@
 <div class="copyright">
   
   &copy; 2015 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

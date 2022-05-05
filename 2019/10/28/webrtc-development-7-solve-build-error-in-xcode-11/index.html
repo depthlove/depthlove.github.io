@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Depth.Love Blog">
 <meta property="og:description" content="将 Xcode 升级到 Xcode 11.1 版本后，工程 AppRTCMobile 编译报错 “code object is not signed at all”。详细信息如下： 123456789101112Showing Recent MessagesCodeSign &#x2F;Users&#x2F;suntongmian&#x2F;Documents&#x2F;workplace&#x2F;webrtc&#x2F;src&#x2F;out&#x2F;mac&#x2F;AppR">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/before-modify-signing.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/after-modify-signing.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-success.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/before-modify-signing.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/after-modify-signing.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/build-success.png">
 <meta property="article:published_time" content="2019-10-28T05:11:50.000Z">
-<meta property="article:modified_time" content="2019-10-28T06:50:19.720Z">
+<meta property="article:modified_time" content="2022-05-05T17:45:54.225Z">
 <meta property="article:author" content="Depth.Love">
 <meta property="article:tag" content="音视频处理">
 <meta property="article:tag" content="WebRTC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png">
 
 <link rel="canonical" href="https://depthlove.github.io/2019/10/28/webrtc-development-7-solve-build-error-in-xcode-11/">
 
@@ -282,16 +282,16 @@
 
 <a id="more"></a>
 
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png" alt="build-error-info"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/build-error-info.png" alt="build-error-info"></p>
 <p>解决方案是：</p>
 <p>(1) 选择 target <code>AppRTCMobile</code></p>
 <p>(2) 点击 <code>Build Settings</code></p>
 <p>(3) 修改 <code>Signing</code> 一栏下的 <code>Other Code Signing Flags</code>，增加 <code>--deep</code></p>
 <p>(4) 修改后，先 clean 下工程，再次执行编译，可以看到编译通过。</p>
 <p>如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/before-modify-signing.png" alt="before-modify-signing"></p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/after-modify-signing.png" alt="after-modify-signing"></p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/webrtc-development-7-solve-build-error-in-xcode-11/build-success.png" alt="build-success"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/before-modify-signing.png" alt="before-modify-signing"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/after-modify-signing.png" alt="after-modify-signing"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-7-solve-build-error-in-xcode-11/build-success.png" alt="build-success"></p>
 
     </div>
 
@@ -444,7 +444,7 @@
 <div class="copyright">
   
   &copy; 2015 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

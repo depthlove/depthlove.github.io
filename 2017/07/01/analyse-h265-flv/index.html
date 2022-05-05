@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="Depth.Love Blog">
 <meta property="og:description" content="常见的 FLV 文件里封装的是 H.264 和 AAC 数据。对于 H.265(HEVC)，FLV 支不支持呢，答案是官方版本不支持。想用 FLV 封装 H.265 数据，那该怎么搞？首先，需要一套 H.265 的编解码器，其次，就是扩展 FLV 的头 header，其实是增加对 H.265 CodecID 的支持。 今年6月6日苹果开发者大会开放了 iOS 平台的 HEVC API，也就是开发者">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/analyse-h265-flv/analyse-h265-flv-00.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/analyse-h265-flv/analyse-h265-flv-00.jpg">
 <meta property="article:published_time" content="2017-07-01T10:38:19.000Z">
-<meta property="article:modified_time" content="2021-09-03T07:38:13.261Z">
+<meta property="article:modified_time" content="2022-05-05T14:09:24.281Z">
 <meta property="article:author" content="Depth.Love">
 <meta property="article:tag" content="音视频处理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/analyse-h265-flv/analyse-h265-flv-00.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/analyse-h265-flv/analyse-h265-flv-00.jpg">
 
 <link rel="canonical" href="https://depthlove.github.io/2017/07/01/analyse-h265-flv/">
 
@@ -280,7 +280,7 @@
 
 <p>去年，我们团队就已经实现 H.265 直播推流和播放了，采用的是 H.265 软编码和软解码器，推流端使用 500K 码率就能推送 24 帧，720P 的视频流，设备的性能消耗在可接受的范围内，播放端画质相当清晰。</p>
 <p>言归正传，分析下 H.265+AAC 的 FLV 文件。</p>
-<p><img src="https://raw.githubusercontent.com/depthlove/depthloveBlog/master/source/images/analyse-h265-flv/analyse-h265-flv-00.jpg" alt="H.265+AAC的FLV"></p>
+<p><img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/analyse-h265-flv/analyse-h265-flv-00.jpg" alt="H.265+AAC的FLV"></p>
 <p>关于 H.265 的 VPS、SPS、PPS 等知识点的解释，可参看文章：<br><a href="http://blog.csdn.net/u012868357/article/details/48974967" target="_blank" rel="noopener">VPS SPS PPS</a><br><a href="http://blog.csdn.net/lin453701006/article/details/52797104" target="_blank" rel="noopener">HEVC编码结构：序列参数集SPS、图像参数集PPS、视频参数集VPS</a><br><a href="http://blog.csdn.net/leixiaohua1020/article/details/46412607" target="_blank" rel="noopener">FFmpeg的HEVC解码器源代码简单分析：解析器（Parser）部分</a><br><a href="http://blog.csdn.net/nb_vol_1/article/details/50210487" target="_blank" rel="noopener">homerHEVC代码阅读（21）——基本流程</a><br><a href="http://blog.csdn.net/lin453701006/article/details/52797415" target="_blank" rel="noopener">HEVC概念缩写对照表</a></p>
 <p>想了解关于 FLV 的更多细节请看文章<a href="https://depthlove.github.io/2015/11/13/flv-analysis-in-rtmp-live-play">rtmp直播推流（一）－－flv格式解析与封装</a></p>
 
@@ -434,7 +434,7 @@
 <div class="copyright">
   
   &copy; 2015 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
