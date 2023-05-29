@@ -204,6 +204,163 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2023/01/10/webrtc-development-13-run-android-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/10/webrtc-development-13-run-android-project/" class="post-title-link" itemprop="url">WebRTC 开发（十三）编译与运行 Android 工程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-10 11:49:36" itemprop="dateCreated datePublished" datetime="2023-01-10T11:49:36+08:00">2023-01-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a>
+                </span>
+            </span>
+
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="WebRTC-版本"><a href="#WebRTC-版本" class="headerlink" title="WebRTC 版本"></a>WebRTC 版本</h1><p><a href="https://webrtc.googlesource.com/src/+/refs/heads/main/docs/release-notes.md" target="_blank" rel="noopener">Release notes</a></p>
+<p><a href="https://chromiumdash.appspot.com/branches" target="_blank" rel="noopener">branches</a></p>
+<p><a href="https://webrtc.googlesource.com/src.git/+log/refs/branch-heads/5359" target="_blank" rel="noopener">m108</a></p>
+<table>
+<thead>
+<tr>
+<th align="right">版本</th>
+<th align="right">分支</th>
+<th align="right">commit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">m108</td>
+<td align="right">branch-heads/5359</td>
+<td align="right">93081d5</td>
+</tr>
+</tbody></table>
+<blockquote>
+<h1 id="操作系统类型"><a href="#操作系统类型" class="headerlink" title="操作系统类型"></a>操作系统类型</h1></blockquote>
+<p>MacOS</p>
+<blockquote>
+<h1 id="下载-depot-tools-工具"><a href="#下载-depot-tools-工具" class="headerlink" title="下载 depot_tools 工具"></a>下载 depot_tools 工具</h1></blockquote>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -<span class="keyword">p</span> webrtc</span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> webrtc</span><br><span class="line"></span><br><span class="line">git clone http<span class="variable">s:</span>//chromium.googlesource.<span class="keyword">com</span>/chromium/tools/depot_tools.git</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="配置-depot-tools-工具的路径"><a href="#配置-depot-tools-工具的路径" class="headerlink" title="配置 depot_tools 工具的路径"></a>配置 depot_tools 工具的路径</h1></blockquote>
+<p>在终端执行命令：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~<span class="string">/.zshrc</span></span><br></pre></td></tr></table></figure>
+
+<p>往 ~/.zshrc 文件中添加路径：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> <span class="attribute">webrtc_depot_tools</span>=/Users/suntongmian/Documents/workplace/webrtc/depot_tools</span><br><span class="line"><span class="builtin-name">export</span> <span class="attribute">PATH</span>=<span class="variable">$PATH</span>:$webrtc_depot_tools</span><br></pre></td></tr></table></figure>
+
+<p>让修改生效，在终端执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="下载-Android-平台代码"><a href="#下载-Android-平台代码" class="headerlink" title="下载 Android 平台代码"></a>下载 Android 平台代码</h1></blockquote>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> webrtc</span><br><span class="line"></span><br><span class="line">fetch <span class="params">--nohooks</span> webrtc_android</span><br></pre></td></tr></table></figure>
+
+<p>执行过程如下：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">➜  webrtc fetch --nohooks webrtc_android                  </span><br><span class="line">Running: gclient root</span><br><span class="line">Updating depot_tools<span class="built_in">..</span>.</span><br><span class="line">WARNING: Your metrics.cfg file was invalid <span class="keyword">or</span> nonexistent. A new one will be created.</span><br><span class="line">Running: gclient<span class="built_in"> config </span>--spec <span class="string">'solutions = [</span></span><br><span class="line"><span class="string">  &#123;</span></span><br><span class="line"><span class="string">    "name": "src",</span></span><br><span class="line"><span class="string">    "url": "https://webrtc.googlesource.com/src.git",</span></span><br><span class="line"><span class="string">    "deps_file": "DEPS",</span></span><br><span class="line"><span class="string">    "managed": False,</span></span><br><span class="line"><span class="string">    "custom_deps": &#123;&#125;,</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string">target_os = ["android", "unix"]</span></span><br><span class="line"><span class="string">'</span></span><br><span class="line">Updating depot_tools<span class="built_in">..</span>.</span><br><span class="line">Running: gclient sync --nohooks --with_branch_heads</span><br><span class="line">Updating depot_tools<span class="built_in">..</span>.</span><br><span class="line"></span><br><span class="line"><span class="built_in">..</span><span class="built_in">..</span><span class="built_in">..</span></span><br><span class="line"></span><br><span class="line">[0:32:15] Still working on:</span><br><span class="line">[0:32:15]   src/third_party/android_ndk</span><br><span class="line">Syncing projects: 100% (243/243), done.                     </span><br><span class="line">Running: git submodule <span class="keyword">foreach</span> <span class="string">'git config -f $toplevel/.git/config submodule.$name.ignore all'</span></span><br><span class="line">Running: git<span class="built_in"> config </span>--<span class="builtin-name">add</span> remote.origin.fetch <span class="string">'+refs/tags/*:refs/tags/*'</span></span><br><span class="line">Running: git<span class="built_in"> config </span>diff.ignoreSubmodules all</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="下载指定的-WebRTC-版本"><a href="#下载指定的-WebRTC-版本" class="headerlink" title="下载指定的 WebRTC 版本"></a>下载指定的 WebRTC 版本</h1></blockquote>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> webrtc</span><br><span class="line"></span><br><span class="line">gclient sync -r 93081d5 <span class="params">--force</span></span><br></pre></td></tr></table></figure>
+
+<p>执行过程如下：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  webrtc gclient sync -r 93081d5 <span class="params">--force</span>                                           </span><br><span class="line">Updating depot_tools.<span class="string">..</span></span><br><span class="line">Syncing projects: 100% <span class="params">(242/242)</span>, done. </span><br><span class="line"></span><br><span class="line"><span class="string">......</span></span><br><span class="line"></span><br><span class="line">Hook 'download_from_google_storage <span class="params">--directory</span> <span class="params">--recursive</span> <span class="params">--num_threads=10</span> <span class="params">--no_auth</span> <span class="params">--quiet</span> <span class="params">--bucket</span> chromium-webrtc-resources src/resources' took 367.89 secs</span><br><span class="line">Hook 'vpython3 src/testing/generate_location_tags.py <span class="params">--out</span> src/testing/location_tags.json' took 36.50 secs</span><br><span class="line">Running hooks: 100% <span class="params">(29/29)</span>, done.</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="创建-Android-工程"><a href="#创建-Android-工程" class="headerlink" title="创建 Android 工程"></a>创建 Android 工程</h1></blockquote>
+<p>生成 Android 平台的 Android Studio 工程，在终端执行命令：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> webrtc</span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> src</span><br><span class="line"></span><br><span class="line">gn <span class="keyword">gen</span> <span class="keyword">out</span>/android --<span class="keyword">args</span>='target_os=<span class="string">"android"</span> target_cpu=<span class="string">"arm64"</span> is_debug=true'</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ERROR Unresolved dependencies.</span><br><span class="line">/<span class="regexp">/examples/androidapp</span><span class="regexp">/third_party/autobanh</span><span class="symbol">:autobanh_java__header</span>(<span class="regexp">//build</span><span class="regexp">/toolchain/android</span><span class="symbol">:android_clang_arm64</span>)</span><br><span class="line">  needs /<span class="regexp">/third_party/ijar</span><span class="symbol">:ijar</span>(<span class="regexp">//build</span><span class="regexp">/toolchain/mac</span><span class="symbol">:clang_x64</span>)</span><br><span class="line">/<span class="regexp">/third_party/accessibility</span><span class="symbol">_test_framework:</span>accessibility_test_framework_java__header(<span class="regexp">//build</span><span class="regexp">/toolchain/android</span><span class="symbol">:android_clang_arm64</span>)</span><br><span class="line">  needs /<span class="regexp">/third_party/ijar</span><span class="symbol">:ijar</span>(<span class="regexp">//build</span><span class="regexp">/toolchain/mac</span><span class="symbol">:clang_x64</span>)</span><br><span class="line">  </span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p>在 macOS 系统上生成 WebRTC Android 工程报错了。如何解决？</p>
+<p><a href="https://groups.google.com/g/discuss-webrtc/c/9299R9Fyrog" target="_blank" rel="noopener">Supported to compile webRTC for Android on a Mac?</a> 提到“WebRTC android development is not supported on mac”。官方解释不支持在 Mac 设备上编译 Android 平台的 WebRTC。</p>
+<p>如果要在 Mac 设备上编译 Android 平台的 WebRTC 工程，该怎么办？</p>
+<p>根据错误提示“ERROR Unresolved dependencies. needs //third_party/ijar:ijar(//build/toolchain/mac:clang_x64)”，查看 webrtc/src/third_party/ijar/BUILD.gn 文件的内容。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">➜  src git:(<span class="number">93081</span>d594f) cat third_party/ijar/BUILD.gn        </span><br><span class="line"><span class="comment"># Copyright 2015 The Chromium Authors</span></span><br><span class="line"><span class="comment"># Use of this source code is governed by a BSD-style license that can be</span></span><br><span class="line"><span class="comment"># found in the LICENSE file.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># A tool that removes all non-interface-specific parts from a .jar file.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (is_linux || is_chromeos) &#123;</span><br><span class="line">  config(<span class="string">"ijar_compiler_flags"</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (is_clang) &#123;</span><br><span class="line">      <span class="attr">cflags</span> = [</span><br><span class="line">        <span class="string">"-Wno-shadow"</span>,</span><br><span class="line">        <span class="string">"-Wno-unused-but-set-variable"</span>,</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  executable(<span class="string">"ijar"</span>) &#123;</span><br><span class="line">    <span class="attr">sources</span> = [</span><br><span class="line">      <span class="string">"classfile.cc"</span>,</span><br><span class="line">      <span class="string">"common.h"</span>,</span><br><span class="line">      <span class="string">"ijar.cc"</span>,</span><br><span class="line">      <span class="string">"mapped_file.h"</span>,</span><br><span class="line">      <span class="string">"mapped_file_unix.cc"</span>,</span><br><span class="line">      <span class="string">"platform_utils.cc"</span>,</span><br><span class="line">      <span class="string">"platform_utils.h"</span>,</span><br><span class="line">      <span class="string">"zip.cc"</span>,</span><br><span class="line">      <span class="string">"zip.h"</span>,</span><br><span class="line">      <span class="string">"zlib_client.cc"</span>,</span><br><span class="line">      <span class="string">"zlib_client.h"</span>,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="attr">deps</span> = [ <span class="string">"//third_party/zlib"</span> ]</span><br><span class="line"></span><br><span class="line">    configs += [ <span class="string">":ijar_compiler_flags"</span> ]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Always build release since this is a build tool.</span></span><br><span class="line">    <span class="keyword">if</span> (is_debug) &#123;</span><br><span class="line">      configs <span class="attr">-=</span> [ <span class="string">"//build/config:debug"</span> ]</span><br><span class="line">      configs += [ <span class="string">"//build/config:release"</span> ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>if (is_linux || is_chromeos) 修改为 if (is_linux || is_chromeos || is_mac)</code> ，让 gn 支持 Mac 设备编译 Android 平台的 WebRTC 工程。</p>
+<p>再次在终端执行命令：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> webrtc</span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> src</span><br><span class="line"></span><br><span class="line">gn <span class="keyword">gen</span> <span class="keyword">out</span>/android --<span class="keyword">args</span>='target_os=<span class="string">"android"</span> target_cpu=<span class="string">"arm64"</span> is_debug=true'</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  src git:(<span class="number">93081</span>d594f) gn gen <span class="keyword">out</span>/android --args=<span class="string">'target_os="android" target_cpu="arm64" is_debug=true'</span></span><br><span class="line">Done. Made <span class="number">6591</span> targets <span class="keyword">from</span> <span class="number">356</span> files <span class="keyword">in</span> <span class="number">2002</span>ms</span><br></pre></td></tr></table></figure>
+
+<p>在终端执行命令：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autoninja -C <span class="keyword">out</span>/android -t targets <span class="keyword">all</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="启动-Android-Studio-工程"><a href="#启动-Android-Studio-工程" class="headerlink" title="启动 Android Studio 工程"></a>启动 Android Studio 工程</h1></blockquote>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> -a Xcode.app <span class="keyword">out</span>/ios/<span class="keyword">all</span>.xcworkspace</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h1 id="运行-Android-工程"><a href="#运行-Android-工程" class="headerlink" title="运行 Android 工程"></a>运行 Android 工程</h1></blockquote>
+<center>
+<figure>
+<img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-10-run-ios-project/ios-app-home.png" width="300"/>
+<img src="https://raw.githubusercontent.com/depthlove/depthlove.github.io/master/images/webrtc-development-10-run-ios-project/ios-app-meeting.png" width="300"/>
+</figure>
+</center>
+
+<blockquote>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1></blockquote>
+<p>[1] <a href="https://webrtc.googlesource.com/src/+/main/docs/native-code/android/index.md" target="_blank" rel="noopener">WebRTC Android development</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2021/12/30/the-summary-of-2021-year/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -928,86 +1085,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2019/10/28/webrtc-development-8-render-video-with-opengl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/28/webrtc-development-8-render-video-with-opengl/" class="post-title-link" itemprop="url">WebRTC 开发（八）使用 OpenGL 渲染视频</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-28 18:13:43" itemprop="dateCreated datePublished" datetime="2019-10-28T18:13:43+08:00">2019-10-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/WebRTC/" itemprop="url" rel="index"><span itemprop="name">WebRTC</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>前文 <a href="https://depthlove.github.io/2019/10/22/webrtc-development-6-video-rendering-analysis/">WebRTC 开发（六）摄像头采集与视频渲染分析</a> 提到了 WebRTC 视频渲染的大概流程，但没有具体分析每个实现文件的功能，本文会深入到具体的实现文件。</p>
-<blockquote>
-<h3 id="渲染的代码位置"><a href="#渲染的代码位置" class="headerlink" title="渲染的代码位置"></a>渲染的代码位置</h3></blockquote>
-<p>代码位置：<a href="https://chromium.googlesource.com/external/webrtc/+/9863f3d246e2da7a2e1f42bbc5757f6af5ec5682/sdk/objc/components/renderer/" target="_blank" rel="noopener">webrtc/src/sdk/objc/components/renderer</a></p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># opengl</span><br><span class="line"></span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCNSGLVideoView</span>.</span></span>h          <span class="module-access"><span class="module"><span class="identifier">RTCNSGLVideoView</span>.</span></span>m</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCEAGLVideoView</span>.</span></span>h          <span class="module-access"><span class="module"><span class="identifier">RTCEAGLVideoView</span>.</span></span>m</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCOpenGLDefines</span>.</span></span>h          <span class="module-access"><span class="module"><span class="identifier">RTCVideoViewShading</span>.</span></span>h</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCDefaultShader</span>.</span></span>h          <span class="module-access"><span class="module"><span class="identifier">RTCDefaultShader</span>.</span></span>mm</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCShader</span>.</span></span>h                 <span class="module-access"><span class="module"><span class="identifier">RTCShader</span>.</span></span>mm</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCNV12TextureCache</span>.</span></span>h       <span class="module-access"><span class="module"><span class="identifier">RTCNV12TextureCache</span>.</span></span>m</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCI420TextureCache</span>.</span></span>h       <span class="module-access"><span class="module"><span class="identifier">RTCI420TextureCache</span>.</span></span>mm</span><br><span class="line"><span class="module-access"><span class="module"><span class="identifier">RTCDisplayLinkTimer</span>.</span></span>h       <span class="module-access"><span class="module"><span class="identifier">RTCDisplayLinkTimer</span>.</span></span>m</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/28/webrtc-development-8-render-video-with-opengl/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1079,7 +1156,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1131,7 +1208,7 @@
 <div class="copyright">
   
   &copy; 2015 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
