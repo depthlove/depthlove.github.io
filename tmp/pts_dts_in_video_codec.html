@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"depthlove.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在音视频开发中，时间戳（Timestamp）是保障画面流畅和音视频同步（A&#x2F;V Sync）的核心。如果搞不懂 PTS&#x2F;DTS 的底层机制，在面对 B 帧、起播黑屏、音画不同步等复杂问题时，基本只能抓瞎。 基于 H.264 底层规范，结合 FFmpeg、VideoToolbox、MediaCodec 等主流框架，我将 PTS&#x2F;DTS 的核心机理和踩坑经验总结如下。 1. 核心定义与时间基 (Time">
+<meta property="og:type" content="website">
+<meta property="og:title" content="视频编解码的 PTS&#x2F;DTS 时间戳机制与工程实践">
+<meta property="og:url" content="https://depthlove.github.io/tmp/pts_dts_in_video_codec.html">
+<meta property="og:site_name" content="Depth.Love Blog">
+<meta property="og:description" content="在音视频开发中，时间戳（Timestamp）是保障画面流畅和音视频同步（A&#x2F;V Sync）的核心。如果搞不懂 PTS&#x2F;DTS 的底层机制，在面对 B 帧、起播黑屏、音画不同步等复杂问题时，基本只能抓瞎。 基于 H.264 底层规范，结合 FFmpeg、VideoToolbox、MediaCodec 等主流框架，我将 PTS&#x2F;DTS 的核心机理和踩坑经验总结如下。 1. 核心定义与时间基 (Time">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-10T09:22:07.455Z">
+<meta property="article:author" content="Depth.Love">
+<meta property="article:tag" content="音视频处理">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://depthlove.github.io/tmp/pts_dts_in_video_codec">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>视频编解码的 PTS/DTS 时间戳机制与工程实践 | Depth.Love Blog
+</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140292689-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-140292689-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb3cb1d5838b79bdd0bccc4f449418c6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Depth.Love Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">GitHub：https://github.com/depthlove</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/depthlove" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">视频编解码的 PTS/DTS 时间戳机制与工程实践
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>在音视频开发中，时间戳（Timestamp）是保障画面流畅和音视频同步（A/V Sync）的核心。如果搞不懂 PTS/DTS 的底层机制，在面对 B 帧、起播黑屏、音画不同步等复杂问题时，基本只能抓瞎。</p>
+<p>基于 H.264 底层规范，结合 FFmpeg、VideoToolbox、MediaCodec 等主流框架，我将 PTS/DTS 的核心机理和踩坑经验总结如下。</p>
+<h2 id="1-核心定义与时间基-Time-Base"><a href="#1-核心定义与时间基-Time-Base" class="headerlink" title="1. 核心定义与时间基 (Time Base)"></a>1. 核心定义与时间基 (Time Base)</h2><h3 id="1-1-三个核心时间概念"><a href="#1-1-三个核心时间概念" class="headerlink" title="1.1 三个核心时间概念"></a>1.1 三个核心时间概念</h3><p>在引入 B 帧的视频流中，单一的时间轴无法满足解码和显示的双重要求，因此定义了三个变量：</p>
+<ul>
+<li><strong>PTS (Presentation Time Stamp)</strong>：<strong>显示时间戳</strong>。告诉播放器这一帧应该在什么绝对时间点渲染到屏幕上。</li>
+<li><strong>DTS (Decoding Time Stamp)</strong>：<strong>解码时间戳</strong>。告诉解码器这一帧压缩数据（NALU）应该在什么绝对时间点送入解码器。</li>
+<li><strong>CTS (Composition Time Shift)</strong>：<strong>组合时间偏移</strong>。即显示时间与解码时间的差值。由于画面必须先解码才能显示，所以通常 PTS ≥ DTS。<script type="math/tex; mode=display">PTS = DTS + CTS</script></li>
+</ul>
+<blockquote>
+<p><strong>音频的特殊性</strong>：音频是线性顺序解码的，不存在类似视频 B 帧的前后时域依赖。因此<strong>音频的 PTS 永远等于 DTS</strong>，处理音频时只需关注 PTS。</p>
+</blockquote>
+<span id="more"></span>  
+<h3 id="1-2-时间基-Time-Base-与刻度转换"><a href="#1-2-时间基-Time-Base-与刻度转换" class="headerlink" title="1.2 时间基 (Time Base) 与刻度转换"></a>1.2 时间基 (Time Base) 与刻度转换</h3><p>在 FFmpeg 或 WebRTC 等工程实现中，时间戳很少用浮点数（秒）表示，因为浮点数连续累加会带来精度误差。业界普遍采用<strong>有理数分数（Rational Number）</strong>定义的时间基准来表示离散的 Tick 刻度。</p>
+<ul>
+<li><strong>MPEG-TS 封装</strong>：默认采用 1/90000 秒作为基准。若视频为 25fps，则每帧的增量为：90000 / 25 = 3600 ticks。</li>
+<li><strong>FLV/RTMP 封装</strong>：默认采用 1/1000 秒（即毫秒）作为基准。</li>
+<li><strong>换算公式</strong>：<script type="math/tex; mode=display">\text{物理绝对时间 (秒)} = \text{timestamp} \times \frac{\text{time_base.num}}{\text{time_base.den}}</script></li>
+</ul>
+<h2 id="2-B-帧引入的时域错位"><a href="#2-B-帧引入的时域错位" class="headerlink" title="2. B 帧引入的时域错位"></a>2. B 帧引入的时域错位</h2><h3 id="2-1-为什么必须分离-PTS-与-DTS？"><a href="#2-1-为什么必须分离-PTS-与-DTS？" class="headerlink" title="2.1 为什么必须分离 PTS 与 DTS？"></a>2.1 为什么必须分离 PTS 与 DTS？</h3><p>视频帧间预测分为三种：</p>
+<ul>
+<li><strong>I 帧（Intra-coded）</strong>：关键帧，全量空间编码，不依赖其他帧。</li>
+<li><strong>P 帧（Predictive）</strong>：前向预测帧，参考历史显示的 I/P 帧。</li>
+<li><strong>B 帧（Bi-directional）</strong>：双向预测帧，同时参考<strong>历史帧</strong>和<strong>未来帧</strong>，压缩率极高。</li>
+</ul>
+<p>因为 B 帧需要“向未来借信息”，编码器/解码器就必须先处理未来的参考帧（P帧），再处理中间的 B 帧。这导致了<strong>解码顺序（DTS）与显示顺序（PTS）</strong>的错位。</p>
+<h3 id="2-2-典型-IBBP-结构下的时域推演"><a href="#2-2-典型-IBBP-结构下的时域推演" class="headerlink" title="2.2 典型 IBBP 结构下的时域推演"></a>2.2 典型 IBBP 结构下的时域推演</h3><p>假设视频帧率为 25 fps（帧间隔 $\Delta t = 40\text{ ms}$），GOP 结构为 IBBP（2 个连续 B 帧）。</p>
+<p>显示顺序 (PTS):  I0(0)  ──&gt;  B1(40)  ──&gt;  B2(80)  ──&gt;  P3(120)  ──&gt;  B4(160)<br>                 │            │            │            │             │<br>                 ▼            └──────┬─────┘            ▼             │<br>解码顺序 (DTS):  I0(0)  ──&gt;  P3(40) ──┴─&gt; B1(80)  ──&gt;  B2(120)  ──&gt;  P6(160)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">显示序号</th>
+<th style="text-align:left">帧类型</th>
+<th style="text-align:left">显示时间 (PTS)</th>
+<th style="text-align:left">解码时间 (DTS)</th>
+<th style="text-align:left">偏移量 (CTS)</th>
+<th style="text-align:left">处理序号</th>
+<th style="text-align:left">依赖关系与说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">I 帧</td>
+<td style="text-align:left">0 ms</td>
+<td style="text-align:left">0 ms</td>
+<td style="text-align:left">0 ms</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">独立解码，直接显示</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">B 帧</td>
+<td style="text-align:left">40 ms</td>
+<td style="text-align:left">120 ms</td>
+<td style="text-align:left">-80 ms</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">依赖 I0 和 P3，需等待 P3 解码完毕</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">B 帧</td>
+<td style="text-align:left">80 ms</td>
+<td style="text-align:left">160 ms</td>
+<td style="text-align:left">-80 ms</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">依赖 I0 和 P3，需等待 P3 解码完毕</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">P 帧</td>
+<td style="text-align:left">120 ms</td>
+<td style="text-align:left">40 ms</td>
+<td style="text-align:left">80 ms</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">仅依赖 I0。必须提前解码以供 B1/B2 参考</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">B 帧</td>
+<td style="text-align:left">160 ms</td>
+<td style="text-align:left">240 ms</td>
+<td style="text-align:left">-80 ms</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">依赖 P3 和下一帧 P6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>核心铁律</strong>：无论是写入 MP4 文件还是网络推流，<strong>底层的数据包必须严格按照 DTS 单调递增的顺序排列和传输</strong>。播放器接收到数据后，按 DTS 喂给解码器，解码后缓存在内存中，再按照 PTS 顺序挑出画面送给显卡渲染。</p>
+</blockquote>
+<h2 id="3-裸流与容器层的时间戳解耦"><a href="#3-裸流与容器层的时间戳解耦" class="headerlink" title="3. 裸流与容器层的时间戳解耦"></a>3. 裸流与容器层的时间戳解耦</h2><h3 id="3-1-H-264-裸流中的-POC-机制"><a href="#3-1-H-264-裸流中的-POC-机制" class="headerlink" title="3.1 H.264 裸流中的 POC 机制"></a>3.1 H.264 裸流中的 POC 机制</h3><p><strong>误区</strong>：很多人以为 H.264 码流内部直接存储了 PTS 和 DTS。事实上，H.264 Annex B 裸流内部没有绝对时间戳的概念。</p>
+<ul>
+<li>它通过 Slice Header 中的 <strong>POC (Picture Order Count，图像顺序计数)</strong> 来标定当前帧的相对显示顺序。</li>
+<li>解码器解析 POC 能够知道画面的相对前后关系，但不知道具体的播放毫秒数。</li>
+</ul>
+<h3 id="3-2-容器层的绝对时间映射"><a href="#3-2-容器层的绝对时间映射" class="headerlink" title="3.2 容器层的绝对时间映射"></a>3.2 容器层的绝对时间映射</h3><p>绝对时间戳是由外部封装格式（Container）维护的，不同容器的存储结构不同：</p>
+<ul>
+<li><strong>MP4 / MOV</strong>：通过 <code>stts</code> box 存储每一帧 <strong>DTS</strong> 的差值（Delta），通过 <code>ctts</code> box 存储每一帧的 <strong>CTS</strong>。播放器通过 $PTS = DTS + CTS$ 计算出显示时间。</li>
+<li><strong>FLV / RTMP</strong>：Video Tag Header 中有 32 位的 <code>Timestamp</code> 字段（存储绝对 <strong>DTS</strong>），以及一个 24 位的 <code>CompositionTime</code> 字段（存储 <strong>CTS</strong> 偏移）。</li>
+<li><strong>MPEG-TS</strong>：在 PES (Packetized Elementary Stream) 头中，直接以 33 位无符号整数分别写入完整的 <strong>PTS</strong> 和 <strong>DTS</strong>。</li>
+</ul>
+<h2 id="4-主流编解码框架的工程踩坑点"><a href="#4-主流编解码框架的工程踩坑点" class="headerlink" title="4. 主流编解码框架的工程踩坑点"></a>4. 主流编解码框架的工程踩坑点</h2><h3 id="4-1-FFmpeg"><a href="#4-1-FFmpeg" class="headerlink" title="4.1 FFmpeg"></a>4.1 FFmpeg</h3><ul>
+<li><strong>数据结构</strong>：<code>AVPacket</code>（压缩流）包含 <code>pts</code> 和 <code>dts</code>；<code>AVFrame</code>（未压缩图像）只包含 <code>pts</code>。</li>
+<li><strong>内部 DPB 托管</strong>：通过 <code>avcodec_send_packet</code> 顺序喂入乱序 PTS 的包，解码器内部维护 DPB（Decoded Picture Buffer），并在 <code>avcodec_receive_frame</code> 时自动吐出按 PTS 排好序的原始帧。</li>
+<li><strong>时间基转换</strong>：跨容器封装时，必须进行 Time Base 转换，否则时间戳错乱：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">av_packet_rescale_ts(pkt, in_stream-&gt;time_base, out_stream-&gt;time_base);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-2-x264-的-dts-shift-策略"><a href="#4-2-x264-的-dts-shift-策略" class="headerlink" title="4.2 x264 的 dts_shift 策略"></a>4.2 x264 的 dts_shift 策略</h3><p>由于 B 帧的存在，第一帧 I 帧的 DTS 理论上需要提前（计算结果为负数，如 <code>-80ms</code>）。</p>
+<ul>
+<li><strong>痛点</strong>：FLV / RTMP 规范中的时间戳是<strong>无符号整数</strong>，不支持负数。负数会被强转为巨大的正数导致播放器崩溃。</li>
+<li><strong>x264 解法</strong>：默认进行时间轴平移（<code>dts_shift</code>），将整条流的时间轴向右平移（例如都加上 80ms），保证输出的码流 DTS 严格从 0 开始单调递增。</li>
+</ul>
+<h3 id="4-3-Apple-VideoToolbox"><a href="#4-3-Apple-VideoToolbox" class="headerlink" title="4.3 Apple VideoToolbox"></a>4.3 Apple VideoToolbox</h3><ul>
+<li><strong>输入约束</strong>：调用 <code>VTCompressionSessionEncodeFrame</code> 时，只能传入当前画面的显示时间（PTS）。严禁自行计算并传入 DTS（必须传入 <code>kCMTimeInvalid</code>），否则会破坏底层硬件的重排状态机。</li>
+<li><strong>输出提取</strong>：在回调中，通过 <code>CMSampleBufferGetPresentationTimeStamp</code> 和 <code>CMSampleBufferGetDecodeTimeStamp</code> 提取硬件计算好的 PTS 与 DTS。</li>
+</ul>
+<h3 id="4-4-Android-MediaCodec"><a href="#4-4-Android-MediaCodec" class="headerlink" title="4.4 Android MediaCodec"></a>4.4 Android MediaCodec</h3><p>MediaCodec 是处理时间戳最棘手的“黑盒”。</p>
+<ul>
+<li><strong>API 缺陷</strong>：其输入输出核心结构 <code>MediaCodec.BufferInfo</code> 只有一个 <code>presentationTimeUs</code> 字段，<strong>完全没有暴露 DTS</strong>。</li>
+<li><strong>录制 MP4 场景</strong>：将 <code>BufferInfo</code> 委托给底层的 <code>MediaMuxer</code>，系统底层会自行解析码流并推导 <code>stts</code> 和 <code>ctts</code>。</li>
+<li><strong>RTMP 推流场景</strong>：推流必须显式提供 DTS。此时必须自建推导算法：提取 NALU 中的 Slice Header 解析出 POC，在内存中维护一个容量约等于 GOP 大小的滑动窗口，模拟 DPB 延迟出栈逻辑，手动计算并分配严格单调递增的 DTS。</li>
+</ul>
+<h2 id="5-经典案例排查"><a href="#5-经典案例排查" class="headerlink" title="5. 经典案例排查"></a>5. 经典案例排查</h2><h3 id="案例一：短视频剪辑中-MP4-Edit-List-elst-导致的起播黑屏"><a href="#案例一：短视频剪辑中-MP4-Edit-List-elst-导致的起播黑屏" class="headerlink" title="案例一：短视频剪辑中 MP4 Edit List (elst) 导致的起播黑屏"></a>案例一：短视频剪辑中 MP4 Edit List (elst) 导致的起播黑屏</h3><ul>
+<li><strong>现象</strong>：对带有 B 帧的 MP4 文件进行剪辑拼接后，播放器在起播阶段经常出现 80ms 左右的黑屏或微弱的音画不同步。</li>
+<li><strong>原因</strong>：由于 <code>dts_shift</code>，第一帧 I 帧的 DTS 为 0，而 PTS 变成了 80ms。如果直接拼装，播放器从 80ms 开始渲染，导致前 80ms 画面为空。</li>
+<li><strong>解法</strong>：在 MP4 封装层利用 <code>elst</code> (Edit List Box) 机制。封装器需要写入一条 <code>elst</code> 记录，声明：“将媒体轨道的物理起播时间（80ms）映射到逻辑时间轴的 0ms 处”。播放器解析到该 Box 后会自动吃掉这 80ms 的空持续时间。</li>
+</ul>
+<h3 id="案例二：RTC-与秀场直播中的音画同步-Master-Clock-策略"><a href="#案例二：RTC-与秀场直播中的音画同步-Master-Clock-策略" class="headerlink" title="案例二：RTC 与秀场直播中的音画同步 (Master Clock) 策略"></a>案例二：RTC 与秀场直播中的音画同步 (Master Clock) 策略</h3><ul>
+<li><strong>现象</strong>：Android 手机长时间推流后，主播的口型与声音逐渐产生偏差，音画分离达到 500ms 以上。</li>
+<li><strong>原因</strong>：错误地采用了“根据帧率累加”的方式计算 PTS（如 <code>pts += 40ms</code>）。由于视频采集硬件存在丢帧，且音视频晶振存在物理漂移，静态累加的时间轴会与真实物理时间越差越远。</li>
+<li><strong>解法</strong>：引入系统单调递增时钟（Monotonic Clock），实施 <strong>Audio Master 策略</strong>：<ol>
+<li><strong>物理打戳</strong>：音视频帧在采集回调的第一时间，统一获取 <code>System.nanoTime()</code> 作为基础时间戳。</li>
+<li><strong>时钟对齐</strong>：以音频的物理时间为 Master。视频帧的实际下发 PTS 需动态追赶音频时间轴：<code>PTS_Video = Current_Video_Time - Start_Audio_Time</code>。</li>
+<li><strong>拥塞控制</strong>：当编码器或网络拥塞时，主动<strong>丢弃视频帧</strong>，但绝对不能丢弃音频帧。</li>
+</ol>
+</li>
+</ul>
+<h2 id="6-常见故障速查表"><a href="#6-常见故障速查表" class="headerlink" title="6. 常见故障速查表"></a>6. 常见故障速查表</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">异常现象</th>
+<th style="text-align:left">根源分析</th>
+<th style="text-align:left">修复方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>画面前后乱跳（鬼畜）</strong></td>
+<td style="text-align:left">未区分 PTS 与 DTS，交错发送。推流时误把乱序的 PTS 赋值给了网络包的 DTS 字段。解码器按错误顺序收包，B 帧在找不到参考帧的情况下被强行解码。</td>
+<td style="text-align:left">检查封装/推流层的 Timestamp 是否严格按单调递增的 DTS 顺序写入。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>周期性绿屏 / 大面积马赛克</strong></td>
+<td style="text-align:left">参考帧丢失或重排缓冲区 (DPB) 损坏。码流中丢失了关键的 P 帧或 I 帧，导致后续依赖它的 P/B 帧宏块预测失败。</td>
+<td style="text-align:left">检查网络丢包率；检查解码器输入端是否抛弃了无法识别的 NALU；验证 DTS 是否存在负数。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>起播画面卡顿，声音先出</strong></td>
+<td style="text-align:left">首帧 PTS 偏移量未处理。存在 <code>dts_shift</code> 偏移，但容器未写入 <code>elst</code> 或者播放器未正确实现 Edit List 解析。</td>
+<td style="text-align:left">检查 MP4 文件是否包含有效的 <code>elst</code> box；对于 FLV 检查首帧的 <code>CompositionTime</code> 是否被正确处理。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>持续的恒定音画不同步</strong></td>
+<td style="text-align:left">PTS 丢失或被渲染管线覆盖。如在 Android 端经过 OpenGL 处理后，原始采集的 PTS 被覆盖成了渲染管线的系统时间。</td>
+<td style="text-align:left">在采集源头将 PTS 绑定在纹理的 Metadata 中透传，在编码前重新赋回给图像流。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="7-架构选型复盘"><a href="#7-架构选型复盘" class="headerlink" title="7. 架构选型复盘"></a>7. 架构选型复盘</h2><ul>
+<li><p><strong>超低延迟场景（RTC、连麦、云游戏）</strong>：</p>
+<ul>
+<li><strong>强烈建议全局禁用 B 帧</strong>（强制设置 Baseline Profile 或 zero-latency 模式）。</li>
+<li>没有 B 帧后，PTS ≡ DTS，彻底消除 DPB 重排带来的数十毫秒物理延迟，同时也极大简化了网络传输层的重组逻辑。</li>
+</ul>
+</li>
+<li><p><strong>高画质流媒体场景（点播、标准直播、录制）</strong>：</p>
+<ul>
+<li>必须开启 B 帧以获取更高的压缩率。</li>
+<li>在自建流媒体管道时，务必将“按 DTS 递增传输、按 PTS 排序渲染”作为底层公理，并在模块交界处严格做好 Time Base 的精度转换。</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89%E4%B8%8E%E6%97%B6%E9%97%B4%E5%9F%BA-Time-Base"><span class="nav-number">1.</span> <span class="nav-text">1. 核心定义与时间基 (Time Base)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%97%B6%E9%97%B4%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 三个核心时间概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%97%B6%E9%97%B4%E5%9F%BA-Time-Base-%E4%B8%8E%E5%88%BB%E5%BA%A6%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 时间基 (Time Base) 与刻度转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-B-%E5%B8%A7%E5%BC%95%E5%85%A5%E7%9A%84%E6%97%B6%E5%9F%9F%E9%94%99%E4%BD%8D"><span class="nav-number">2.</span> <span class="nav-text">2. B 帧引入的时域错位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E5%88%86%E7%A6%BB-PTS-%E4%B8%8E-DTS%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 为什么必须分离 PTS 与 DTS？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%85%B8%E5%9E%8B-IBBP-%E7%BB%93%E6%9E%84%E4%B8%8B%E7%9A%84%E6%97%B6%E5%9F%9F%E6%8E%A8%E6%BC%94"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 典型 IBBP 结构下的时域推演</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%A3%B8%E6%B5%81%E4%B8%8E%E5%AE%B9%E5%99%A8%E5%B1%82%E7%9A%84%E6%97%B6%E9%97%B4%E6%88%B3%E8%A7%A3%E8%80%A6"><span class="nav-number">3.</span> <span class="nav-text">3. 裸流与容器层的时间戳解耦</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-H-264-%E8%A3%B8%E6%B5%81%E4%B8%AD%E7%9A%84-POC-%E6%9C%BA%E5%88%B6"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 H.264 裸流中的 POC 机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%AE%B9%E5%99%A8%E5%B1%82%E7%9A%84%E7%BB%9D%E5%AF%B9%E6%97%B6%E9%97%B4%E6%98%A0%E5%B0%84"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 容器层的绝对时间映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%B8%BB%E6%B5%81%E7%BC%96%E8%A7%A3%E7%A0%81%E6%A1%86%E6%9E%B6%E7%9A%84%E5%B7%A5%E7%A8%8B%E8%B8%A9%E5%9D%91%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">4. 主流编解码框架的工程踩坑点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-FFmpeg"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 FFmpeg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-x264-%E7%9A%84-dts-shift-%E7%AD%96%E7%95%A5"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 x264 的 dts_shift 策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Apple-VideoToolbox"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Apple VideoToolbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Android-MediaCodec"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Android MediaCodec</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%8F%E5%85%B8%E6%A1%88%E4%BE%8B%E6%8E%92%E6%9F%A5"><span class="nav-number">5.</span> <span class="nav-text">5. 经典案例排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80%EF%BC%9A%E7%9F%AD%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91%E4%B8%AD-MP4-Edit-List-elst-%E5%AF%BC%E8%87%B4%E7%9A%84%E8%B5%B7%E6%92%AD%E9%BB%91%E5%B1%8F"><span class="nav-number">5.1.</span> <span class="nav-text">案例一：短视频剪辑中 MP4 Edit List (elst) 导致的起播黑屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C%EF%BC%9ARTC-%E4%B8%8E%E7%A7%80%E5%9C%BA%E7%9B%B4%E6%92%AD%E4%B8%AD%E7%9A%84%E9%9F%B3%E7%94%BB%E5%90%8C%E6%AD%A5-Master-Clock-%E7%AD%96%E7%95%A5"><span class="nav-number">5.2.</span> <span class="nav-text">案例二：RTC 与秀场直播中的音画同步 (Master Clock) 策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="nav-number">6.</span> <span class="nav-text">6. 常见故障速查表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E5%A4%8D%E7%9B%98"><span class="nav-number">7.</span> <span class="nav-text">7. 架构选型复盘</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Depth.Love"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Depth.Love</p>
+  <div class="site-description" itemprop="description">Audio and Video Technology Specialist</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+      <!-- Google Ads -->
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-2304335236058241"
+          data-ad-slot="8084137562"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2015 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Depth.Love</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '023374e22942af4046f9',
+      clientSecret: '5cedecd7c2b07700433ee7c72cac9ae1057a9092',
+      repo        : 'depthlove.github.io',
+      owner       : 'depthlove',
+      admin       : ['depthlove'],
+      id          : 'ed00d7f9e82be984783bfac5e9bbe99f',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
