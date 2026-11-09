@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/16/share-my-project-experience-in-audio-and-video-development/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/04/28/talk-about-FFmpeg-part2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/03/16/share-my-project-experience-in-audio-and-video-development/" class="post-title-link" itemprop="url">个人在音视频开发方面的经历分享启动啦</a>
+            <a href="/2015/04/28/talk-about-FFmpeg-part2/" class="post-title-link" itemprop="url">笔谈FFmpeg（二）</a>
         </h2>
 
         <div class="post-meta">
@@ -230,7 +230,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-03-16 10:30:55" itemprop="dateCreated datePublished" datetime="2016-03-16T10:30:55+08:00">2016-03-16</time>
+              <time title="创建时间：2015-04-28 15:04:58" itemprop="dateCreated datePublished" datetime="2015-04-28T15:04:58+08:00">2015-04-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,11 +255,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>本人小硕一枚，科班出身，毕业后在公司做过iOS应用开发工程师，搞过iOS项目移植到flash、unity3d平台的开发，在流媒体行业内实力不错的公司做过播放器开发工程师，现在在一家互联网公司做音视频编解码工程师。</p>
-<p>以前，就想着把自己实战经历过的项目经验总结并分享下，个人觉得在分享的过程中，会加深对知识点和技术的认识，同时也能帮助下一些人。值得开心的是，去年4月份左右，具体时间记不得请了，北京的一家做游戏应用内支付的公司的iOS工程师看到我的博客园博客后，联系我寻求iOS项目移植到flash平台的帮助。经过半个月时间与我沟通，项目移植成功上线了。在小型互联网公司，工程师可谓是孤军奋战。分享自己所学和经历是一件很兴奋，很开心的事。</p>
+          <p>经过前面的学习对FFmpeg的基本流程已经很熟悉了，现在到了掌握其中细节的时候了，用FFmpeg做播放器解码操作中，涉及到了一些结构体，这些结构之间到底有什么关系，它们是怎样协同工作的呢。文章 FFMPEG中最关键的结构体之间的关系 对这些结构间的关系进行了分析，详细内容如下：</p>
+<p>FFMPEG中结构体很多。最关键的结构体可以分成以下几类：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/03/16/share-my-project-experience-in-audio-and-video-development/#more" rel="contents">
+              <a class="btn" href="/2015/04/28/talk-about-FFmpeg-part2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -283,7 +283,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/15/CMTime-CMTimeMake-CMTimeMakeWithSeconds-in-iOS-encode/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/04/27/talk-about-FFmpeg-part1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -297,7 +297,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/03/15/CMTime-CMTimeMake-CMTimeMakeWithSeconds-in-iOS-encode/" class="post-title-link" itemprop="url">iOS平台上编码之CMTime，CMTimeMake，CMTimeMakeWithSeconds的作用</a>
+            <a href="/2015/04/27/talk-about-FFmpeg-part1/" class="post-title-link" itemprop="url">笔谈FFmpeg（一）</a>
         </h2>
 
         <div class="post-meta">
@@ -307,7 +307,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-03-15 16:39:35" itemprop="dateCreated datePublished" datetime="2016-03-15T16:39:35+08:00">2016-03-15</time>
+              <time title="创建时间：2015-04-27 11:21:37" itemprop="dateCreated datePublished" datetime="2015-04-27T11:21:37+08:00">2015-04-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -332,11 +332,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在iOS平台上使用iOS8及以上系统的VideoToolbox进行硬编码，会涉及到CMTime，CMTimeMake，CMTimeMakeWithSeconds的使用。下面说下这几个结构体的作用。</p>
-<p>CoreMedia.framework的CMTime.h中CMTime，CMTimeMake，CMTimeMakeWithSeconds的定义如下：</p>
+          <p>现在的工作是播放器库的开发，可不是调用iOS系统自带的播放器框架进行一些简单的功能和界面定制，这些没什么含量。涉及iOS开发有3个年头了，现在的工作算是有点含金量了。涉及播放器的开发，FFmpeg的架构和功能是必须清楚的。FFmpeg自带的三个工程：ffplay， ffmpeg， ffprobe。这三个工程的代码量太大，如何切入进去，一窥其中的奥秘为自己所用呢？从核心切入，编码和解码。编码和解码的核心API接口就那十几个，通过这些深入然后剖析源代码，目标就明确了。</p>
+<p>就我个人而言，首先要了解FFmpeg整个的运行机制，哪一部分工作需要调用FFmpeg的哪一块，这个必须清楚。播放器库的开发，解码播放这就是核心，我就需要从FFmpeg的解码流程入手了。FFmpeg源代码结构图 - 解码 这篇文章太好了，看得我两眼放光，精华。这篇文章读透了，完全可以把控FFmpeg的使用。我接下来的学习任务，那就是认真研读和敲代码研习，光看是不顶用的，需要动手写。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/03/15/CMTime-CMTimeMake-CMTimeMakeWithSeconds-in-iOS-encode/#more" rel="contents">
+              <a class="btn" href="/2015/04/27/talk-about-FFmpeg-part1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -360,7 +360,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/14/use-webrtc-codec-in-ios-platform/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/04/22/talk-about-knowledge-points-of-developing-iOS-player/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -374,7 +374,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/03/14/use-webrtc-codec-in-ios-platform/" class="post-title-link" itemprop="url">在iOS平台上编译WebRTC</a>
+            <a href="/2015/04/22/talk-about-knowledge-points-of-developing-iOS-player/" class="post-title-link" itemprop="url">谈一谈做iOS播放器库开发所涉及的知识点</a>
         </h2>
 
         <div class="post-meta">
@@ -384,7 +384,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-03-14 10:46:48" itemprop="dateCreated datePublished" datetime="2016-03-14T10:46:48+08:00">2016-03-14</time>
+              <time title="创建时间：2015-04-22 13:59:40" itemprop="dateCreated datePublished" datetime="2015-04-22T13:59:40+08:00">2015-04-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -409,545 +409,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/12/31/review-2015-outlook-2016/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/31/review-2015-outlook-2016/" class="post-title-link" itemprop="url">回顾2015，展望2016</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-12-31 18:54:50" itemprop="dateCreated datePublished" datetime="2015-12-31T18:54:50+08:00">2015-12-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天是2015年12月31号，2015年最后的一天，这一年过的真快，自己在这一年中做了什么，在2016年需要做什么，我需要花点时间来总结和规划下。2015年的最后一天，没有了以往的那种希望时间快速过去的欲望，而是一种淡淡的对时间流逝的可惜和害怕，害怕变老，害怕时间过得太快，要做的事情没有按时完成。</p>
+          <p>在自己研究生毕业的时候，想着能找上一份做视频编解码的工作，可惜没有如愿，最后到了一家iOS游戏渠道公司去做游戏支付业务的SDK开发，我的iOS正式开发生涯就这么开始了。</p>
+<p>在那家iOS游戏渠道没做上一年，就离职了，至于怎么离职的，后续文章会谈一谈，以此来梳理下自己的职业规划。说了这多了，进入正题吧，今年3月份找上了一家做音视频服务的公司，做iOS播放器的开发，职位是播放器开发工程师，就是我现在所在的公司咯。</p>
+<p>要开发一套属于自己的播放器库，不利用移动设备上自带的播放器来播放音频、视频，要用到哪些知识点呢，下面以我熟悉公司播放器库的前提下，说一说我的看法。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2015/12/31/review-2015-outlook-2016/#more" rel="contents">
+              <a class="btn" href="/2015/04/22/talk-about-knowledge-points-of-developing-iOS-player/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/11/16/push-video-or-audio-to-server-in-rtmp-live-play/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/11/16/push-video-or-audio-to-server-in-rtmp-live-play/" class="post-title-link" itemprop="url">rtmp直播推流（二）－－将音频／视频推送到流媒体服务器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-11-16 18:27:30" itemprop="dateCreated datePublished" datetime="2015-11-16T18:27:30+08:00">2015-11-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>参考我之前写的一篇文章<a href="https://depthlove.github.io/2015/09/18/use-ffmpeg-and-x264-encode-iOS-camera-video-to-h264/">利用FFmpeg+x264将iOS摄像头实时视频流编码为h264文件</a></p>
-<p>参看文章<a href="http://blog.csdn.net/nonmarking/article/details/48022387" target="_blank" rel="noopener">ffmpeg综合应用示例（一）——摄像头直播 </a>，       <a href="http://blog.csdn.net/nonmarking/article/details/50522413" target="_blank" rel="noopener">ffmpeg综合应用示例（四）——摄像头直播的视音频同步</a></p>
-<p>参看文章<a href="http://blog.csdn.net/leixiaohua1020/article/details/47072519" target="_blank" rel="noopener">最简单的基于FFmpeg的移动端例子：IOS 推流器</a>，      <a href="http://blog.csdn.net/leixiaohua1020/article/details/39803457" target="_blank" rel="noopener"> 最简单的基于FFmpeg的推流器（以推送RTMP为例）</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/11/16/push-video-or-audio-to-server-in-rtmp-live-play/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/11/13/flv-analysis-in-rtmp-live-play/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/11/13/flv-analysis-in-rtmp-live-play/" class="post-title-link" itemprop="url">rtmp直播推流（一）－－flv格式解析与封装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-11-13 17:35:27" itemprop="dateCreated datePublished" datetime="2015-11-13T17:35:27+08:00">2015-11-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>flv文件格式分析，可参看<a href="http://www.cnblogs.com/chef/archive/2012/07/18/2597279.html" target="_blank" rel="noopener">RTMP中FLV流到标准h264、aac的转换</a>，该文章写的很清晰。</p>
-<p>flv封装格式解析，可参看<a href="http://blog.csdn.net/leixiaohua1020/article/details/50535082" target="_blank" rel="noopener">视音频数据处理入门：FLV封装格式解析</a>，文章图文并貌，很直观。</p>
-<p>flv文件封装，可参看<a href="http://blog.csdn.net/yeyumin89/article/details/7932368" target="_blank" rel="noopener">将h.264视频流封装成flv格式文件（一.flv格式）</a><br>，    <a href="http://blog.csdn.net/yeyumin89/article/details/7932431" target="_blank" rel="noopener">将h.264视频流封装成flv格式文件（二.开始动手）</a></p>
-<p>使用rtmp协议发送flv文件，可参看<a href="http://blog.csdn.net/yeyumin89/article/details/8011362" target="_blank" rel="noopener">rtmp协议简单解析以及用其发送h264的flv文件</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/11/13/flv-analysis-in-rtmp-live-play/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/10/29/iOS-development-need-abilities/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/29/iOS-development-need-abilities/" class="post-title-link" itemprop="url">iOS开发需要掌握的知识点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-10-29 15:35:49" itemprop="dateCreated datePublished" datetime="2015-10-29T15:35:49+08:00">2015-10-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>任何一个方向，都需要基本功扎实。软件开发领域，数据结构与算法，操作系统，网络协议（tcp/ip协议族）是立足的基础。</p>
-<p>下面列举iOS开发需要掌握的知识点：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/10/29/iOS-development-need-abilities/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/10/29/frequently-used-audio-and-video-codec-script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/29/frequently-used-audio-and-video-codec-script/" class="post-title-link" itemprop="url">音视频编解码中常用的编译脚本</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-10-29 10:21:47" itemprop="dateCreated datePublished" datetime="2015-10-29T10:21:47+08:00">2015-10-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="FFmpeg"><a href="#FFmpeg" class="headerlink" title="FFmpeg"></a>FFmpeg</h3><p>iOS：<a href="https://github.com/kewlbear/FFmpeg-iOS-build-script" target="_blank" rel="noopener">https://github.com/kewlbear/FFmpeg-iOS-build-script</a></p>
-<h3 id="x264"><a href="#x264" class="headerlink" title="x264"></a>x264</h3><p>iOS：<a href="https://github.com/kewlbear/x264-ios" target="_blank" rel="noopener">https://github.com/kewlbear/x264-ios</a></p>
-<h3 id="fdk-aac"><a href="#fdk-aac" class="headerlink" title="fdk-aac"></a>fdk-aac</h3><p>iOS：<a href="https://github.com/verybigdog/fdk-aac-ios" target="_blank" rel="noopener">https://github.com/verybigdog/fdk-aac-ios</a></p>
-<p>或 <a href="https://github.com/kewlbear/fdk-aac-build-script-for-iOS" target="_blank" rel="noopener">https://github.com/kewlbear/fdk-aac-build-script-for-iOS</a>，不支持iOS arm64，但是可以借鉴</p>
-<h3 id="librtmp"><a href="#librtmp" class="headerlink" title="librtmp"></a>librtmp</h3><p>iOS：<a href="https://github.com/saiten/ios-librtmp" target="_blank" rel="noopener">https://github.com/saiten/ios-librtmp</a></p>
-<h3 id="OpenSSL"><a href="#OpenSSL" class="headerlink" title="OpenSSL"></a>OpenSSL</h3><p>iOS：<a href="https://github.com/x2on/OpenSSL-for-iPhone" target="_blank" rel="noopener">https://github.com/x2on/OpenSSL-for-iPhone</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/10/29/frequently-used-audio-and-video-codec-script/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/10/24/use-VideoToolBox-decode-h264/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/24/use-VideoToolBox-decode-h264/" class="post-title-link" itemprop="url">iOS上使用VideoToolBox硬解码h264</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-10-24 15:55:12" itemprop="dateCreated datePublished" datetime="2015-10-24T15:55:12+08:00">2015-10-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>以下内容摘自我博客的<a href="https://depthlove.github.io/2015/09/16/build-X264-library-for-iOS-platform/">编译iOS平台上使用的X264库</a>一文。</p>
-<p>从iOS8开始，苹果开放了硬解码和硬编码API，框架为VideoToolbox.framework， 此框架需要在iOS8及以上的系统上才能使用。</p>
-<p>此框架中的硬解码API是几个纯C函数，在任何OC或者 C++代码里都可以使用。使用的时候，首先，要把 VideoToolbox.framework 添加到工程里，并且在要使用该API的文件中包含头文件 #include &lt;VideoToolbox/VideoToolbox.h&gt;，然后，就可以畅快的高效的对视频流进行硬编码了。</p>
-<p>其实至少从iPhone4开始，苹果就是支持硬件解码了，但是硬解码API框架VideoToolBox一直是私有API，如果调用这个私有库，那么app在必须在越狱的设备上运行，正常的App如果想提交到AppStore是不允许使用私有API的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/10/24/use-VideoToolBox-decode-h264/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2015/10/13/use-ffmpeg-and-rtmp-to-push-iOS-camera-streaming/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/13/use-ffmpeg-and-rtmp-to-push-iOS-camera-streaming/" class="post-title-link" itemprop="url">利用FFmpeg和rtmp实现iOS设备上摄像头视频流的推送</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2015-10-13 14:06:55" itemprop="dateCreated datePublished" datetime="2015-10-13T14:06:55+08:00">2015-10-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <a id="more"></a>
       
     </div>
 
@@ -965,7 +437,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
   </nav>
 
 
@@ -1033,20 +505,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

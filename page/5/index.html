@@ -206,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/11/01/duo-shuo-is-poor/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/07/08/use-fdk-aac-encode-iOS-mic-pcm-to-aac/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -220,7 +220,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/11/01/duo-shuo-is-poor/" class="post-title-link" itemprop="url">换了个博客主题，多说评论无法在博客中显示了</a>
+            <a href="/2016/07/08/use-fdk-aac-encode-iOS-mic-pcm-to-aac/" class="post-title-link" itemprop="url">利用fdk-aac将iOS麦克风实时音频流编码为aac文件</a>
         </h2>
 
         <div class="post-meta">
@@ -230,7 +230,16 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-11-01 15:21:02" itemprop="dateCreated datePublished" datetime="2016-11-01T15:21:02+08:00">2016-11-01</time>
+              <time title="创建时间：2016-07-08 13:37:38" itemprop="dateCreated datePublished" datetime="2016-07-08T13:37:38+08:00">2016-07-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
+                </span>
             </span>
 
           
@@ -246,12 +255,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>之前用的 hexo 博客主题不太美观，就想着换个，结果换了个博客主题，多说评论不能在博客中显示，评论只能在多说后台上看到。试着把文章和评论导出来再导入到多说后台，各种方法都试了，没搞成功。</p>
-<p>文章评论不能显示的问题让我心情很不好，大量的评论要想一个不落的跟文章关联起来的可能性不大，内心里对恢复评论不作指望了，能恢复多少算多少吧。</p>
-<p>想想这个事，真不该折腾，浪费了时间不说，关键是评论数据不能正常恢复显示很影响我的心情。先把评论数据保存，以后得闲，再整这个恢复评论数据显示的事情。说到以后得闲再做，估计这个事可能就被我遗忘了。</p>
+          <p>近几天终于有点空闲时间写写东西了，将之前项目中自己做的东西更新上来，写写自己的心得感想。</p>
+<p>iOS系统上的音频硬编码器，可实现将pcm音频数据编码为aac格式的数据。但是，对于低码率下的音频编码，就是它的软肋了。通过函数扫描iOS各系统上音频硬编码支持的情况发现，aac-lc编码都是支持的，苹果的官方文档也说的很清楚。对于aac-he-v2编码，iOS现在所有的系统都不支持，aac-he编码需要iOS9.0以上系统才支持音频硬编码。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/11/01/duo-shuo-is-poor/#more" rel="contents">
+              <a class="btn" href="/2016/07/08/use-fdk-aac-encode-iOS-mic-pcm-to-aac/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -275,7 +283,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/19/fear-of-marriage/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/07/07/talk-about-theory-study-and-application/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -289,7 +297,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/10/19/fear-of-marriage/" class="post-title-link" itemprop="url">我竟然恐婚了</a>
+            <a href="/2016/07/07/talk-about-theory-study-and-application/" class="post-title-link" itemprop="url">对理论学习与应用的一些思考</a>
         </h2>
 
         <div class="post-meta">
@@ -299,16 +307,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-10-19 11:05:16" itemprop="dateCreated datePublished" datetime="2016-10-19T11:05:16+08:00">2016-10-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
+              <time title="创建时间：2016-07-07 10:35:14" itemprop="dateCreated datePublished" datetime="2016-07-07T10:35:14+08:00">2016-07-07</time>
             </span>
 
           
@@ -324,10 +323,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>在二十岁出头的时候，认为恋爱、结婚是很值得期待、很幸福的一件事。可是到了如今的年龄，很害怕结婚。婚姻不是简简单单两个人的事情，要考虑到婚前两个家庭的关系，结婚时的开销，婚后小孩的培养以及夫妻之间感情生活的问题。分析我现在的这种状态，之所以有害怕结婚的状态是因为我认为未来有太多不可预期的因素，我现阶段能力不足以给予自身强有力的信心。</p>
+          <p>待续。。。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/10/19/fear-of-marriage/#more" rel="contents">
+              <a class="btn" href="/2016/07/07/talk-about-theory-study-and-application/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -351,7 +350,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/14/Interactive-live-broadcast/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/05/09/live-broadcast-development-process/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -365,7 +364,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/10/14/Interactive-live-broadcast/" class="post-title-link" itemprop="url">聊一聊互动直播</a>
+            <a href="/2016/05/09/live-broadcast-development-process/" class="post-title-link" itemprop="url">移动端直播应用的开发流程</a>
         </h2>
 
         <div class="post-meta">
@@ -375,7 +374,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-10-14 15:30:00" itemprop="dateCreated datePublished" datetime="2016-10-14T15:30:00+08:00">2016-10-14</time>
+              <time title="创建时间：2016-05-09 10:14:54" itemprop="dateCreated datePublished" datetime="2016-05-09T10:14:54+08:00">2016-05-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -383,7 +382,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
                 </span>
             </span>
 
@@ -400,10 +399,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>传统单人直播，形式上比较单调，以主播为主导，聊各种话题。观众与主播之间的沟通，基于即时通信（IM）技术以文字，表情，点赞等来与主播互动。这种互动是有延迟性的，单向的，一问一答的模式。为了增加观众与主播之间的强互动性，有必要引入实时通信（RTC）技术打造连麦互动直播。</p>
+          <h2 id="Part-1-推流端"><a href="#Part-1-推流端" class="headerlink" title="Part 1. 推流端"></a>Part 1. 推流端</h2><p>推流，就是将采集到的音频，视频数据通过流媒体协议发送到流媒体服务器。</p>
+<h3 id="一、选择流媒体协议"><a href="#一、选择流媒体协议" class="headerlink" title="一、选择流媒体协议"></a>一、选择流媒体协议</h3><p>现在直播应用，采用 RTMP 协议居多，也有部分使用 HLS 协议。</p>
+<p>采用RTMP协议，就要看下它与流媒体服务器交互的过程，RTMP协议的默认端口是1935，采用 TCP 协议。并且需要了解 FLV 的封装格式。</p>
+<p>采用 HLS 协议，因为涉及到切片，延时会比较大，需要了解 TS 流。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/10/14/Interactive-live-broadcast/#more" rel="contents">
+              <a class="btn" href="/2016/05/09/live-broadcast-development-process/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -427,7 +429,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/12/how-to-love/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/23/hw-encode-and-transfer-in-ios-platform-encode-aac-part6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -441,7 +443,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/10/12/how-to-love/" class="post-title-link" itemprop="url">如何去爱</a>
+            <a href="/2016/03/23/hw-encode-and-transfer-in-ios-platform-encode-aac-part6/" class="post-title-link" itemprop="url">在iOS上硬编码推流－编码aac（六）</a>
         </h2>
 
         <div class="post-meta">
@@ -451,7 +453,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-10-12 20:45:05" itemprop="dateCreated datePublished" datetime="2016-10-12T20:45:05+08:00">2016-10-12</time>
+              <time title="创建时间：2016-03-23 18:03:43" itemprop="dateCreated datePublished" datetime="2016-03-23T18:03:43+08:00">2016-03-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -459,7 +461,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
                 </span>
             </span>
 
@@ -476,11 +478,284 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>如何去爱？关于这个问题，我想说的是到了一定年纪才会懂得。爱，不是一时情感的寄托，一时的喜好。看着小年轻们，经常上演死去活来的剧情，我内心深处想表达的是这些所谓的爱只是一时的爱慕，只是以后回忆青春年华的一个所谓的美景而已。年纪轻轻，没有太多的经历，自以为是男欢女爱，到底有多少能修到甜蜜与和谐的生活。到了一定年龄，经历过社会的锤炼，对男女之情才会有成熟的看法，对家庭的观念才有全局的认识。</p>
-<p>古有三十而立，四十不惑之说，真的很佩服古人的总结。到三十的年纪，会多角度去看待事物，自身的角度，换位思考的角度。</p>
+          <a id="more"></a>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/22/hw-encode-and-transfer-in-ios-platform-mic-part5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="Audio and Video Technology Specialist">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/22/hw-encode-and-transfer-in-ios-platform-mic-part5/" class="post-title-link" itemprop="url">在iOS上硬编码推流－麦克风数据采集（五）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-22 10:53:23" itemprop="dateCreated datePublished" datetime="2016-03-22T10:53:23+08:00">2016-03-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
+                </span>
+            </span>
+
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/20/hw-encode-and-transfer-in-ios-platform-videotoolbox-encode-h264-part4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="Audio and Video Technology Specialist">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/20/hw-encode-and-transfer-in-ios-platform-videotoolbox-encode-h264-part4/" class="post-title-link" itemprop="url">在iOS上硬编码推流－硬编码h264（四）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-20 19:32:23" itemprop="dateCreated datePublished" datetime="2016-03-20T19:32:23+08:00">2016-03-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
+                </span>
+            </span>
+
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/19/hw-encode-and-transfer-in-ios-platform-real-time-image-filter-part3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="Audio and Video Technology Specialist">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/19/hw-encode-and-transfer-in-ios-platform-real-time-image-filter-part3/" class="post-title-link" itemprop="url">在iOS上硬编码推流－实时图像滤镜（三）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-19 18:09:09" itemprop="dateCreated datePublished" datetime="2016-03-19T18:09:09+08:00">2016-03-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
+                </span>
+            </span>
+
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/18/hw-encode-and-transfer-in-ios-platform-image-merging-part2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Depth.Love">
+      <meta itemprop="description" content="Audio and Video Technology Specialist">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Depth.Love Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/18/hw-encode-and-transfer-in-ios-platform-image-merging-part2/" class="post-title-link" itemprop="url">在iOS上硬编码推流－图像融合（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2016-03-18 14:52:50" itemprop="dateCreated datePublished" datetime="2016-03-18T14:52:50+08:00">2016-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
+                </span>
+            </span>
+
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>采用UIGraphics将两幅图绘制到同一个画布上输出，达到图像融合的简单效果。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/10/12/how-to-love/#more" rel="contents">
+              <a class="btn" href="/2016/03/18/hw-encode-and-transfer-in-ios-platform-image-merging-part2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -504,7 +779,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/08/talk-about-IT-technology/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/17/hw-encode-and-transfer-in-ios-platform-camera-part1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -518,7 +793,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/10/08/talk-about-IT-technology/" class="post-title-link" itemprop="url">论 IT 技术的有效期</a>
+            <a href="/2016/03/17/hw-encode-and-transfer-in-ios-platform-camera-part1/" class="post-title-link" itemprop="url">在iOS上硬编码推流－摄像头数据采集（一）</a>
         </h2>
 
         <div class="post-meta">
@@ -528,7 +803,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-10-08 08:05:46" itemprop="dateCreated datePublished" datetime="2016-10-08T08:05:46+08:00">2016-10-08</time>
+              <time title="创建时间：2016-03-17 15:55:53" itemprop="dateCreated datePublished" datetime="2016-03-17T15:55:53+08:00">2016-03-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -536,7 +811,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
                 </span>
             </span>
 
@@ -553,10 +828,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>IT，互联网行业的代名词，代表着科技前沿、市场趋势，无时不刻在改变我们的生活。有那么一群活跃在 IT 行业的人群，美言之软件开发工程师，自嘲之码农，对 IT 技术的革新有着最深刻的体会。旧的技术被取代，程序员若不及时跟上市场的节奏，被淘汰是必然的结局。技术的新旧更替，处在程序开发最上层的程序员的反应最敏感，受到的冲击最大。有点实力的公司，要彰显市场的竞争力，在引领市场获取未来竞争力的驱动下，招募一批研究员、专家、首席科学家去做理论研究。这批做理论的人对 IT 市场的应激反应肯定是延迟的。理论的过时经历的时间更长，理论间的交叉以及相互引入改进，让理论存活的时间变长，也让做理论研究的 IT 人群有长远发展的空间，不至于时刻面临着技术失效的局面。</p>
+          <p>该文的内容在我之前的文章中已经实现过，但是为了结构清晰起见，本文将相机控制和采集视频数据功能封装为单独的库。</p>
+<p>iOS上使用AVFoundation.framework框架来调用系统相机并获取视频数据。视频数据可以根据设定的参数，可采集到RGB或YUV数据，一般使用的是GBRA32，420v，420f，下面演示相机的调用和视频数据的获取。</p>
+<p>a)引入框架的头文件<code>#import &lt;AVFoundation/AVFoundation.h&gt;</code></p>
+<p>b)调用的类遵守协议<code>AVCaptureVideoDataOutputSampleBufferDelegate</code></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/10/08/talk-about-IT-technology/#more" rel="contents">
+              <a class="btn" href="/2016/03/17/hw-encode-and-transfer-in-ios-platform-camera-part1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -580,7 +858,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/07/next-ten-years/">
+    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/03/15/CMTime-CMTimeMake-CMTimeMakeWithSeconds-in-iOS-encode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -594,7 +872,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2016/10/07/next-ten-years/" class="post-title-link" itemprop="url">下一个十年</a>
+            <a href="/2016/03/15/CMTime-CMTimeMake-CMTimeMakeWithSeconds-in-iOS-encode/" class="post-title-link" itemprop="url">iOS平台上编码之CMTime，CMTimeMake，CMTimeMakeWithSeconds的作用</a>
         </h2>
 
         <div class="post-meta">
@@ -604,7 +882,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2016-10-07 22:00:51" itemprop="dateCreated datePublished" datetime="2016-10-07T22:00:51+08:00">2016-10-07</time>
+              <time title="创建时间：2016-03-15 16:39:35" itemprop="dateCreated datePublished" datetime="2016-03-15T16:39:35+08:00">2016-03-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -612,7 +890,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
+                  <a href="/categories/%E7%9B%B4%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">直播</span></a>
                 </span>
             </span>
 
@@ -629,320 +907,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>今晚跟高中要好的同学耀（某知名学校硕士）相聚，聊的东西都深入内心。八年未见，我们从十多岁的小青年变成了年近三十岁的大叔，相见仍然是那么熟悉，岁月的痕迹留在了我们脸上和身体健康状态上。每一个行业都有它的亮点，也有它的痛点，不必羡慕，不必感概，因为深处其中时，真的没有那么光鲜，没有那么轻松，没有那么自以为是。我们每个人都在为前途、命运在决斗，遍体鳞伤仍然奋斗不止。</p>
+          <p>在iOS平台上使用iOS8及以上系统的VideoToolbox进行硬编码，会涉及到CMTime，CMTimeMake，CMTimeMakeWithSeconds的使用。下面说下这几个结构体的作用。</p>
+<p>CoreMedia.framework的CMTime.h中CMTime，CMTimeMake，CMTimeMakeWithSeconds的定义如下：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2016/10/07/next-ten-years/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/06/private-development-in-three-years/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/10/06/private-development-in-three-years/" class="post-title-link" itemprop="url">三年内个人发展规划</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-10-06 08:05:34" itemprop="dateCreated datePublished" datetime="2016-10-06T08:05:34+08:00">2016-10-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>互联网发展日新月异，处在该行业就需要紧跟行业发展动态和高新技术理论发展趋势。这不仅关乎个人长远发展，也关乎家庭生活的质量，所以，需要做好长远实际的规划。</p>
-<p>如何做好规划，这个问题因人而异。但都离不开学习环节。学习伴随我们的一生，一生的工作，一生的生活。我们工作效率的提升，生活质量的提升，都需要通过不断地学习、接受新的理念来修正过去的观念。</p>
-<p>处在互联网这个非线性时变的系统中，我该如何有效精准地预测系统的实际输出呢。经验，理论是建立预测模型的基础，将工作经验，人生阅历，接收到的新理论作为训练数据，进而得出一个切合自身实际的预测输出。获取到一个理论模型之后，接下来的环节就是不断在实践过程中进行修正调参，以更符合期望。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/10/06/private-development-in-three-years/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/10/02/living-in-the-present/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/10/02/living-in-the-present/" class="post-title-link" itemprop="url">对当下的思考</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-10-02 22:15:50" itemprop="dateCreated datePublished" datetime="2016-10-02T22:15:50+08:00">2016-10-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>当下是未来的基础，未来的憧憬犹如当下的场景，都离不开物质和精神的依赖。由于工作的变动，身心很是疲惫，看事待物都游离着低迷的气息。表面上的光鲜，私底下的痛楚和悲凉，只有在夜深人静的时候，在心底强行抹掉，把当前遇到的事情当作一种对人生的考验，痛而高仰头颅散发出坚而不催的积极向上的气息。</p>
-<p>在北京的日子，自己的忙碌，无暇接听家人的电话。当自己闲下来的时候，觉得自己真的好无力。生活的现实，不得不让人在最应该珍惜一种感情的时候，却以一种强硬的语气和态度应对。父母面容的沧桑，不断苍老的白发袭来，身体没有以前那样灵活，我将这些看在心里，说不出的酸楚。我信奉的一句话是“美好的东西，都是煎熬之后才得到的”，同时欲望的膨胀，也是煎熬的过程中加剧痛苦的催化剂。没有美好的结局，只希望捕捉到的过程中的瞬间和阶段是一段美好的回忆。珍惜平时所见所遇，无需过急赶往远方，柔和的心态才是体验生活的缓冲剂。</p>
-<p>回顾自己的生活，走得太快，提前透支自己，脑中搜寻近几年美好的记忆寥寥无几，大部分是自己为了追逐欲望的场面。近几年活过吗，为谁活过，答案是为了欲望活着。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/10/02/living-in-the-present/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/09/29/opengl-practice-description/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/29/opengl-practice-description/" class="post-title-link" itemprop="url">对OpenGL开发实践的思考</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-09-29 17:33:34" itemprop="dateCreated datePublished" datetime="2016-09-29T17:33:34+08:00">2016-09-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在使用一个工具的时候，首先要搞清楚它的定义［见 wiki ：<a href="https://en.wikipedia.org/wiki/OpenGL" target="_blank" rel="noopener">OpenGL</a>］，其次才是用它来做实践开发。我个人对它的理解是，OpenGL 是一个用于做图形处理的工具库，基于 GPU 硬件资源用来绘制和渲染 2D，3D 图形。要做比较炫的图形渲染，图形变化，选择 OpenGL 来开发可以降低设备对 CPU 资源的消耗。现在流行的 VR 开发，无外乎也是基于 OpenGL 来做的。知道 OpenGL 能干什么了，随之而来的是写个小程序把我们对 OpenGL 的好奇心实践下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/09/29/opengl-practice-description/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://depthlove.github.io/2016/09/25/a-week-in-Shanghai-City/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-      <meta itemprop="name" content="Depth.Love">
-      <meta itemprop="description" content="Audio and Video Technology Specialist">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Depth.Love Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/25/a-week-in-Shanghai-City/" class="post-title-link" itemprop="url">在上海总部工作一周的感受</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-09-25 12:50:38" itemprop="dateCreated datePublished" datetime="2016-09-25T12:50:38+08:00">2016-09-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a>
-                </span>
-            </span>
-
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2016年9月19日～2016年9月24日，在上海总部工作了一周，收获颇多。对于我而言，很感谢团队和公司的付出。</p>
-<p>人到一定阶段，处在一个和谐进取的团队中，人的感官和认识不再是那种不入流的小民市井看法。</p>
-<p>以前，看到某些颁奖典礼上一些人说的大客套话，感谢公司，感谢团队，让人听起来真的好假。为什么觉得好假，在于没有经历过别人的处境。在上海的一周，我确实体会到了一个人在舞台的光鲜，其背后有很多默默付出和支持的小伙伴们，说一些感谢的话，看起来是大话，用心去体验，那是发自内心最真实的声音。现在的社会，是群体，单打独斗不是主流，合群求同化异是趋势。对于知识交流，人际交流，只有放开，才能拥抱更大更广的空间。保持谦逊，保持温和，保持敬畏，保持进取，视野就会大一点，进步就会快一点。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/09/25/a-week-in-Shanghai-City/#more" rel="contents">
+              <a class="btn" href="/2016/03/15/CMTime-CMTimeMake-CMTimeMakeWithSeconds-in-iOS-encode/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -965,7 +934,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1033,20 +1002,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-count">73</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
